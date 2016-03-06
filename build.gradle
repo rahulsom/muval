@@ -1,10 +1,29 @@
 plugins {
     id 'java'
+    id 'groovy'
     id 'application'
+    id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
+group = 'com.github.rahulsom' // This could become 'gov.nist'
+version = '1.0-SNAPSHOT'
+
 mainClassName = "gov.nist.mu.validation.Validator"
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir 'build/generated/src/java'
+        }
+        resources {
+            srcDir 'src/main/resources'
+            srcDir 'build/generated/resources'
+        }
+    }
+}
+
 
 repositories {
     jcenter()
@@ -47,4 +66,59 @@ dependencies {
     }
     compile xmlbeans('qname')
     compile xmlbeans('xmlpublic')
+
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.4'
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+}
+
+def rulesets = [
+        [name: 'ccd', dir: 'ccd', file: 'ccd.sch'],
+        [name: 'cda4cdt', dir: 'cda4cdt', file: 'HandP.IHE.PCC.sch'],
+        [name: 'c32_v25_c83_20', dir: 'c32_v_2_5_c83_2_0', file: 'HITSP_C32.sch'],
+]
+rulesets.each { ruleset ->
+    task "create_${ruleset.name}"(type: Zip) {
+        from "schematron/${ruleset.dir}"
+        //include "**/*.*"
+        destinationDir file('build/generated/resources/schematron')
+        archiveName ruleset.name
+    }
+}
+
+task "create_stylesheet"(type: Zip) {
+    from "schematron"
+    include "*.xsl"
+    destinationDir file('build/generated/resources/schematron')
+    archiveName "stylesheet"
+}
+
+task "create_schema"(type: Zip) {
+    from "schema/cdar2c32"
+    destinationDir file('build/generated/resources/schematron')
+    archiveName "schema"
+}
+
+task packageRules() {
+    dependsOn rulesets*.name.collect { "create_${it}" }
+    dependsOn 'create_stylesheet', 'create_schema'
+    doLast {
+        file('build/generated/src/java/gov/nist/mu/validation').mkdirs()
+        def fileBody = 'package gov.nist.mu.validation;\nclass Rulesets {\n' + rulesets.
+                collect {
+                    $/    public static final Ruleset ${it.name} = new Ruleset("${it.name}", "${it.file}");/$
+                }.join('\n') +
+                "\n}\n"
+        file('build/generated/src/java/gov/nist/mu/validation/Rulesets.java').text = fileBody
+    }
+}
+
+compileJava.dependsOn 'packageRules'
+
+publishing {
+    publications {
+        shadow(MavenPublication) {
+            from components.java
+            artifact shadowJar
+        }
+    }
 }

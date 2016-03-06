@@ -14,136 +14,167 @@
  */
 package gov.nist.mu.validation;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.ParseException;
+import net.sf.saxon.StandardURIResolver;
+import net.sf.saxon.trans.XPathException;
+import org.apache.commons.cli.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+
 /**
  * @author andrew.mccaffrey
  */
 public class Validator {
 
-    
-    public static String schemaLocation = "./schema/cdar2c32/infrastructure/cda/C32_CDA.xsd";
-    public static String schematronLocationCcd = "./schematron/ccd/ccd.sch";
-    public static String schematronLocationCda4cdt = "./schematron/cda4cdt/HandP.IHE.PCC.sch";
-    public static String schematronLocationHitspIhe = "./schematron/c32_v_2_5_c83_2_0/HITSP_C32.sch";
-    public static String skeletonLocation = "./schematron/schematron-Validator-report.xsl";
+    public static final Ruleset schemaLocation = Ruleset.schema;
+    public static final Ruleset skeletonLocation = Ruleset.stylesheet;
     public static TransformerFactory factory = null;
 
 
     public static final void main(String[] args) {
 
-        String workingDirectory = System.getProperty("user.dir") + '/';
-        schemaLocation = workingDirectory + schemaLocation;
-        schematronLocationCcd = workingDirectory + schematronLocationCcd;
-        schematronLocationCda4cdt = workingDirectory + schematronLocationCda4cdt;
-        schematronLocationHitspIhe = workingDirectory + schematronLocationHitspIhe;
-        skeletonLocation = workingDirectory + skeletonLocation;
+        Options cliOptions = Validator.setCliOptions();
+        CommandLine line = getCommandLine(args, cliOptions);
+        if (line == null) {
+            return;
+        }
 
-        org.apache.commons.cli.Options cliOptions = Validator.setCliOptions();
+        if (printHelp(args, cliOptions, line)) return;
+
+        FileInputStream file = getInputFile(line);
+        if (file == null) {
+            return;
+        }
+
+        Ruleset[] rulesets = {Rulesets.ccd, Rulesets.cda4cdt, Rulesets.c32_v25_c83_20};
+        SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
+
+        Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
+
+        String[] results = new String[rulesets.length];
+        for (int i = 0; i < rulesets.length; i++) {
+            results[i] = Validator.validateWithSchematron(doc, rulesets[i], skeletonLocation, "errors");
+        }
+
+        Node[] messageList = getResultNodes(results);
+
+        if (messageList == null) {
+            return;
+        }
+
+        Document result = Validator.generateReport(doc, errorHandler, messageList);
+        String output = Validator.xmlToString(result);
+        String outputfilename = computeOutputFilename(line);
+        writeOutput(output, outputfilename);
+    }
+
+    public static Node[] validate(InputStream file, Ruleset[] rulesets) {
+        SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
+        Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
+        String[] results = new String[rulesets.length];
+        for (int i = 0; i < rulesets.length; i++) {
+            results[i] = Validator.validateWithSchematron(doc, rulesets[i], skeletonLocation, "errors");
+        }
+
+        Node[] messageList = getResultNodes(results);
+        return messageList;
+    }
+
+    private static Node[] getResultNodes(String[] results) {
+        Node[] retval = new Node[results.length];
+
+        for (int i = 0; i < results.length; i++) {
+            try {
+                retval[i] = Validator.stringToDom(results[i]);
+            } catch (SAXException ex) {
+                ex.printStackTrace();
+                return null;
+            } catch (ParserConfigurationException ex) {
+                ex.printStackTrace();
+                return null;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                return null;
+            }
+        }
+
+        return retval;
+    }
+
+    private static FileInputStream getInputFile(CommandLine line) {
+        String input = null;
+        input = line.getOptionValue("input");
+        try {
+            return new FileInputStream(input);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static boolean printHelp(String[] args, Options cliOptions, CommandLine line) {
+        HelpFormatter formatter = new HelpFormatter();
+        if (line.hasOption("help") || args.length == 0 || !line.hasOption("input")) {
+            formatter.printHelp("java -jar Validator.jar", cliOptions);
+            System.out.println("\n\nExample: user@localhost:~/cdafiles> java -jar Validator.jar -input CCD.xml -output report.xml\n");
+            return true;
+        }
+        return false;
+    }
+
+    private static CommandLine getCommandLine(String[] args, Options cliOptions) {
         CommandLineParser parser = new GnuParser();
         CommandLine line = null;
         try {
             line = parser.parse(cliOptions, args);
-        } catch(ParseException ex) {
+        } catch (ParseException ex) {
             ex.printStackTrace();
-            return;
         }
+        return line;
+    }
 
-        HelpFormatter formatter = new HelpFormatter();
-        if(line.hasOption("help") || args.length == 0 || !line.hasOption("input")) {
-            formatter.printHelp("java -jar Validator.jar", cliOptions);
-            System.out.println("\n\nExample: user@localhost:~/cdafiles> java -jar Validator.jar -input CCD.xml -output report.xml\n");
-            return;
-        }
-
-        String input = null;
-        input = line.getOptionValue("input");
-        File file = new File(input);
-
-        SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
-        Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
-
-        String ccdResult = Validator.validateWithSchematron(doc, schematronLocationCcd, skeletonLocation, "errors");
-        String cda4cdtResult = Validator.validateWithSchematron(doc, schematronLocationCda4cdt, skeletonLocation, "errors");
-        String hitspIheResult = Validator.validateWithSchematron(doc, schematronLocationHitspIhe, skeletonLocation, "errors");
-
-        Node ccdResultNode = null;
-        Node cda4cdtResultNode = null;
-        Node hitspIheResultNode = null;
-        
-        try {         
-            ccdResultNode = Validator.stringToDom(ccdResult);
-            cda4cdtResultNode = Validator.stringToDom(cda4cdtResult);
-            hitspIheResultNode = Validator.stringToDom(hitspIheResult);
-        } catch(SAXException ex) {
-            ex.printStackTrace();
-            return;
-        } catch(ParserConfigurationException ex) {
-            ex.printStackTrace();
-            return;
-        } catch(IOException ex) {
-            ex.printStackTrace();
-            return;
-        }
-
-        Node[] messageList = { ccdResultNode, cda4cdtResultNode, hitspIheResultNode };
-        Document result = Validator.generateReport(doc, errorHandler, messageList);
-        String output = Validator.xmlToString(result);
+    private static String computeOutputFilename(CommandLine line) {
         String outputfilename = null;
 
         if (line.hasOption("output")) {
             outputfilename = line.getOptionValue("output");
         } else {
             String date = Validator.createDateOfTest();
-            String time = Validator.createTimeOfTest().substring(0,5);
+            String time = Validator.createTimeOfTest().substring(0, 5);
             outputfilename = "validationResult" + date + time + ".xml";
         }
+        return outputfilename;
+    }
+
+    private static void writeOutput(String output, String outputfilename) {
         FileWriter outputStream = null;
         try {
             outputStream = new FileWriter(outputfilename);
             outputStream.write(output);
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
             return;
         } finally {
-            if(outputStream != null) {
+            if (outputStream != null) {
                 try {
                     outputStream.close();
-                } catch(IOException ex) {
+                } catch (IOException ex) {
                     ex.printStackTrace();
                     return;
                 }
@@ -153,14 +184,14 @@ public class Validator {
 
 
     public static Document generateReport(Document doc, SchemaValidationErrorHandler errorHandler,
-            Node[] messages) {
+                                          Node[] messages) {
 
         Document result = null;
         DocumentBuilder builder = null;
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             result = builder.newDocument();
-        } catch(ParserConfigurationException ex) {
+        } catch (ParserConfigurationException ex) {
             ex.printStackTrace();
             System.exit(1);
         }
@@ -179,8 +210,8 @@ public class Validator {
         report.appendChild(schemaErrorReport);
         //}
 
-        if(messages != null) {
-            for(int i = 0; i < messages.length; i++) {
+        if (messages != null) {
+            for (int i = 0; i < messages.length; i++) {
                 Node message = messages[i];
                 report.appendChild(result.importNode(message.getFirstChild(), true));
             }
@@ -188,11 +219,11 @@ public class Validator {
 
         Element testObject = result.createElement("TestObject");
 
-            if(doc != null) {
-                testObject.appendChild(result.importNode(doc.getDocumentElement(), true));
-            } else {
-                testObject.setTextContent("Error: Could not read file to generate test object.  Verify it is valid XML.");
-            }
+        if (doc != null) {
+            testObject.appendChild(result.importNode(doc.getDocumentElement(), true));
+        } else {
+            testObject.setTextContent("Error: Could not read file to generate test object.  Verify it is valid XML.");
+        }
         report.appendChild(testObject);
         return result;
     }
@@ -218,7 +249,7 @@ public class Validator {
         reportHeader.appendChild(timeOfTest);
 
         Element resultOfTest = result.createElement("ResultOfTest");
-        if(errorCountInt == 0)
+        if (errorCountInt == 0)
             resultOfTest.setTextContent("Passed");
         else
             resultOfTest.setTextContent("Failed");
@@ -236,9 +267,9 @@ public class Validator {
         Element result = doc.createElement("Results");
         result.setAttribute("severity", "schemaViolation");
         result.setAttribute("specification", "cda_r2");
-        if(errorHandler.hasErrors()) {
+        if (errorHandler.hasErrors()) {
             Iterator<String> it = errorHandler.getErrors().iterator();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 Element issue = doc.createElement("issue");
                 result.appendChild(issue);
 
@@ -254,10 +285,10 @@ public class Validator {
 
     public static int getMessageCount(Node[] messages) {
 
-        if(messages == null || messages.length == 0) return 0;
+        if (messages == null || messages.length == 0) return 0;
 
         int count = 0;
-        for(int i = 0; i < messages.length; i++) {
+        for (int i = 0; i < messages.length; i++) {
             Node message = messages[i];
             count += message.getFirstChild().getChildNodes().getLength();
         }
@@ -265,20 +296,24 @@ public class Validator {
     }
 
 
-    protected static Document validateWithSchema(File xml, SchemaValidationErrorHandler handler, String schemaLocation) {
+    protected static Document validateWithSchema(InputStream xml, SchemaValidationErrorHandler handler, Ruleset schemaLocation) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
         factory.setValidating(true);
         factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage",
                 "http://www.w3.org/2001/XMLSchema");
 
-        factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource",
-                schemaLocation);
+        try {
+            factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource",
+                    schemaLocation.getFile().getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         factory.setIgnoringElementContentWhitespace(true);
         DocumentBuilder builder = null;
         try {
             builder = factory.newDocumentBuilder();
-        } catch(ParserConfigurationException pce) {
+        } catch (ParserConfigurationException pce) {
             pce.printStackTrace();
             return null;
         }
@@ -287,11 +322,11 @@ public class Validator {
         Document doc = null;
         try {
             doc = builder.parse(xml);
-        } catch(SAXException e) {
+        } catch (SAXException e) {
             System.out.println("Message is not valid XML.");
             handler.addError("Message is not valid XML.", null);
             e.printStackTrace();
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("Message is not valid XML.  Possible empty message.");
             handler.addError("Message is not valid XML.  Possible empty message.", null);
             e.printStackTrace();
@@ -306,14 +341,19 @@ public class Validator {
     // generating it on every run.  That is left as an exercise for the
     // implementor.
 
-    public static String validateWithSchematron(Document xml, String schematronLocation, String skeletonLocation, String phase) {
+    public static String validateWithSchematron(Document xml, Ruleset schematronLocation, Ruleset skeletonLocation, String phase) {
 
         StringBuilder result = new StringBuilder();
-        File schematron = new File(schematronLocation);
-        File skeleton = new File(skeletonLocation);
-        Node schematronTransform = Validator.doTransform(schematron, skeleton, phase);       
-        result.append(Validator.doTransform(xml, schematronTransform));
-        return result.toString();
+        try {
+            File schematron = schematronLocation.getFile();
+            File skeleton = skeletonLocation.getFile();
+            Node schematronTransform = Validator.doTransform(schematron, skeleton, phase);
+            result.append(Validator.doTransform(xml, schematronTransform));
+            return result.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public static Node doTransform(File originalXml, File transform, String phase) {
@@ -327,10 +367,10 @@ public class Validator {
             Transformer transformer = Validator.getTransformerFactory().newTransformer(xsltSource);
             transformer.setParameter("phase", phase);
             transformer.transform(xmlSource, result);
-        } catch(TransformerConfigurationException tce) {
+        } catch (TransformerConfigurationException tce) {
             tce.printStackTrace();
             return null;
-        } catch(TransformerException te) {
+        } catch (TransformerException te) {
             te.printStackTrace();
             return null;
         } finally {
@@ -351,10 +391,10 @@ public class Validator {
 
             Transformer transformer = Validator.getTransformerFactory().newTransformer(xsltSource);
             transformer.transform(xmlSource, result);
-        } catch(TransformerConfigurationException tce) {
+        } catch (TransformerConfigurationException tce) {
             tce.printStackTrace();
             return null;
-        } catch(TransformerException te) {
+        } catch (TransformerException te) {
             te.printStackTrace();
             return null;
         } finally {
@@ -365,8 +405,17 @@ public class Validator {
 
 
     public static TransformerFactory getTransformerFactory() {
-        if(factory == null)
+        if (factory == null) {
             factory = TransformerFactory.newInstance();
+            factory.setURIResolver(new StandardURIResolver() {
+                @Override
+                public Source resolve(String href, String base) throws XPathException {
+                    InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(href);
+                    return resourceAsStream == null ?
+                            super.resolve(href, base) : new StreamSource(resourceAsStream);
+                }
+            });
+        }
         return factory;
     }
 
@@ -378,13 +427,13 @@ public class Validator {
         return builder.parse(new InputSource(new StringReader(xmlSource)));
     }
 
-    private static org.apache.commons.cli.Options setCliOptions() throws IllegalArgumentException {
+    private static Options setCliOptions() throws IllegalArgumentException {
         Option help = new Option("help", "display this message");
 
         Option input = OptionBuilder.withArgName("input").hasArg().withDescription("input filename").create("input");
         Option output = OptionBuilder.withArgName("output").hasArg().withDescription("output filename (without this option, the default filename is validationResult[timestamp].xml)").create("output");
 
-        org.apache.commons.cli.Options cliOptions = new org.apache.commons.cli.Options();
+        Options cliOptions = new Options();
 
         cliOptions.addOption(help);
         cliOptions.addOption(input);
@@ -392,6 +441,7 @@ public class Validator {
 
         return cliOptions;
     }
+
     public static String createDateOfTest() {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date();
@@ -414,7 +464,7 @@ public class Validator {
             Transformer transformer = Validator.getTransformerFactory().newTransformer();
             transformer.transform(source, result);
             return stringWriter.getBuffer().toString();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

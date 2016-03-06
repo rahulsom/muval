@@ -15,4 +15,61 @@ I am thankful for that.
 
 == Are we there yet?
 
-NO
+Kinda
+
+== Usage
+
+This supports the legacy CLI usage as well as programmatic usage
+
+=== CLI Usage
+
+Build the jar
+[source,bash]
+----
+./gradlew clean shadowJar
+----
+
+Then use it
+[source,bash]
+----
+java -jar libs/muval-1.0-SNAPSHOT-all.jar -input sampleCCD.xml -output result.xml
+----
+
+=== Programmatic usage
+
+Build the jar
+[source,java]
+----
+./gradlew publishToMavenLocal
+----
+
+Import the dependency using maven, gradle, sbt, leingen or ivy. Example below is for gradle
+[source,gradle]
+----
+dependencies {
+    // ...
+    compile 'com.github.rahulsom:muval:1.0-SNAPSHOT'
+}
+----
+
+Then use it in your code. This example is a Spock Specification. You could use it in test or production code.
+[source,groovy]
+----
+import spock.lang.Specification
+
+class ValidatorSpec extends Specification {
+    def "sample ccd should validate"() {
+        when: "I validate a CCD"
+        def nodes = Validator.validate(
+                this.class.getClassLoader().getResourceAsStream('SampleCCDDocument.xml'),
+                [Rulesets.ccd, Rulesets.cda4cdt, Rulesets.c32_v25_c83_20] as Ruleset[]
+        )
+
+        then: "There are 3 nodes"
+        nodes.size() == 3
+
+        and: "Some other assertion"
+        // more assertions
+    }
+}
+----
