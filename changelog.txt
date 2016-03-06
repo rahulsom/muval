@@ -1,0 +1,28 @@
+changelog.txt
+
+Release date: 2010/10/13
+
+   * A relaxation of the rules for IHE Simple Observation because of an incompatibility with HITSP Advance Directive.
+
+   * A relaxation of the rules for HITSP Data Element 8.14 Coded Brand Name because of an ambiguity involving a translation used to describe a Coded Brand Name and a translation used as an alternative code system for Data Element 8.13 Coded Product Name.
+
+----------
+
+Release date: 2010/10/01
+
+  * The only change was to correct a bug in the schematron check for a Result section.  Previously it had been possible to have a procedure entry and a result entry in different sections.  Now the schematron check verifies that a Result section contains both the required entries.
+
+----------
+
+Release date: 2010/09/23
+
+   * Correction on the error messages for Information Source (it had been referring to the wrong table in HITSP/C83).
+
+   * A relaxation of the R2 requirement on National Provider ID in the Healthcare Provider module.
+
+   * A correction on the template ID for the Result section.
+
+   * Correction of a false positive that was being fired for a CCD Encounter Activity.
+
+
+

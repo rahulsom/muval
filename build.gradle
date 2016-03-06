@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+mainClassName = "gov.nist.mu.validation.Validator"
+
+repositories {
+    jcenter()
+}
+
+Map<String, String> xmlbeans(String subproject = null) {
+    [
+            group  : 'org.apache.xmlbeans',
+            name   : subproject ? "xmlbeans-$subproject" : 'xmlbeans',
+            version: '2.4.0'
+    ]
+}
+
+Map<String, String> saxon(String subproject = null) {
+    [
+            group     : 'net.sourceforge.saxon',
+            name      : 'saxon',
+            version   : '9.1.0.8',
+            classifier: subproject
+    ]
+}
+
+dependencies {
+    compile 'commons-cli:commons-cli:1.0'
+    compile 'javax.xml.bind:jsr173_api:1.0'
+    compile 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
+
+    compile saxon()
+    compile saxon('dom')
+    compile saxon('dom4j')
+    compile saxon('jdom')
+    compile saxon('s9api')
+    compile saxon('sql')
+    compile saxon('xom')
+    compile saxon('xqj')
+
+    compile xmlbeans()
+    compile(xmlbeans('xpath')) {
+        exclude group: 'net.sf.saxon'
+    }
+    compile xmlbeans('qname')
+    compile xmlbeans('xmlpublic')
+}
