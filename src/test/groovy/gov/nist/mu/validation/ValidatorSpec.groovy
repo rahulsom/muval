@@ -15,6 +15,7 @@ class ValidatorSpec extends Specification {
         nodes.size() == 3
 
         and: "Some other assertion"
+        nodes*.issues.flatten().findAll().size() == 54
 // end::sampletest[]
     }
 }

@@ -23,6 +23,9 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -84,16 +87,23 @@ public class Validator {
         writeOutput(output, outputfilename);
     }
 
-    public static Node[] validate(InputStream file, Ruleset[] rulesets) {
+    public static Results[] validate(InputStream file, Ruleset[] rulesets) {
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
         Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
-        String[] results = new String[rulesets.length];
+        Results[] results = new Results[rulesets.length];
         for (int i = 0; i < rulesets.length; i++) {
-            results[i] = Validator.validateWithSchematron(doc, rulesets[i], skeletonLocation, "errors");
+            String result = Validator.validateWithSchematron(doc, rulesets[i], skeletonLocation, "errors");
+            try {
+                JAXBContext jaxbContext = JAXBContext.newInstance(Results.class);
+                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+                Object unmarshal = unmarshaller.unmarshal(new ByteArrayInputStream(result.getBytes()));
+                results[i] = (Results) unmarshal;
+            } catch (JAXBException e) {
+                e.printStackTrace();
+            }
         }
 
-        Node[] messageList = getResultNodes(results);
-        return messageList;
+        return results;
     }
 
     private static Node[] getResultNodes(String[] results) {
