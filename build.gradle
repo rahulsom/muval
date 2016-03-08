@@ -63,13 +63,13 @@ dependencies {
 }
 
 def rulesets = [
-        [name: 'Ccd', dir: 'ccd', file: 'ccd.sch'],
-        [name: 'Cda4Cdt', dir: 'cda4cdt', file: 'HandP.IHE.PCC.sch'],
-        [name: 'C32_V25_C83_20', dir: 'c32_v_2_5_c83_2_0', file: 'HITSP_C32.sch'],
-        [name: 'Hl7Phmr', dir: 'HL7_PHMR_20120427', file: 'PHMR.sch'],
-        [name: 'Hl7Qrda', dir: 'HL7_QRDA', file: 'qrdaCat1.sch'],
-        [name: 'Hl7QrdaBmi', dir: 'HL7_QRDA', file: 'bmi.sch'],
-        [name: 'IheBppc', dir: 'IHE_BPPC_2010Dec10', file: 'BPPC.sch'],
+        [name: 'Ccd',            dir: 'ccd',                file: 'ccd.sch'          ],
+        [name: 'Cda4Cdt',        dir: 'cda4cdt',            file: 'HandP.IHE.PCC.sch'],
+        [name: 'C32_V25_C83_20', dir: 'c32_v_2_5_c83_2_0',  file: 'HITSP_C32.sch'    ],
+        [name: 'Hl7Phmr',        dir: 'HL7_PHMR_20120427',  file: 'PHMR.sch'         ],
+        [name: 'Hl7Qrda',        dir: 'HL7_QRDA',           file: 'qrdaCat1.sch'     ],
+        [name: 'Hl7QrdaBmi',     dir: 'HL7_QRDA',           file: 'bmi.sch'          ],
+        [name: 'IheBppc',        dir: 'IHE_BPPC_2010Dec10', file: 'BPPC.sch'         ],
 ]
 rulesets.each { ruleset ->
     task "create_${ruleset.name}"(type: Zip) {
