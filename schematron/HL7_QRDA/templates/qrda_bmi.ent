@@ -1,0 +1,264 @@
+<!--  HL7 QRDA BMI (Section 6) -->
+
+<!-- errors -->
+  <pattern id="p-qrda_bmi-errors">
+    <title>HL7 QRDA BMI (Section 6) - errors validation phase</title>
+    <rule context='/'>
+
+    <assert test='count(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime) = 1'>
+       Error: CONF-QRDA_BMI-1: Category I BMI QRDA report SHALL contain exactly one
+       ClinicalDocument/recordTarget/patientRole/patient/birthTime.
+    </assert>
+
+    <assert test='string-length(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value) >= 8'>
+       Error: CONF-QRDA_BMI-2: The birthTime SHALL be precise to the day and MAY be precise to
+       the second.
+    </assert>
+
+    <assert test='.//cda:section/cda:templateId[@root="2.16.840.1.113883.10.20.12.2"]'>
+       Error: CONF-QRDA_BMI-3: A Body Mass Index QRDA SHALL contain a non-nested top-level
+       Measure section containing information about the Body Mass Index
+       measure.
+    </assert>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.12.2"]'>
+    <assert test="contains(translate(cda:title,'QWERTYUIOPASDFGHJKLZXCVBNM','qwertyuiopasdfghjklzxcvbnm'),'measure: body mass index percentile')">
+       Error: CONF-QRDA_BMI-5: The Body Mass Index Measure section SHALL contain exactly one
+       section/title valued with a case-insensitive, text string containing,
+       "Measure: Body Mass Index Percentile".
+    </assert>
+
+    <assert test='cda:entry/cda:act/cda:code[@code="BMIV1-X" and @codeSystem="2.16.840.1.113883.6.1"]'>
+       Error: CONF-QRDA_BMI-6: The value for act/code SHALL be BMIV1-X Body Mass Index,
+        V1 2.16.840.1.113883.6.1 LOINC STATIC.
+    </assert>
+    </rule>
+
+<!-- This context comes from the definition of Reporting Parameters Section
+
+CONF-QRDA-II-24: The value for section/code SHALL be 55187-9 Reporting
+        Parameters 2.16.840.1.113883.6.1 LOINC STATIC.
+
+ -->
+
+    <rule context='*[cda:code/@code="55187-9" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]'>
+    <assert test='string-length(cda:entry/cda:act[cda:code[@code="252116004" and @codeSystem="2.16.840.1.113883.6.96"]]/cda:effectiveTime/cda:low/@value) >= 8 and
+                  string-length(cda:entry/cda:act[cda:code[@code="252116004" and @codeSystem="2.16.840.1.113883.6.96"]]/cda:effectiveTime/cda:high/@value) >= 8'>
+       Error: CONF-QRDA_BMI-8: The reporting time period in a Reporting Period Observation SHALL
+       be represented with an effectiveTime/low element with a value of the first
+       day of the month combined with a high element with a value of the last day
+       of the month OR the reporting time period in a Reporting Period Observation
+       SHALL be represented with an effectiveTime/low element with a value of
+       the first day of the quarter combined with a high element with a value of
+       the last day of the quarter representing respectively the first and last days of
+       the period reported.
+    </assert>
+    </rule>
+
+<!-- This context comes from the definition of Patient Data Section
+
+CONF-QRDA-I-56: The value for section/code SHALL be 55188-7 Patient Data
+        2.16.840.1.113883.6.1 LOINC STATIC.
+
+-->
+    <rule context='*[cda:code/@code="55188-7" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]'>
+    <assert test='cda:entry/cda:encounter'>
+       Error: CONF-QRDA_BMI-9: The Body Mass Index QRDA Patient Data Section encounter
+       information SHALL be represented with encounter.
+    </assert>
+    <assert test='cda:entry/cda:encounter/@classCode="ENC"'>
+       Error: CONF-QRDA_BMI-11: The value for encounter/@classCode in an Encounter activity
+        SHALL be ENC 2.16.840.1.113883.5.6 ActClass STATIC.
+    </assert>
+    <assert test='cda:entry/cda:encounter/@moodCode="EVN"'>
+       Error: CONF-QRDA_BMI-12: The value for encounter/@moodCode in an Encounter activity
+        SHALL be EVN 2.16.840.1.113883.5.1001 ActMood STATIC.
+    </assert>
+    <assert test='count(cda:entry/cda:encounter/cda:code) = 1'>
+       Error: CONF-QRDA_BMI-14: An Encounter activity SHALL contain exactly one encounter/code.
+    </assert>
+    <assert test='cda:entry/cda:encounter/cda:code/@codeSystem="2.16.840.1.113883.5.4" and (
+                  cda:entry/cda:encounter/cda:code/@code="AMB" or
+                  cda:entry/cda:encounter/cda:code/@code="EMER" or
+                  cda:entry/cda:encounter/cda:code/@code="HH" or
+                  cda:entry/cda:encounter/cda:code/@code="IMP" or
+                  cda:entry/cda:encounter/cda:code/@code="SS")'>
+       Error: CONF-QRDA_BMI-15: The value for encounter/code in the Encounter activity SHALL be 
+       selected from Value Set BMIPhysicalEncounter 2.16.840.1.113883.11.20.2.1 STATIC 20090215.
+    </assert>
+    <assert test='count(cda:entry/cda:encounter/cda:effectiveTime) = 1'>
+       Error: CONF-QRDA_BMI-16: An Encounter activity SHALL contain exactly one
+       encounter/effectiveTime to indicate date and time of the encounter.
+    </assert>
+    <assert test='string-length(cda:entry/cda:encounter/cda:effectiveTime/@value) &gt;= 8'>
+       Error: CONF-QRDA_BMI-17: The encounter/effectiveTime SHALL be accurate to the day.
+    </assert>
+    <assert test='cda:entry/cda:encounter/cda:entryRelationship[@typeCode="COMP"]/cda:organizer'>
+       Error: CONF-QRDA_BMI-18: The Encounter activity SHALL contain exactly one
+       entryRelationship where the value of @typeCode SHALL be COMP, whose
+       target act is a principal diagnosis organizer (as described in Section 6.6.3.2
+       Clinical Statement Conformance Principle Diagnosis).
+    </assert>
+    </rule>
+
+<!-- Body Mass Index Percentile -->
+
+    <rule context='*[cda:code/@code="55188-7" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]/cda:entry/cda:observation'>
+
+    <assert test='cda:statusCode'>
+       Error: CONF-QRDA_BMI-36: A Body Mass Index Percentile Observation SHALL contain exactly
+       one observation/statusCode.
+    </assert>
+    <assert test='cda:statusCode[@code="completed"]'>
+       Error: CONF-QRDA_BMI-37: The value of observation/statusCode SHALL be completed.
+    </assert>
+    <assert test='cda:effectiveTime'>
+       Error: CONF-QRDA_BMI-38: A Body Mass Index Percentile Observation SHALL contain exactly
+       one observation/effectiveTime, which represents the time the percentile
+       was measured.
+    </assert>
+    <assert test='string-length(cda:effectiveTime/@value) &gt;= 8'>
+       Error: CONF-QRDA_BMI-39: The observation/effective Time SHALL be accurate to the day
+       and MAY be accurate to the second.
+    </assert>
+    <assert test='cda:code[@code="1111111" and @codeSystem="2.16.840.1.113883.6.96"]'>
+       Error: CONF-QRDA_BMI-40: A Body Mass Percentile Observation SHALL contain exactly one
+       observation/code where the value is TempSNOMEDcode 1111111 Body Mass
+       Percentile 2.16.840.1.113883.6.96 SNOMED-CT STATIC.
+    </assert>
+    <assert test='cda:value[@xsi:type="PQ"]'>
+       Error: CONF-QRDA_BMI-41: The value for value/xsi:type SHALL be PQ.
+    </assert>
+    <assert test='cda:value[@unit = "%"]'>
+       Error: CONF-QRDA_BMI-42: The observation/value SHALL be expressed using a valid UCUM
+       Physical Quantity Unit = "%" (percent).
+    </assert>
+    </rule>
+
+<!-- Rule context comes from above Patient Data context plus XPath to bring us down to Principle Diagnosis Organizer -->
+
+    <rule context='*[cda:code/@code="55188-7" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]/cda:entry/cda:encounter/cda:entryRelationship[@typeCode="COMP"]/cda:organizer'>
+    <assert test='@classCode="CLUSTER"'>
+       Error: CONF-QRDA_BMI-20: The value for organizer/@classCode in a Principle Diagnosis
+       Organizer SHALL be CLUSTER 2.16.840.1.113883.5.6 ActClass STATIC.
+    </assert>
+    <assert test='@moodCode="EVN"'>
+       Error: CONF-QRDA_BMI-21: The value for organizer/@moodCode in a Principle Diagnosis
+       Organizer SHALL be EVN 2.16.840.1.113883.5.1001 ActMood STATIC.
+    </assert>
+    <assert test='cda:code[@code = "8319008" and @codeSystem="2.16.840.1.113883.6.96"]'>
+       Error: CONF-QRDA_BMI-22: The value for organizer/code SHALL be 8319008 Principle
+       diagnosis 2.16.840.1.113883.6.96 SNOMED-CT STATIC.
+    </assert>
+    <assert test='count(cda:statusCode) = 1'>
+       Error: CONF-QRDA_BMI-23: A Principle Diagnosis Organizer SHALL contain exactly one
+       organizer/statusCode.
+    </assert>
+    <assert test='cda:statusCode[@code = "completed"]'>
+       Error: CONF-QRDA_BMI-24: The value for organizer/statusCode in a Principle Diagnosis
+       Organizer SHALL be completed 2.16.840.1.113883.5.14 ActStatus STATIC.
+    </assert>
+    <assert test='cda:component'>
+       Error: CONF-QRDA_BMI-25: A Principle Diagnosis Organizer SHALL contain one or more 
+       organizer/component.
+    </assert>
+    <assert test='cda:component/cda:observation[@classCode = "OBS" and @moodCode="EVN"]/cda:code[@code = "ASSERTION" and @codeSystem = "2.16.840.1.113883.5.4"]'>
+       Error: CONF-QRDA_BMI-26: The target of the Principle Diagnosis Organizer
+       organizer/component relationship SHALL be a Principle Diagnosis
+       Observation.
+       CONF-QRDA_BMI-27: The Principle Diagnosis Observation SHALL be represented with an
+       observation element where the value of @classCode is OBS and the value
+       of @moodCode is EVN.
+       CONF-QRDA_BMI-28: The value for code/@code SHALL be ASSERTION and
+       code/@codeSystem SHALL be 2.16.840.1.113883.5.4 HL7 ActCode
+       Complete STATIC.
+    </assert>
+    </rule>
+<!-- Rule context comes from above context plus XPath to bring us down to Principle Diagnosis Observation -->
+
+    <rule context='*[cda:code/@code="55188-7" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]/cda:entry/cda:encounter/cda:entryRelationship[@typeCode="COMP"]/cda:organizer/cda:component/cda:observation[@classCode = "OBS" and @moodCode="EVN"][cda:code[@code = "ASSERTION" and @codeSystem = "2.16.840.1.113883.5.4"]]'>
+    <assert test='cda:statusCode[@code="completed"]'>
+       Error: CONF-QRDA_BMI-29: A statusCode element SHALL be present where the value of @code
+       is completed.
+    </assert>
+    <assert test='cda:value[@xsi:type = "CD"]'>
+       Error: CONF-QRDA_BMI-30: The value for value/@xsi:type SHALL be CD.
+    </assert>
+<!--
+
+This rule was from the April 2009 version...  Removed?
+
+    <assert test='cda:value[@codeSystem="2.16.840.1.113883.6.2" or @codeSystem="2.16.840.1.113883.6.96"]'>
+       Error: CONF-QRDA_BMI-30: The value for value/@code SHALL be selected from
+       2.16.840.1.113883.6.2 ICD9 CM Diagnoses or
+       2.16.840.1.113883.6.96 SNOMED-CT.
+    </assert>
+-->
+
+    <assert test='cda:value[@code="102506008" or @codeSystem="2.16.840.1.113883.6.96"]'>
+       Error: CONF-QRDA_BMI-31: The value for value/@code shall be "102506008" (Well Child), from 
+       codeSystem 2.16.840.1.113883.6.96 (SNOMED-CT).
+    </assert>
+
+    </rule>
+
+  </pattern>
+
+  <pattern id="p-qrda_bmi-warnings">
+    <title>HL7 QRDA BMI (Section 6) - warning validation phase</title>
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.1"]'>
+
+    </rule>
+-->
+    <rule context='*[cda:code/@code="55188-7" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]'>
+    <assert test='count(cda:entry/cda:encounter/cda:id) &gt;= 1'>
+       Warning: CONF-QRDA_BMI-13: An Encounter activity SHOULD contain at least one encounter/id.
+    </assert>
+    <assert test='cda:entry/cda:observation/cda:id'>
+       Warning: CONF-QRDA_BMI-35: A Body Mass Index Percentile Observation SHOULD contain at
+       least one observation/id.
+    </assert>
+
+    </rule>
+
+    <rule context='*[cda:code/@code="55188-7" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]'>
+    <assert test='cda:entry/cda:observation'>
+       Warning: CONF-QRDA_BMI-32: The Body Mass Index Percentile QRDA Patient Data section SHOULD
+       contain exactly one Body Mass Index Percentile Observation.
+    </assert>
+    </rule>
+
+  </pattern>
+
+  <pattern id="p-qrda_bmi-notes">
+    <title>HL7 QRDA BMI (Section 6) - note validation phase</title>
+    <rule context='/'>
+
+    <assert test='string-length(/cda:ClinicalDocument/cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime/@value) >= 14'>
+       Note: CONF-QRDA_BMI-2: The birthTime [...] MAY be precise to the second.
+    </assert>
+    </rule>
+    <rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.12.2"]'>
+
+    <assert test="contains(translate(cda:entry/cda:act/cda:text,'QWERTYUIOPASDFGHJKLZXCVBNM','qwertyuiopasdfghjklzxcvbnm'),'Children ages 2-18 who had an encounter in the measurement period AND whose weight was classified based on CDC BMI percentile for age and gender.')">
+       Note: CONF-QRDA_BMI-7: The value for act/text element MAY contain a case-insensitive,
+       text string containing the description of the measure, "Children ages 2-18
+       who had an encounter in the measurement period AND whose
+       weight was classified based on CDC BMI percentile for age and
+       gender."
+    </assert>
+    </rule>
+
+    <rule context='*[cda:code/@code="55188-7" and cda:code/@codeSystem="2.16.840.1.113883.6.1"]'>
+    <assert test='string-length(cda:entry/cda:encounter/cda:effectiveTime/@value) &gt;= 14'>
+       Note: CONF-QRDA_BMI-17: The encounter/effectiveTime ... MAY be accurate to the second.
+    </assert>
+    <assert test='string-length(cda:entry/cda:observation/cda:effectiveTime/@value) &gt;= 14'>
+       Note: CONF-QRDA_BMI-39: The observation/effective Time ... MAY be accurate to the second.
+    </assert>
+
+    </rule>
+  </pattern>
+  
