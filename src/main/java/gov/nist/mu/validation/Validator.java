@@ -65,7 +65,7 @@ public class Validator {
             return;
         }
 
-        Ruleset[] rulesets = {Rulesets.ccd, Rulesets.cda4cdt, Rulesets.c32_v25_c83_20};
+        Ruleset[] rulesets = {Rulesets.Ccd, Rulesets.Cda4Cdt, Rulesets.C32_V25_C83_20};
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
 
         Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
@@ -87,7 +87,7 @@ public class Validator {
         writeOutput(output, outputfilename);
     }
 
-    public static Results[] validate(InputStream file, Ruleset[] rulesets) {
+    public static Results[] validate(InputStream file, Ruleset... rulesets) {
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
         Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
         Results[] results = new Results[rulesets.length];

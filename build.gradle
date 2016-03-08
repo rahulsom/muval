@@ -30,20 +30,11 @@ repositories {
 }
 
 Map<String, String> xmlbeans(String subproject = null) {
-    [
-            group  : 'org.apache.xmlbeans',
-            name   : subproject ? "xmlbeans-$subproject" : 'xmlbeans',
-            version: '2.4.0'
-    ]
+    [group: 'org.apache.xmlbeans', name: subproject ? "xmlbeans-$subproject" : 'xmlbeans', version: '2.4.0']
 }
 
 Map<String, String> saxon(String subproject = null) {
-    [
-            group     : 'net.sourceforge.saxon',
-            name      : 'saxon',
-            version   : '9.1.0.8',
-            classifier: subproject
-    ]
+    [group: 'net.sourceforge.saxon', name: 'saxon', version: '9.1.0.8', classifier: subproject]
 }
 
 dependencies {
@@ -72,9 +63,9 @@ dependencies {
 }
 
 def rulesets = [
-        [name: 'ccd', dir: 'ccd', file: 'ccd.sch'],
-        [name: 'cda4cdt', dir: 'cda4cdt', file: 'HandP.IHE.PCC.sch'],
-        [name: 'c32_v25_c83_20', dir: 'c32_v_2_5_c83_2_0', file: 'HITSP_C32.sch'],
+        [name: 'Ccd', dir: 'ccd', file: 'ccd.sch'],
+        [name: 'Cda4Cdt', dir: 'cda4cdt', file: 'HandP.IHE.PCC.sch'],
+        [name: 'C32_V25_C83_20', dir: 'c32_v_2_5_c83_2_0', file: 'HITSP_C32.sch'],
 ]
 rulesets.each { ruleset ->
     task "create_${ruleset.name}"(type: Zip) {
