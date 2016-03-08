@@ -1,0 +1,40 @@
+<!-- Schematron rules for Patient Privacy Consent Acknowledgement Document -->
+<!-- Template 1.3.6.1.4.1.19376.1.5.3.1.1.7 - With no Scanned Document Part -->
+            
+ <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.7-errors">
+ 
+   <rule context="/">
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.7"]'>
+      Error: The Basic Patient Privacy Consent Acknowlegement Document requires template ID (1.3.6.1.4.1.19376.1.5.3.1.1.7).
+    </assert>
+      <assert test='documentationOf'>
+     Error: A Patient Privacy Consent Acknowledgement Document (1.3.6.1.4.1.19376.1.5.3.1.1.7) shall have a ClinicalDocument/documentationOf element describing the serviceEvent.
+   </assert>  
+    </rule>
+    
+  <rule context='*[cda:templateId/@root = "1.3.6.1.4.1.19376.1.5.3.1.1.7"]'>
+   <assert test='cda:templateId/@root = "1.3.6.1.4.1.19376.1.5.3.1.1.1"'>
+     Error: A Basic Patient Privacy Consent Acknowlegement Document (1.3.6.1.4.1.19376.1.5.3.1.1.7) is a medical document and must include the templateId (1.3.6.1.4.1.19376.1.5.3.1.1.1) for medical documents.
+   </assert>
+   <assert test='self::cda:ClinicalDocument'>
+     Error: The template id 1.3.6.1.4.1.19376.1.5.3.1.1.7) for Patient Privacy Consent Acknowledgement Document is a child element of ClinicalDocument.
+   </assert>
+   <assert test='cda:code/@code="57016-8"'>
+     Error: In the Patient Privacy Consent Acknowledgement Document (1.3.6.1.4.1.19376.1.5.3.1.1.7) the ClinicalDocument/code/@code shall equal the LOINC code 57016-8.
+   </assert>  
+   <assert test='cda:code/@codeSystem="2.16.840.1.113883.6.1"'>
+     Error: A Patient Privacy Consent Acknowledgement Document (1.3.6.1.4.1.19376.1.5.3.1.1.7) the ClinicalDocument/code/@codeSystem shall be 2.16.840.1.113883.6.1 for LOINC.
+   </assert>   
+  </rule>
+  
+ <rule context='cda:ClinicalDocument/cda:documentationOf'>
+    <assert test='@typeCode="DOC"'>
+      Error: A Patient Privacy Consent Acknowledgement Document (1.3.6.1.4.1.19376.1.5.3.1.1.7) shall have a ClinicalDocument/documentationOf element with typeCode = DOC.
+   </assert>  
+   
+   <assert test='cda:serviceEvent/cda:templateId/@root ="1.3.6.1.4.1.19376.1.5.3.1.2.6"'>
+     Error: A Patient Privacy Consent Acknowledgement Document (1.3.6.1.4.1.19376.1.5.3.1.1.7) must document at least one consent service event. The ClinicalDocument/documentationOf/serviceEvent/templateId/@root='1.3.6.1.4.1.19376.1.5.3.1.2.6'.
+   </assert>
+   </rule>
+   
+</pattern>
