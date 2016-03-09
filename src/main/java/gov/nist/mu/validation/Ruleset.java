@@ -8,10 +8,12 @@ import java.util.zip.ZipInputStream;
 public class Ruleset {
     private final String resource;
     private final String fileName;
+    private final String type;
 
-    public Ruleset(String resourceName, String filename) {
+    public Ruleset(String resourceName, String filename, String type) {
         this.resource = resourceName;
         this.fileName = filename;
+        this.type = type;
     }
 
     private File destFile = null;
@@ -52,7 +54,6 @@ public class Ruleset {
         bos.close();
     }
 
-    public static Ruleset stylesheet = new Ruleset("stylesheet", "schematron-Validator-report.xsl");
-    public static Ruleset schema = new Ruleset("schema", "infrastructure/cda/C32_CDA.xsd");
+    public static Ruleset stylesheet = new Ruleset("stylesheet", "schematron-Validator-report.xsl", "stylesheet");
 
 }
