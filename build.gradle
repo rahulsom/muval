@@ -4,10 +4,13 @@ plugins {
     id 'application'
     id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id "com.jfrog.bintray" version "1.6"
+    id "nebula.source-jar" version "4.4.4"
+    id "nebula.javadoc-jar" version "4.4.4"
 }
 
 group = 'com.github.rahulsom' // This could become 'gov.nist'
-version = '1.0-SNAPSHOT'
+version = '0.1'
 
 mainClassName = "gov.nist.mu.validation.Validator"
 
@@ -100,9 +103,18 @@ compileJava.dependsOn 'createStylesheet', 'createCachefile'
 
 publishing {
     publications {
-        shadow(MavenPublication) {
+        mavenJava(MavenPublication) {
             from components.java
             artifact shadowJar
+        }
+    }
+    repositories {
+        maven {
+            url "https://api.bintray.com/maven/rahulsom/m2/muval"
+            credentials {
+                username = System.getenv('BINTRAY_USER')
+                password = System.getenv('BINTRAY_KEY')
+            }
         }
     }
 }
