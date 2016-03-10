@@ -1,0 +1,7 @@
+sudo: false
+language: groovy
+# script: ./travis.sh
+cache:
+  directories:
+  - "$HOME/.grails/wrapper"
+  - "$HOME/.m2"
