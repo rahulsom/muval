@@ -26,9 +26,6 @@ class FileCache {
     private FileCache() {
         try {
             destFile = Files.createTempDirectory("muval").toFile();
-            final File stylesheetDir = new File(destFile, "stylesheet");
-            stylesheetDir.mkdirs();
-            extract("stylesheet", stylesheetDir);
             extract("cachefile", destFile);
         } catch (IOException e) {
             e.printStackTrace();

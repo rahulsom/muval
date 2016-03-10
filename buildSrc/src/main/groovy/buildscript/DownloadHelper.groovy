@@ -16,6 +16,7 @@ import com.ning.http.client.*
 class DownloadHelper {
 
     public static final String ANSI_CL = "\u001B[0K";
+    public static final String NIST_HOME = 'http://cda-validation.nist.gov:11080/'
 
     JAXBContext context = JAXBContext.newInstance(DocumentTypes)
     Unmarshaller unmarshaller = context.createUnmarshaller()
@@ -37,8 +38,8 @@ class DownloadHelper {
     ExecutorService filePool = Executors.newSingleThreadExecutor()
 
     String massageUrl(String url) {
-        url.replace('http://localhost', 'http://cda-validation.nist.gov').
-                replace('cda-validation.nist.gov:11079', 'cda-validation.nist.gov:11080')
+        url.replace('http://localhost:11080/',  NIST_HOME).
+                replace('http://cda-validation.nist.gov:11079/', NIST_HOME)
     }
 
     synchronized void report() {
@@ -80,7 +81,7 @@ class DownloadHelper {
                         @Override
                         public File onCompleted(Response response) throws Exception {
                             def body = massageUrl(response.responseBody)
-                            outFile.text = body.replace('http://cda-validation.nist.gov:11080/', '').
+                            outFile.text = body.replace(NIST_HOME, '').
                                     replace(urlParts[3..-2].join('/') + '/', '')
                             fetchDependencies(outFile.text, url, root)
                             receivedResponses.incrementAndGet()
@@ -122,7 +123,7 @@ class DownloadHelper {
         body.findAll($/document\(['"](.*)['"]\)/$).each { match ->
             def newUrl = (match =~ $/document\(['"](.+)['"]\)/$)[0][1] as String
                 def calculated = newUrl.contains('/') ?
-                        ('http://cda-validation.nist.gov:11080/' + newUrl):
+                        (NIST_HOME + newUrl):
                         computeUrl(newUrl, url)
             printlnclr "Will request $calculated"
             curl calculated, root
@@ -177,20 +178,31 @@ class DownloadHelper {
         def docTypes = unmarshaller.unmarshal(docTypesFile) as DocumentTypes
         def srcDir = new File(buildDir, 'generated/src/java/gov/nist/mu/validation')
         srcDir.mkdirs()
+
+        def downloadRoot = new File(buildDir, "generated/prebundle")
+
+        curl "${NIST_HOME}hitspValidation/schematron/skeleton1-5.xsl", downloadRoot
+        curl "${NIST_HOME}hitspValidation/schematron/schematron-Validator-report.xsl", downloadRoot
+
         def sb = new StringBuilder()
         sb.append """\
             package gov.nist.mu.validation;
 
             class Rulesets {
+
+                /**
+                 * Stylesheet for schematron
+                 */
+                public static final Ruleset stylesheet = new Ruleset("hitspValidation/schematron", "schematron-Validator-report.xsl", "stylesheet");
             """.stripIndent()
 
         docTypes.documentType.each { DocumentType documentType ->
-            def constName = StringUtils.capitalise(documentType.id)
+            def constName = StringUtils.capitalize(documentType.id)
             def url = massageUrl(documentType.validation.url.trim())
             def urlParts = url.split('/')
 
             sb.append getConst(documentType, constName, urlParts)
-            curl(url, new File(buildDir, "generated/prebundle"))
+            curl(url, downloadRoot)
         }
 
         sb.append "}"

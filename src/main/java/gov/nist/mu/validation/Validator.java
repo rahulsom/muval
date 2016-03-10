@@ -33,14 +33,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
-import java.util.function.BiPredicate;
-import java.util.stream.Stream;
 
 /**
  * @author andrew.mccaffrey
@@ -48,7 +43,7 @@ import java.util.stream.Stream;
 public class Validator {
 
     private static final Ruleset schemaLocation = Rulesets.Cdar2c32;
-    private static final Ruleset skeletonLocation = Ruleset.stylesheet;
+    private static final Ruleset skeletonLocation = Rulesets.stylesheet;
     private static TransformerFactory factory = null;
 
 
@@ -92,28 +87,28 @@ public class Validator {
     private static final String[][] phases =
             {{"error", "errors"}, {"manual"}, {"note", "notes"}, {"violation"}, {"warning", "warnings"}};
 
-    public static Results[] validate(Ruleset schema, InputStream file, Ruleset... schematrons) {
+    public static Results validate(Ruleset schema, InputStream file, Ruleset... schematrons) {
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
         Document doc = Validator.validateWithSchema(file, errorHandler, schema);
-        Results[] results = new Results[schematrons.length * phases.length];
-        for (int i = 0; i < schematrons.length; i++) {
-            for (int j = 0; j < phases.length; j++) {
-                String result = Validator.validateWithSchematron(doc, schematrons[i], skeletonLocation, phases[j]);
-                System.out.println(result);
+        Results retval = new Results();
+        for (Ruleset schematron : schematrons) {
+            for (String[] phase : phases) {
+                String result = Validator.validateWithSchematron(doc, schematron, skeletonLocation, phase);
                 try {
                     JAXBContext jaxbContext = JAXBContext.newInstance(Results.class);
                     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
                     Object unmarshal = unmarshaller.unmarshal(
                             new ByteArrayInputStream(result != null ? result.getBytes() : new byte[0])
                     );
-                    results[i * phases.length + j] = (Results) unmarshal;
+                    Results resultsFromIteration = (Results) unmarshal;
+                    retval.getValidationResults().addAll(resultsFromIteration.getValidationResults());
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
             }
         }
 
-        return results;
+        return retval;
     }
 
     private static Node[] getResultNodes(String[] results) {
@@ -425,19 +420,26 @@ public class Validator {
             factory.setURIResolver((href, base) -> {
 
                 final File cacheLocation = FileCache.getInstance().getDestFile();
-                final File targetFile = new File(cacheLocation, href);
-                if (targetFile.exists()) {
-                    System.out.println("Using file resource");
-                    return new StreamSource(targetFile);
+                String[] paths = {
+                        href,
+                        "hitspValidation/schematron/" + href,
+                        "hitspValidation/schematron/nhin/summaryPatientRecord" + href
+                };
+                for (String path : paths) {
+                    final File targetFile = new File(cacheLocation, path);
+                    if (targetFile.exists()) {
+                        System.out.println("Using file resource - " + href + " as " + path);
+                        return new StreamSource(targetFile);
+                    }
                 }
 
                 InputStream resourceAsStream = Validator.class.getClassLoader().getResourceAsStream(href);
                 if (resourceAsStream != null) {
-                    System.out.println("Using classpath resource");
+                    System.out.println("Using classpath resource - " + href);
                     return new StreamSource(resourceAsStream);
                 }
 
-                System.out.println("Using fallback resource");
+                System.out.println("Using fallback resource - " + href);
                 return oldResolver.resolve(href, base);
             });
         }

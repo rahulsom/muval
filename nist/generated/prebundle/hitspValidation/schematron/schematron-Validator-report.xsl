@@ -49,19 +49,7 @@
    <xsl:param name="title" />
    <xsl:param name="icon" />
    <xsl:param name="contents" />
-<!--
     <axsl:element name="Results" namespace="urn:gov:nist:cdaGuideValidator">
--->
-    <axsl:element name="Results">
-            <axsl:attribute name="severity">
-               <xsl:value-of select="$phase"/>
-            </axsl:attribute>
-            <axsl:attribute name="specification">
-               <xsl:value-of select="//*[local-name()='title']"/>
-            </axsl:attribute>
-            <axsl:attribute name="severity">
-               <xsl:value-of select="$phase"/>
-            </axsl:attribute>
             <xsl:copy-of select="$contents" />
    </axsl:element>  
 </xsl:template>
@@ -73,11 +61,12 @@
    <xsl:param name="role" />
    <xsl:param name="diagnostics" />
    <xsl:param name="test"/>
-  
-<!-- 
+   
     <axsl:element name="validationResult">
--->
        <axsl:element name="issue">
+          <axsl:attribute name="severity">
+             <xsl:value-of select="$phase"/>
+          </axsl:attribute>
            <axsl:element name="message">
                  <xsl:apply-templates mode="text"/>
            </axsl:element>
@@ -87,15 +76,12 @@
            <axsl:element name="test">
                 <xsl:value-of select="@test"/>  
            </axsl:element>  
-<!--               
+               
           <axsl:element name="specification">
              <xsl:value-of select="//*[local-name()='title']"/>
            </axsl:element>  
--->
          </axsl:element>
-<!--
     </axsl:element>
--->
 </xsl:template>
 
 <xsl:template name="process-report">
@@ -103,15 +89,11 @@
    <xsl:param name="icon" />
    <xsl:param name="role" />
    <xsl:param name="diagnostics" />
-<!--
    <axsl:element name="validationResult">
--->
       <axsl:element name="issue">
-<!--
          <axsl:attribute name="severity">
             <xsl:value-of select="$phase"/>
          </axsl:attribute>
--->
          <axsl:element name="message">
             <xsl:apply-templates mode="text"/>
          </axsl:element>
@@ -121,15 +103,11 @@
          <axsl:element name="test">
             <xsl:value-of select="@test"/>  
          </axsl:element>   
-<!--
          <axsl:element name="specification">
             <xsl:value-of select="//*[local-name()='title']"/>
          </axsl:element>  
--->
       </axsl:element>
-<!--
    </axsl:element> 
--->
 </xsl:template>
 
 <axsl:template match="*|@*" mode="schematron-get-full-path-modify">

@@ -26,6 +26,4 @@ public class Ruleset {
         return new File(new File(FileCache.getInstance().getDestFile(), resource), fileName);
     }
 
-    public static Ruleset stylesheet = new Ruleset("stylesheet", "schematron-Validator-report.xsl", "stylesheet");
-
 }

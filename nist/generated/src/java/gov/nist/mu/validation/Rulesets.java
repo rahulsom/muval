@@ -1,6 +1,11 @@
 package gov.nist.mu.validation;
 
 class Rulesets {
+
+    /**
+     * Stylesheet for schematron
+     */
+    public static final Ruleset stylesheet = new Ruleset("hitspValidation/schematron", "schematron-Validator-report.xsl", "stylesheet");
     /**
      * CDA R2
      * HL7 CDA R2 (with no extensions)
