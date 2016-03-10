@@ -85,15 +85,18 @@ task "createStylesheet"(type: Zip) {
     description "Package stylesheet"
     from "schematron"
     include "*.xsl"
-    destinationDir file('build/generated/resources/schematron')
+    destinationDir file('build/generated/resources')
     archiveName "stylesheet"
 }
 
-task packageRules() {
-    dependsOn 'createStylesheet'
+task "createCachefile"(type: Zip) {
+    description "Package Cachefile"
+    from "nist/generated/prebundle"
+    destinationDir file('build/generated/resources')
+    archiveName "cachefile"
 }
 
-compileJava.dependsOn 'packageRules'
+compileJava.dependsOn 'createStylesheet', 'createCachefile'
 
 publishing {
     publications {
