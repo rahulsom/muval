@@ -4,6 +4,8 @@ import org.apache.commons.lang.StringUtils
 
 import javax.xml.bind.JAXBContext
 import javax.xml.bind.Unmarshaller
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 import groovy.util.logging.Slf4j
 import com.ning.http.client.*
@@ -32,6 +34,7 @@ class DownloadHelper {
     Set<String> knownUrls = [] as Set
     List<String> pendingUrls = []
     Object lock = new Object()
+    ExecutorService filePool = Executors.newSingleThreadExecutor()
 
     String massageUrl(String url) {
         url.replace('http://localhost', 'http://cda-validation.nist.gov').
@@ -61,7 +64,8 @@ class DownloadHelper {
         sentRequests.incrementAndGet()
         report()
         def urlParts = url.split('/') as String[]
-        def dir = new File(root, urlParts[3..-2].join('/'))
+        def dirParts = urlParts.size() > 4 ? urlParts[3..-2] : []
+        def dir = new File(root, dirParts.join('/'))
         dir.mkdirs()
         def outFile = new File(dir, urlParts[-1])
         def templateText = """\
@@ -69,6 +73,7 @@ class DownloadHelper {
             curl $url > ${outFile.absolutePath}
             """.stripIndent()
         if (!outFile.exists() || outFile.text == templateText) {
+            printlnclr "Curling $url"
             outFile.text = templateText
             asyncHttpClient.prepareGet(url).
                     execute(new AsyncCompletionHandler<File>() {
@@ -77,12 +82,7 @@ class DownloadHelper {
                             def body = massageUrl(response.responseBody)
                             outFile.text = body.replace('http://cda-validation.nist.gov:11080/', '').
                                     replace(urlParts[3..-2].join('/') + '/', '')
-                            if (url.endsWith('.sch')) {
-                                fetchSchematronResources(outFile.text, url, root)
-                            }
-                            if (url.endsWith('.xsd')) {
-                                fetchSchemaResources(outFile.text, url, root)
-                            }
+                            fetchDependencies(outFile.text, url, root)
                             receivedResponses.incrementAndGet()
                             markUrlDone(url)
                             outFile
@@ -98,15 +98,34 @@ class DownloadHelper {
                         }
                     })
         } else {
-            if (url.endsWith('.sch')) {
-                fetchSchematronResources(outFile.text, url, root)
+            filePool.execute {
+                fetchDependencies(outFile.text, url, root)
+                receivedResponses.incrementAndGet()
+                markUrlDone(url)
             }
-            if (url.endsWith('.xsd')) {
-                fetchSchemaResources(outFile.text, url, root)
-            }
-            receivedResponses.incrementAndGet()
-            markUrlDone(url)
-            outFile
+        }
+    }
+
+    private void fetchDependencies(String body, String url, File root) {
+        if (url.endsWith('.sch')) {
+            fetchSchematronResources(body, url, root)
+        }
+        if (url.endsWith('.xsd')) {
+            fetchSchemaResources(body, url, root)
+        }
+        if (url.endsWith('.sch') || url.endsWith('.ent')) {
+            fetchCodefiles(body, url, root)
+        }
+    }
+
+    private List<String> fetchCodefiles(String body, String url, File root) {
+        body.findAll($/document\(['"](.*)['"]\)/$).each { match ->
+            def newUrl = (match =~ $/document\(['"](.+)['"]\)/$)[0][1] as String
+                def calculated = newUrl.contains('/') ?
+                        ('http://cda-validation.nist.gov:11080/' + newUrl):
+                        computeUrl(newUrl, url)
+            printlnclr "Will request $calculated"
+            curl calculated, root
         }
     }
 
@@ -148,7 +167,7 @@ class DownloadHelper {
         oldParts.join('/')
     }
 
-    void printlnclr(String input) {
+    synchronized void printlnclr(String input) {
         println "${ANSI_CL}\r${input}"
     }
 

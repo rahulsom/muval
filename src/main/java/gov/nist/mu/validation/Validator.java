@@ -33,9 +33,14 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
+import java.util.function.BiPredicate;
+import java.util.stream.Stream;
 
 /**
  * @author andrew.mccaffrey
@@ -418,10 +423,21 @@ public class Validator {
             factory = TransformerFactory.newInstance();
             final URIResolver oldResolver = factory.getURIResolver();
             factory.setURIResolver((href, base) -> {
+
+                final File cacheLocation = FileCache.getInstance().getDestFile();
+                final File targetFile = new File(cacheLocation, href);
+                if (targetFile.exists()) {
+                    System.out.println("Using file resource");
+                    return new StreamSource(targetFile);
+                }
+
                 InputStream resourceAsStream = Validator.class.getClassLoader().getResourceAsStream(href);
                 if (resourceAsStream != null) {
+                    System.out.println("Using classpath resource");
                     return new StreamSource(resourceAsStream);
                 }
+
+                System.out.println("Using fallback resource");
                 return oldResolver.resolve(href, base);
             });
         }

@@ -15,7 +15,7 @@ class ValidatorSpec extends Specification {
 
         and: "Some other assertion"
         results.findAll{it.severity == 'errors'}*.issues.flatten().findAll().size() == 0
-        results*.issues.flatten().findAll().size() == 109
+        results*.issues.flatten().findAll().size() == 98
     }
 
     private InputStream file(String resourceName) {
@@ -34,7 +34,7 @@ class ValidatorSpec extends Specification {
 
         and: "Some other assertion"
         results.findAll{it.severity == 'errors'}*.issues.flatten().findAll().size() == 0
-        results*.issues.flatten().findAll().size() == 8
+        results*.issues.flatten().findAll().size() == 4
     }
 
     def "MU Rev1 has no errors"() {
@@ -49,7 +49,7 @@ class ValidatorSpec extends Specification {
 
         and: "Some other assertion"
         results.findAll{it.severity == 'errors'}*.issues.flatten().findAll().size() == 0
-        results*.issues.flatten().findAll().size() == 38
+        results*.issues.flatten().findAll().size() == 32
     }
 
     def "MU Rev2 has no errors"() {
@@ -64,7 +64,7 @@ class ValidatorSpec extends Specification {
 
         and: "Some other assertion"
         results.findAll{it.severity == 'errors'}*.issues.flatten().findAll().size() == 0
-        results*.issues.flatten().findAll().size() == 59
+        results*.issues.flatten().findAll().size() == 53
     }
 
     def "MU Rev3 has no errors"() {
@@ -79,7 +79,7 @@ class ValidatorSpec extends Specification {
 
         and: "Some other assertion"
         results.findAll{it.severity == 'errors'}*.issues.flatten().findAll().size() == 0
-        results*.issues.flatten().findAll().size() == 57
+        results*.issues.flatten().findAll().size() == 44
     }
 
     def "BPPC has no errors"() {
