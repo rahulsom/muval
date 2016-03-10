@@ -15,7 +15,7 @@ sourceSets {
     main {
         java {
             srcDir 'src/main/java'
-            srcDir 'build/generated/src/java'
+            srcDir 'nist/generated/src/java'
         }
         resources {
             srcDir 'src/main/resources'
@@ -77,7 +77,8 @@ task downloadResources(type: JavaExec) {
     classpath file("${rootDir}/buildSrc/build/classes/main")
     classpath configurations.buildsrc
 
-    main = 'buildscript.Helper'
+    main = 'buildscript.DownloadHelper'
+    args = ['docTypes.xml', 'nist']
 }
 
 task "createStylesheet"(type: Zip) {
@@ -89,7 +90,7 @@ task "createStylesheet"(type: Zip) {
 }
 
 task packageRules() {
-    dependsOn 'createStylesheet', 'downloadResources'
+    dependsOn 'createStylesheet'
 }
 
 compileJava.dependsOn 'packageRules'

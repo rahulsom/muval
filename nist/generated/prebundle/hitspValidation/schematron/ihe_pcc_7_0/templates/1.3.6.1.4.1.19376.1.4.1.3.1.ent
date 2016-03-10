@@ -1,0 +1,75 @@
+<!--  IHE Cardiology Encompassing Encounter: 1.3.6.1.4.1.19376.1.4.1.3.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.4.1.3.1-errors">
+    <title>IHE Cardiology Encompassing Encounter - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.4.1.3.1"]'>
+
+   <assert test='../cda:encompassingEncounter'> 
+      Error: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1), the Cardiology Encompassing Encounter can only be 
+      used on encompassingEncounter s. 
+   </assert>
+
+   <assert test='not(cda:responsibleParty/cda:assignedEntity) or cda:responsibleParty/cda:assignedEntity/cda:assignedPerson or
+                                                                 cda:responsibleParty/cda:assignedEntity/cda:representedOrganization'>
+      Error: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1), if present, responsibleParty/assignedEntity SHALL 
+      have at least one assignedPerson or representedOrganization element present.
+   </assert>
+
+   <assert test='cda:location/cda:healthCareFacility'>
+      Error: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1), location (Health Care Facility) is Required.
+   </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.4.1.3.1-warnings">
+    <title>IHE Cardiology Encompassing Encounter - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.4.1.3.1"]'>
+
+   <assert test='not(cda:responsibleParty/cda:assignedEntity) or cda:responsibleParty/cda:assignedEntity/cda:code '>
+      Warning: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1), assignedEntity code SHOULD be present with the
+      responsible physician''s specialty.
+   </assert>
+
+   <assert test='cda:location/cda:healthcareFacility/cda:serviceProviderOrganization[cda:name and cda:addr and cda:telecom]'>
+      Warning: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1),
+      location/healthCareFacility/serviceProviderOrganization SHOULD be present with name, addr and telecom elements.
+   </assert>
+
+
+
+
+
+    </rule>
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.4.1.3.1-notes">
+    <title>IHE Cardiology Encompassing Encounter - manual validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.4.1.3.1"]'>
+   <assert test='not(cda:responsibleParty/cda:assignedEntity) or cda:responsibleParty/cda:assignedEntity/card:accreditation'>
+      Note: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1), assignedEntity MAY include an accreditation element
+      from the urn:ihe:card namespace to provide physician accreditation status.
+   </assert>
+   <assert test='cda:location/cda:healthCareFacility/cda:location[cda:name and cda:addr]'>
+      Note: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1), location/healthCareFacility/location (Place Entity) 
+      MAY be present with name and/or addr elements identifying the place of the encounter.
+   </assert>
+   <assert test='cda:location/cda:healthCareFacility/card:accreditation'>
+      Note: In IHE Cardiology Encompassing Encounter (1.3.6.1.4.1.19376.1.4.1.3.1), healthCareFacility MAY include an accreditation 
+      element from the urn:ihe:card namespace to provide facility accreditation status.
+   </assert>
+
+
+    </rule>
+  </pattern>
+

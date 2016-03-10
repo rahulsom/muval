@@ -1,0 +1,53 @@
+<!-- These schematron rules are written for the "IHE Laboratory Technical Framework Volume3 (LAB TF-3) August 08, 2008". 
+2.3.5.11 Laboratory Observation 1.3.6.1.4.1.19376.1.3.1.6.
+ -->
+ <pattern id='p-1.3.6.1.4.1.19376.1.3.1.6-errors'>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.3.1.6"]'>
+
+   <!-- Verify that templateId is used on the appropriate type of object -->
+   <assert test='self::cda:observation'>
+     Error: The templateId  (1.3.6.1.4.1.19376.1.3.1.6) child element of observation and identifies a Laboratory Observation. This records a single laboratory observation as standalone or part of a battery.
+   </assert>      
+    <!--! the entryRelationship indicates a standalone observation  --> 
+   <assert test='parent::cda:entryRelationship[@typeCode="COMP"] or parent::cda:component[@typeCode="COMP"]'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the observation parent component shall have a typeCode set to "COMP".</assert>
+   
+   <assert test='@classCode="OBS"'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the observation/@classCode shall be "OBS".</assert>
+  
+   <assert test='@moodCode="EVN"'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the observation/@moodCode shall be "EVN".</assert>
+   
+   <assert test='cda:statusCode[@code="completed"] or cda:statusCode[@code="aborted"]'>
+           Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the observation/statusCode/@code shall be "completed" or "aborted".</assert>
+   
+   <assert test='not(cda:specimen) or cda:specimen[@typeCode="SPC"]'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the specimen/@typeCode shall be "SPC".</assert>        
+ 
+   <assert test='not(cda:performer) or cda:performer[@typeCode="PRF"]'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the performer/@typeCode shall be "PRF".</assert> 
+
+   <assert test='not(cda:performer) or cda:author[@typeCode="AUT"]'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the author/@typeCode shall be "AUT".</assert>  
+  
+   <assert test='not(cda:participant) or cda:participant[@typeCode="AUTHEN"] or cda:participant[@typeCode="RESP"] or cda:participant[@typeCode="DEV"]'>
+        Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the participant/@typeCode for shall be "AUTHEN", "RESP" or "DEV".</assert>
+   <!--The REFR check refers to a previous observation for the same test codeon a previous specimen  -->
+   <assert test='not(cda:entryRelationship) or (cda:entryRelationship[@typeCode="REFR"] or cda:entryRelationship[@typeCode="COMP"])'>
+   Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the entryRelationship/@typeCode shall be "REFR".</assert>
+
+   <assert test='not(cda:entryRelationship/cda:observation) or cda:entryRelationship/cda:observation[@classCode="OBS"]'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the entryRelationship/observation/@classCode shall be "OBS".</assert>
+
+   <assert test='not(cda:entryRelationship/cda:observation) or cda:entryRelationship/cda:observation[@moodCode="EVN"]'>Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the entryRelationship/observation/@moodCode shall be "EVN".</assert>
+
+   <assert test='not(cda:entryRelationship/cda:observation/cda:referenceRange) or cda:entryRelationship/cda:observation/cda:referenceRange[@typeCode="REFV"]'>
+        Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the entryRelationship/observation/referenceRange/@typeCode shall be "REFV".</assert>
+
+   <assert test='not(cda:entryRelationship/cda:observation/cda:referenceRange/cda:observationRange) or cda:entryRelationship/cda:observation/cda:referenceRange/cda:observationRange[@typeCode="OBS"]'>
+        Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the  entryRelationship/observation/referenceRange/observationRange/@typeCode shall be "OBS".</assert>
+  
+   <assert test='not(cda:entryRelationship/cda:observation/cda:referenceRange/cda:observationRange) or cda:entryRelationship/cda:observation/cda:referenceRange/cda:observationRange[@moodCode="EVN.CRT"]'>
+        Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the entryRelationship/observation/referenceRange/observationRange/@moodCode shall be "EVN.CRT".</assert>
+
+   <assert test='not(cda:entryRelationship/cda:observation/cda:referenceRange/cda:observationRange/cda:interpretationCode)'>
+        Error: In Laboratory Observation (1.3.6.1.4.1.19376.1.3.1.6) the entryRelationship/observation/referenceRange/observationRange/interpretationCode shall be present.</assert>
+
+</rule>
+ 
+</pattern>
+

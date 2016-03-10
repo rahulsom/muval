@@ -1,0 +1,121 @@
+<!--  IHE PCC Postpartum Visit Summary: 1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4-errors">
+    <title>IHE PCC Postpartum Visit Summary - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4"]'>
+       Error: The Postpartum Visit Summary requires the Postpartum Visit Summary template ID (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4).
+    </assert>
+    </rule>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4"]'>
+   <!-- Verify that the template id is used on the appropriate type of object -->
+   <assert test='../cda:ClinicalDocument'>
+     Error: The Postpartum Visit Summary can only be used on Clinical Documents.
+   </assert>
+
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.2"]'>
+       Error: In IHE PCC eNursing Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4), the parent template ID for
+       Medical Summaries is not present.
+    </assert>
+
+ 
+   <!-- Verify the document type code -->
+   <assert test='cda:code[@code = "XX-PostPartumVisitSummary"]'>
+     Error: The document type code of a Postpartum Visit Summary must be XX-PostPartumVisitSummary.
+   </assert>
+   <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'>
+     Error: The document type code must come from the LOINC code 
+     system (2.16.840.1.113883.6.1).
+   </assert> 
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'> 
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain an Active Problem Section.
+   </assert> 
+
+   <assert test='count(.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.4"]) > 1'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain at least two Newborn Delivery Information Sections -- one
+     for the mother and one for each of the children.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.16.1"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain an Coded Social History Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.4"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain a History of Present Illness Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.15.1"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain a Coded Physical Exam Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.13"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain an Allergies and Other Adverse Reactions Section.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.31"]) > 1'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain at least two Care Plan Sections -- one for the mother and one 
+     for each of the children.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Postpartum Visit Summary Document must contain a Newborn Status at Maternal Discharge Section.
+   </assert>
+
+
+ 
+ </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4-warnings">
+    <title>IHE PCC Postpartum Visit Summary - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4"]'>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3"]'>
+     Warning: The Postpartum Visit Summary must contain an Event Outcomes Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.27.2.7"]'>
+     Warning: The Postpartum Visit Summary must contain a Postpartum Hospitalization Treatment Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.22"]'>
+     Warning: The Postpartum Visit Summary must contain a Hospital Discharge Medications Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>
+     Warning: The Postpartum Visit Summary must contain an Active Problems Section if that information is known.
+   </assert>
+
+    </rule>
+
+  </pattern>
+
+
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4-notes">
+    <title>IHE PCC Postpartum Visit Summary - notes validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.4"]'>
+
+    </rule>
+
+  </pattern>
+

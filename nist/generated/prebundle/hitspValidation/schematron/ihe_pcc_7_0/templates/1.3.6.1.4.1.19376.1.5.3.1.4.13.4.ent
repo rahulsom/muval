@@ -1,0 +1,58 @@
+<!--  IHE PCC Social History Observation: 1.3.6.1.4.1.19376.1.5.3.1.4.13.4 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.4.13.4-errors">
+    <title>IHE PCC Social History Observation - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.13.4"]'>
+
+   <assert test='cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.13"'>
+      Error: In IHE PCC Social History Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.4), the parent template (Simple Observation)
+      is required.
+   </assert>
+
+   <assert test='cda:templateId/@root="2.16.840.1.113883.10.20.1.33"'>
+      Error: In IHE PCC Social History Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.4), the parent template HL7 CCD Social History 
+      is required and identifies this as a Social History observation.
+   </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.4.13.4-warnings">
+    <title>IHE PCC Social History Observation - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.13.4"]'>
+
+   <assert test='not(cda:value) or cda:value[@xsi:type = "PQ" or @xsi:type="CD" or @xsi:type="ANY"]'>
+      Warning: In IHE PCC Social History Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.4), the data type to use for each observation
+      should be drawn from the table (PQ, CD or ANY).
+   </assert>
+
+   <assert test='not(cda:repeatNumber)'>
+      Warning: In IHE PCC Social History Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.4), the repeatNumber element should not be
+      used.
+   </assert>
+
+   <assert test='not(cda:interpretationCode)'>
+      Warning: In IHE PCC Social History Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.4), the interpretationCode element should
+      not be used.
+   </assert>
+
+   <assert test='not(cda:methodCode)'>
+      Warning: In IHE PCC Social History Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.4), the methodCode element should not be used.
+   </assert>
+
+   <assert test='not(cda:targetSiteCode)'>
+      Warning: In IHE PCC Social History Observation (1.3.6.1.4.1.19376.1.5.3.1.4.13.4), the targetSiteCode element should not be
+      used.
+   </assert>
+
+    </rule>
+
+  </pattern>
+
+

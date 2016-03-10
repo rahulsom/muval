@@ -1,0 +1,273 @@
+<!--  HL7 QRDA Category I Header (Section 2) -->
+
+<!-- errors -->
+  <pattern id="p-2.16.840.1.113883.10.20.12-errors">
+    <title>HL7 QRDA Category I Header (Section 2) - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='.//cda:templateId/@root="2.16.840.1.113883.10.20.12"'>
+       Error: CONF-QRDA-I-5: The value of one ClinicalDocument/templateId/@root SHALL be
+       2.16.840.1.113883.10.20.12 representing conformance to the generic
+       QRDA Category I framework constraints.
+    </assert>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.12"]'>
+    <assert test='cda:realmCode[@code = "US"]'>
+       Error: CONF-QRDA-I-2: The realmCode element SHALL be present where the value of @code is US.
+    </assert>
+    <assert test='cda:typeId[@root = "2.16.840.1.113883.1.3" and @extension = "POCD_HD000040"]'>
+       Error: CONF-QRDA-I-3: The value of typeId/@root SHALL be 2.16.840.1.113883.1.3 and value of 
+       typeId/@extension SHALL be POCD_HD000040.
+    </assert>
+    <assert test='count(cda:code) = 1 and cda:code[@code="55182-0" and @codeSystem="2.16.840.1.113883.6.1"]'>
+       Error: CONF-QRDA-I-6: A QRDA Category I report SHALL contain exactly one
+       ClinicalDocument/code with a value of 55182-0 2.16.840.1.113883.6.1
+       LOINC STATIC.
+    </assert>
+    <assert test="contains(translate(cda:title,'QWERTYUIOPASDFGHJKLZXCVBNM','qwertyuiopasdfghjklzxcvbnm'),'qrda incidence report') or
+                  contains(translate(cda:title,'QWERTYUIOPASDFGHJKLZXCVBNM','qwertyuiopasdfghjklzxcvbnm'),'quality measure report')">
+       Error: CONF-QRDA-I-7: A QRDA Category I report SHALL contain exactly one
+       ClinicalDocument/title element valued with a case-insensitive, text
+       string containing "QRDA Incidence Report" or "Quality measure
+       Report".
+    </assert>
+    <assert test='count(cda:recordTarget/cda:patientRole) = 1'>
+       Error: CONF-QRDA-I-8: A QRDA Category I report SHALL contain exactly one
+       ClinicalDocument/recordTarget/PatientRole.
+    </assert>
+    <assert test='cda:author/cda:assignedAuthor/cda:assignedPerson or
+                  cda:author/cda:assignedAuthor/cda:assignedAuthoringDevice '>
+       Error: CONF-QRDA-I-9: A QRDA Category I report SHALL contain one or more
+        ClinicalDocument/author/assignedAuthor/assignedPerson and/or
+        ClinicalDocument/author/assignedAuthor/assignedAuthoringDevice.
+    </assert>
+    <assert test='count(cda:informant) = 1'>
+       Error: CONF-QRDA-I-10: A QRDA Category I report SHALL contain exactly one
+       ClinicalDocument/informant, which represents the reporting facility.
+       CONF-QRDA-I-11: An organization source of information SHALL be represented with
+       informant.
+    </assert>
+    <assert test='cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:id/@root or
+                  cda:custodian/cda:assignedCustodian/cda:representedCustodianOrganization/cda:id[@nullFlavor="MSK"]'>
+       Error: CONF-QRDA-I-12: A QRDA Category I report SHALL contain exactly one
+       custodian/assignedCustodian/representedCustodianOrganization/
+       id element.
+       CONF-QRDA-I-13: The value of custodian/assignedCustodian/
+       representedCustodianOrganization/id element @root SHALL be the id
+       root of the custodian organization.
+    </assert>
+    <assert test='not(cda:legalAuthenticator) or count(cda:legalAuthenticator/cda:time) = 1'>
+       Error: CONF-QRDA-I-15: If present, a QRDA Category I report legalAuthenticator SHALL
+       contain exactly one ClinicalDocument/legalAuthenticator/time element.
+    </assert>
+    <assert test='not(cda:legalAuthenticator) or count(cda:legalAuthenticator/cda:signatureCode) = 1'>
+       Error: CONF-QRDA-I-16: If present, a QRDA Category I report legalAuthenticator SHALL
+        contain exactly one signatureCode element.
+    </assert>
+    <assert test='not(cda:legalAuthenticator) or
+                  cda:legalAuthenticator/cda:signatureCode[@code="S"] or
+                  cda:legalAuthenticator/cda:signatureCode[@nullFlavor="MSK"]'>
+       Error: CONF-QRDA-I-17: The value of a QRDA ClinicalDocument/signatureCode/@code
+       SHALL be S.
+    </assert>
+    <assert test='not(cda:legalAuthenticator) or
+                  cda:legalAuthenticator/cda:assignedEntity'>
+       Error: CONF-QRDA-I-18: If present, a QRDA Category I report legalAuthenticator SHALL
+       contain exactly one assignedEntity element that represents the legal
+       authenticator of the document.
+    </assert>
+    <assert test='not(cda:legalAuthenticator) or
+                  cda:legalAuthenticator/cda:assignedEntity/cda:id'>
+       Error: CONF-QRDA-I-19: The ClinicalDocument/legalAuthenticator/assigned entity
+       SHALL contain an id element.
+    </assert>
+    <assert test='cda:component/cda:structuredBody'>
+       Error: CONF-QRDA-I-20: A QRDA Category I report SHALL contain exactly one
+       ClinicalDocument/component/structuredBody.
+    </assert>
+    <assert test='count(cda:component/cda:structuredBody/cda:component/cda:section/cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]) &gt; 0'>
+       Error: CONF-QRDA-I-21: A QRDA Category I report SHALL contain at least one and MAY contain
+       more than one non-nested top-level Measure section each containing
+       information about a single measure.
+    </assert>
+    </rule>
+
+
+<!-- Measure Section -->
+
+    <rule context='*[cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]]'>
+<!--
+    <assert test='self::/cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section or
+                  parent::cda:section[@code="55185-3" and @codeSystem="2.16.840.1.113883.6.1"]/cda:component'>
+       Error: CONF-QRDA-I-22: The Measure section SHALL be a top-level section if it is not part of a
+       measure set.
+    </assert>
+-->
+    <assert test='self::cda:section[parent::cda:component[parent::cda:structuredBody[parent::cda:component[parent::cda:ClinicalDocument]]]] or
+                  parent::cda:component[parent::cda:section[cda:code[@code="55185-3" and @codeSystem="2.16.840.1.113883.6.1"]]]'>
+       Error: CONF-QRDA-I-22: The Measure section SHALL be a top-level section if it is not part of a
+       measure set.
+    </assert>
+
+    <assert test='cda:templateId'>
+       Error: CONF-QRDA-I-33: The Measure section SHALL contain at least one templateId uniquely
+        identifying each Measure name and version
+    </assert>
+    <assert test='not(parent::cda:section[@code="55185-3" and @codeSystem="2.16.840.1.113883.6.1"]/cda:entry) or
+                  contains(translate(cda:title,"QWERTYUIOPASDFGHJKLZXCVBNM","qwertyuiopasdfghjklzxcvbnm"),"measure section: ")'>
+       Error: CONF-QRDA-I-36: A non-nested Measure section SHALL be valued with section/title
+       with a case-insensitive, text string containing "measure section:
+       &lt;measure name&gt;".
+    </assert>
+    <assert test='not(parent::cda:ClinicalDocument/cda:component/cda:structuredBody/cda:component/cda:section) or
+                  contains(translate(cda:title,"QWERTYUIOPASDFGHJKLZXCVBNM","qwertyuiopasdfghjklzxcvbnm"),"measure section")'>
+       Error: CONF-QRDA-I-37: A nested Measure section SHALL be valued with section/title with
+        a case-insensitive, text string containing "measure section".
+    </assert>
+    <assert test='count(.//cda:section[cda:code[@code = "55187-9" and @codeSystem="2.16.840.1.113883.6.1"]]) = 1'>
+       Error: CONF-QRDA-I-39: A Measure section SHALL contain exactly one nested Reporting
+       Parameters section (as described in Section 2.4.3 Reporting Parameters
+       Section).
+    </assert>
+    <assert test='count(.//cda:section[cda:code[@code = "55188-7" and @codeSystem="2.16.840.1.113883.6.1"]]) = 1'>
+       Error: CONF-QRDA-I-40: A Measure section SHALL contain exactly one nested Patient Data
+        section (as described in Section 2.4.4 Patient Data Section).
+    </assert>
+    <assert test='cda:entry/cda:act[@classCode="ACT" and @moodCode="DEF"]'>
+       Error: CONF-QRDA-I-42: Each measure SHALL be represented with act.
+       CONF-QRDA-I-43: For each act in the Measure section, the value for act/@classCode
+       in a measure act SHALL be ACT 2.16.840.1.113883.5.6 ActClass STATIC.
+       CONF-QRDA-I-44: For each act in the Measure section the act/@moodCode in a
+       measure act SHALL be DEF 2.16.840.1.113883.5.1001 ActMood STATIC.
+    </assert>
+    </rule>
+
+<!-- Measure -->
+
+    <rule context='*[cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]]/cda:entry/cda:act[@classCode="ACT" and @moodCode="DEF"]'>
+    <assert test='cda:code'>
+       Error: CONF-QRDA-I-45: For each act in the Measure section there SHALL be an act/code
+       reflecting the measure name and version.
+    </assert>
+    </rule>
+
+<!-- Measure Set Section -->
+
+    <rule context='*[cda:code[@code="55185-3" and @codeSystem="2.16.840.1.113883.6.1"]]'>
+    <assert test='count(.//cda:section[cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]]) = 1'>
+       Error: CONF-QRDA-I-24: The Measure Set section SHALL contain one nested Measure section
+       and SHALL NOT contain more than one nested Measure section.
+    </assert>
+    <assert test='cda:templateId'>
+       Error: CONF-QRDA-I-26: The Measure Set section SHALL contain a templateId uniquely
+       identifying the Measure Set name and version.
+    </assert>
+    <assert test="contains(translate(cda:title,'QWERTYUIOPASDFGHJKLZXCVBNM','qwertyuiopasdfghjklzxcvbnm'),'measure set: ')">
+       Error: CONF-QRDA-I-29: The Measure Set section SHALL be valued with section/title with a
+       case-insensitive, text string containing "Measure set: &lt;measure set
+       name&gt;".
+    </assert>
+    <assert test='count(.//cda:section/cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]) &gt; 0 '>
+       Error: CONF-QRDA-I-31: The nested Measure section SHALL contain at least one measure that
+        belongs to the measure set.
+    </assert>
+    </rule>
+
+<!-- Reporting Parameters Section -->
+
+    <rule context='*[cda:code[@code="55187-9" and @codeSystem="2.16.840.1.113883.6.1"]]'>    
+    <assert test='contains(translate(cda:title,"QWERTYUIOPASDFGHJKLZXCVBNM","qwertyuiopasdfghjklzxcvbnm"),"reporting parameters")'>
+       Error: CONF-QRDA-I-49: The Reporting Parameters section SHALL be valued with
+       section/title with a case-insensitive, text string containing "Reporting
+       Parameters".
+    </assert>
+    <assert test='cda:entry/cda:act[@classCode="ACT" and @moodCode="EVN"]/cda:code[@code="252116004" and @codeSystem="2.16.840.1.113883.6.96"]'>
+       Error: CONF-QRDA-I-50: The Reporting Parameters section SHALL contain exactly one
+       Observation Parameters Act, represented as an act.
+       CONF-QRDA-I-51: The value for act/@classCode in an Observation Parameters Act
+       SHALL be ACT 2.16.840.1.113883.5.6 ActClass STATIC.
+       CONF-QRDA-I-52: The value for act/@moodCode in an Observation Parameters Act
+       SHALL be EVN 2.16.840.1.113883.5.1001 ActMood STATIC.
+       CONF-QRDA-I-53: The value for act/code SHALL be 252116004 Observation
+       Parameters 2.16.840.1.113883.6.96 SNOMED-CT STATIC.
+    </assert>
+    <assert test='cda:entry/cda:act[@classCode="ACT" and @moodCode="EVN"][cda:code[@code="252116004" and @codeSystem="2.16.840.1.113883.6.96"]]/cda:effectiveTime[cda:low and cda:high]'>
+       Error: CONF-QRDA-I-54: The reporting time period SHALL be represented with an
+       effectiveTime/low element combined with a high element representing
+       respectively the first and last days of the period reported.
+    </assert>
+    </rule>
+
+<!-- Patient Data Section -->
+
+    <rule context='*[cda:code[@code="55188-7" and @codeSystem="2.16.840.1.113883.6.1"]]'>
+    <assert test='contains(translate(cda:title,"QWERTYUIOPASDFGHJKLZXCVBNM","qwertyuiopasdfghjklzxcvbnm"),"patient data")'>
+       Error: CONF-QRDA-I-57: The Patient Data section SHALL be valued with section/title with a
+       case-insensitive, text string containing "Patient Data".
+    </assert>
+
+    </rule>
+
+  </pattern>
+
+  <pattern id="p-2.16.840.1.113883.10.20.12-warnings">
+    <title>HL7 QRDA Category I Header (Section 2) - warning validation phase</title>
+    <rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.12"]'>
+    <assert test='count(cda:legalAuthenticator) = 1'>
+       Warning: CONF-QRDA-I-14: A QRDA Category I report SHOULD contain exactly one
+       legalAuthenticator element.
+    </assert>
+    </rule>
+  </pattern>
+
+  <pattern id="p-2.16.840.1.113883.10.20.12-notes">
+    <title>HL7 QRDA Category I Header (Section 2) - note validation phase</title>
+    <rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.12"]'>
+    <assert test='count(cda:component/cda:structuredBody/cda:component/cda:section/cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]) &gt; 1'>
+       Note: CONF-QRDA-I-21: A QRDA Category I report ... MAY contain
+       more than one non-nested top-level Measure section each containing
+       information about a single measure.
+    </assert>
+    <assert test='.//cda:section/cda:code[@code="55185-3" and @codeSystem="2.16.840.1.113883.6.1"]'>
+       Note: CONF-QRDA-I-23: A QRDA Category I report MAY contain one or more Measure Set
+       sections.
+    </assert>
+    <assert test='cda:component/cda:structuredBody/cda:component/cda:section/cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"] and
+                  .//cda:section/cda:code[@code="55185-3" and @codeSystem="2.16.840.1.113883.6.1"]'>
+       Note: CONF-QRDA-I-25: A QRDA Category I report MAY contain both Measure Set sections and
+       individual top-level Measure sections.
+    </assert>
+
+    </rule>
+
+<!-- Measure Section -->
+
+    <rule context='*[cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]]'>
+
+    <assert test='cda:text'>
+       Note: CONF-QRDA-I-41: The Measure section MAY contain a section/text element for the
+       description of the measure(s).
+    </assert>
+    </rule>
+
+<!-- Measure -->
+
+    <rule context='*[cda:code[@code="55186-1" and @codeSystem="2.16.840.1.113883.6.1"]]/cda:entry/cda:act[@classCode="ACT" and @moodCode="DEF"]'>
+    <assert test='cda:text'>
+       Note: CONF-QRDA-I-46: Each measure act MAY contain an act/text element containing a
+        description of the measure.
+    </assert>
+    </rule>
+
+<!-- Measure Set Section -->
+
+    <rule context='*[cda:code[@code="55185-3" and @codeSystem="2.16.840.1.113883.6.1"]]'>
+    <assert test='cda:text'>
+       Note: CONF-QRDA-I-30: The Measure Set section MAY contain a section/text element for
+       the description of the measure set or MAY contain a formal representation of
+       a description of the measure set.
+    </assert>
+    </rule>
+  </pattern>
+  

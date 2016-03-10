@@ -1,0 +1,43 @@
+<!--  IHE PCC Coded Antenatal Testing and Surveillance Section: 1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1-errors">
+    <title>IHE PCC Coded Antenatal Testing and Surveillance Section - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1"]'>
+    <assert test='../cda:section'> 
+       Error: In IHE PCC Coded Antenatal Testing and Surveillance Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1), the Coded Antenatal Testing and Surveillance Section can only be used on sections. 
+    </assert> 
+    <!-- Verify the section type code --> 
+    <assert test='cda:code[@code = "XX-ANTENATALTESTING"]'> 
+       Error: In IHE PCC Coded Antenatal Testing and Surveillance Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1), the section type code of a Coded Antenatal Testing and Surveillance Section must be XX-ANTENATALTESTING. 
+    </assert> 
+    <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+       Error: In IHE PCC Coded Antenatal Testing and Surveillance Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1), the section type code must come from the LOINC code system (2.16.840.1.113883.6.1). 
+    </assert> 
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5"]'>
+       Error: In IHE PCC Coded Antenatal Testing and Surveillance Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1), the parent
+       template ID must be present.
+    </assert>
+    <assert test='.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.3.10"]'>
+       Error: In IHE PCC Coded Antenatal Testing and Surveillance Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1), Antenatal 
+       Testing and Surveillance Battery is required.
+    </assert>
+
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1-warnings">
+    <title>IHE PCC Coded Antenatal Testing and Surveillance Section - warning validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1"]'>
+      <report test="."/>
+    </rule>
+-->
+
+  </pattern>

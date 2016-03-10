@@ -1,13 +1,10 @@
 plugins {
     id 'groovy'
-    id 'application'
 }
 
 repositories {
     jcenter()
 }
-
-mainClassName = "buildscript.Helper"
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.4'

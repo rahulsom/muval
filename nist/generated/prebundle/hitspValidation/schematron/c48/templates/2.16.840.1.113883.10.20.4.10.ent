@@ -1,0 +1,32 @@
+<!--  Review of Systems: 2.16.840.1.113883.10.20.4.10 -->
+
+<!-- errors -->
+
+<pattern id='p-2.16.840.1.113883.10.20.4.10-errors' see='#p-2.16.840.1.113883.10.20.4.10-errors'>
+	<title>Review of Systems - errors validation phase</title>
+	<rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.4.10"]'>
+    <assert test="cda:text">The Review of Systems section SHALL contain a narrative block.</assert>
+    <assert test="cda:code[@code='10187-3']">The LOINC section code used for the section describing the Review of Systems in a Level 2-conforming Care Record Summary SHALL be 10187-3 (REVIEW OF SYSTEMS).</assert>
+	</rule>
+</pattern>
+
+<!-- warning -->
+
+<pattern id='p-2.16.840.1.113883.10.20.4.10-warning' see='#p-2.16.840.1.113883.10.20.4.10-warning'>
+	<title>Review of Systems - warning validation phase</title>
+	<rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.4.10"]'>
+	<assert test=".//cda:entry">The Review of Systems section SHOULD contain clinical statements.</assert>
+	</rule>
+</pattern>
+
+<!-- manual -->
+
+<pattern id='p-2.16.840.1.113883.10.20.4.10-manual' see='#p-2.16.840.1.113883.10.20.4.10-manual'>
+	<title>Review of Systems - manual validation phase</title>
+	<rule context='*[cda:templateId/@root="2.16.840.1.113883.10.20.4.10"]'>
+<!--
+	<report test='.'>TBD</report>
+-->
+	</rule>
+</pattern>
+

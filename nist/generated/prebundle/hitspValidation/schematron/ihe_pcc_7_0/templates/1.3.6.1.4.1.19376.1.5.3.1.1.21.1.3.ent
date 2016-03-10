@@ -1,0 +1,227 @@
+<!--  IHE PCC Maternal Discharge Summary: 1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3-errors">
+    <title>IHE PCC Material Discharge Summary - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3"]'>
+       Error: The IHE PCC Maternal Discharge Summary requires the IHE PCC Maternal Discharge Summary template ID
+       (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3).
+    </assert>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3"]'>
+    <assert test='../cda:ClinicalDocument'> 
+       Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary can only be 
+       used on Clincal Documents. 
+    </assert>
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.2"]'>
+       Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the parent template ID for
+       Medical Summaries is not present.
+    </assert> 
+    <assert test='cda:code[@code = "57058-0"]'> 
+       Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the document type code of a Maternal 
+       Discharge Summary must be 57058-0. 
+    </assert> 
+    <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+       Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the document type code must come from 
+       the LOINC code system (2.16.840.1.113883.6.1). 
+    </assert> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.3"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Hospital Admission Diagnosis Section.
+   </assert>
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.5"]'> 
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary 
+     Document must contain a(n) Hospital Course Section.
+   </assert> 
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.7"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Discharge Diagnosis Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.32"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Discharge Disposition Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.13"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Allergies and Other Adverse Reactions Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.22"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Hospital Discharge Medications Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.28"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Coded Results Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.30"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Coded Hospital Studies Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.16.1"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Coded Social History Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.6"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Intravenous Fluid Administered Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.12"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Transfusion History Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.1"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Provider Orders Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.4"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Newborn Delivery Information Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.11"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Procedures and Interventions Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.31"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Care Plan Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Newborn Status at Maternal Discharge Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9"]'>
+     Error: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Event Outcomes Section.
+   </assert>
+
+
+</rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3-warnings">
+    <title>IHE PCC Maternal Discharge Summary - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3"]'>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.10.3.2"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Transport Mode Section if that information is known.
+   </assert>
+<!--
+
+Cannot find template with this OID. 2010/12/22.
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.12"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Discharge Status Section if that information is known.
+   </assert>
+-->
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.35"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Coded Advanced Directives Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.4"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Pain Assessment Panel Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Problems Section if that information is known.
+   </assert>
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.12.2.3"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Braden Score Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.7"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Post-partum Treatment Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.31"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Care Plan Section if that information is known.
+   </assert>
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.2"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Estimated Blood Lose Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.38"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Patient Education and Consents Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.11"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Procedures and Interventions Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.4.12"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Immunizations Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.21"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Medications Administered Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.33"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Discharge Diet Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.18.3.1"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Immunizations Recommendations Section if that information is known.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Procedures and Interventions Section if that information is known.
+   </assert>
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.8"]'>
+     Warning: In IHE PCC Maternal Discharge Summary (1.3.6.1.4.1.19376.1.5.3.1.1.21.1.3), the Maternal Discharge Summary
+     Document must contain a(n) Consultations Section if that information is known.
+   </assert>
+
+
+</rule>
+
+  </pattern>

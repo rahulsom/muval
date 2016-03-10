@@ -1,0 +1,103 @@
+<!--  IHE PCC Cancer Diagnosis Entry: 1.3.6.1.4.1.19376.1.7.3.1.4.14.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.4.14.1-errors">
+    <title>IHE PCC Cancer Diagnosis Entry - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.4.14.1"]'>
+
+
+   <assert test='self::cda:observation[@classCode="OBS" and @moodCode="EVN"]'>
+     Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the observation SHALL have classCode = "OBS" and
+     moodCode= "EVN".
+   </assert>
+
+   <assert test='cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.5"'>
+     Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the parent template is Problem Entry
+     (1.3.6.1.4.1.19376.1.5.3.1.4.5).
+   </assert>
+
+   <assert test='parent::cda:entryRelationship[parent::cda:act[cda:templateId/@root="2.16.840.1.113883.10.20.1.27" and 
+                                                              cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.5.2"]]'>
+     Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the cancer diagnosis shall be in an entryRelationship
+     with an act that conforms to the CCD Template for Problems acts (2.16.840.1.113883.10.20.1.27) and the IHE Template for Problem
+     Concern Entry.
+   </assert>
+
+   <assert test='parent::cda:entryRelationship[@typeCode="SUBJ" and @inversionInd="false"]'>
+     Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the entryRelationship of the parent of the cancer
+     diagnosis entry SHALL have typeCode="SUBJ" and inversionInd="false".
+   </assert>
+   <assert test='cda:code[@code = "282291009" and @codeSystem="2.16.840.1.113883.6.96"]'>
+      Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the code element indicates that this is the Diagnosis 
+      information. This code SHALL be the SNOMED CT code "282291009" for "Diagnosis". It is good style to include the displayName
+      and codeSystemName to help debugging.
+   </assert>
+   <assert test='cda:statusCode[@code="completed"]'>
+     Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the status code for all Cancer Diagnosis Entries 
+     SHALL be 'completed'.
+   </assert>
+   <assert test='cda:value/@xsi:type="CD"'>
+      Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the value records the Histologic Type, which is the 
+      cell type of the tumor/cancer (e.g., carcinoma, melanoma, sarcoma, lymphoma, leukemia). This element is required. It is always
+      represented using the CD datatype (xsi:type='CD'), even though the value may be a coded or uncoded string. 
+   </assert>
+   <assert test='cda:value/cda:qualifier/cda:name[@code="31206-6" and @codeSystem="2.16.840.1.113883.6.1"]'>
+      Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), a qualifier provides Behavior information, indicating 
+      whether the tumor is benign, in situ, malignant or metastatic. The code and codeSystem attributes SHALL be recorded exactly as
+      code="31206-6" codeSystem="2.16.840.1.113883.6.1".
+   </assert>
+   <assert test='cda:value/cda:qualifier/cda:name[@code="21861-0" and @codeSystem="2.16.840.1.113883.6.1"]'>
+      Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), a qualifier provides Best Method of Diagnosis information, 
+      indicating the best method used to confirm the presence of the cancer being reported. The code and codeSystem attributes SHALL be 
+      recorded exactly as code="21861-0" codeSystem="2.16.840.1.113883.6.1".
+   </assert>
+   <assert test='cda:targetSiteCode[@code and @codeSystem]'>
+      Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the targetSiteCode element SHALL be present and shall 
+      indicate the anatomic location where the primary tumor originated. Vocabulary used SHALL follow the appropriate realm constraints.
+   </assert>
+   <assert test='cda:targetSiteCode/cda:qualifier[cda:name[@code="20228-3" and @codeSystem="2.16.840.1.113883.6.1"]]/cda:value'>
+      Error: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the qualifier provides the laterality, which indicates 
+      the side of a paired organ or side of the body on which the reportable tumor originated. The code and codeSystem attributes SHALL
+      be recorded exactly as shown above. The value records the laterality.
+   </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.4.14.1-warnings">
+    <title>IHE PCC Cancer Diagnosis Entry - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.4.14.1"]'>
+
+   <assert test='cda:code[@displayName = "Diagnosis" and @codeSystemName="SNOMED CT"]'>
+      Warning: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), the code element indicates that this is the Diagnosis
+      information. It is good style to include the displayName and codeSystemName to help debugging.
+   </assert>
+
+   <assert test='cda:entryRelationship/cda:observation/cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.4.14.2"'>
+      Warning: In IHE Cancer Diagnosis Entry (1.3.6.1.4.1.19376.1.7.3.1.4.14.1), one entryRelationship element should be present 
+      providing information on the TNM Clinical Stage.  Observations that describe the TNM Stage Information SHALL be included
+      if known.
+   </assert>
+
+
+    </rule>
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.4.14.1-notes">
+    <title>IHE PCC Cancer Diagnosis Entry - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.4.14.1"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

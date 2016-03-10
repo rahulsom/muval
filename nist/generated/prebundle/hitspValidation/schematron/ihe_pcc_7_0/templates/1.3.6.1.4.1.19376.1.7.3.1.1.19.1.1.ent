@@ -1,0 +1,199 @@
+<!--  IHE QRPH Labor and Delivery Summary for Vital Records Specification: 1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1-errors">
+    <title>IHE QRPH Labor and Delivery Summary for Vital Records Specification - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1"]'>
+       Error: The IHE QRPH Labor and Delivery Summary for Vital Records requires the IHE QRPH Labor and Delivery Summary for Vital Records template ID
+       (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1).
+    </assert>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1"]'>
+    <assert test='../cda:ClinicalDocument'> 
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records can only be used on Clinical Documents. 
+    </assert>
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.1.2"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the parent template ID for
+       PCC Labor and Delivery Summary is not present.
+    </assert>
+    <assert test='cda:code[@code = "57057-2"]'> 
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the document type code of a Labor and 
+       Delivery Summary for Vital Records must be 57057-2. 
+    </assert> 
+    <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the document type code must come from 
+       the LOINC code system (2.16.840.1.113883.6.1). 
+    </assert> 
+
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.3"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Hospital Admission Diagnosis.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.1"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Chief Complaint.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.10.3.2"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Transport Mode.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.4"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Pain Assessment Panel.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.28"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Coded Results.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.4"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) History of Present Illness.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.8"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) History of Past Illness.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Active Problems.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.13"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Allergies and other Adverse Reactions.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.15.1"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Coded Detailed Physical Examination.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.11.2.2.1"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Estimated Due Date.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.21"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Medications Administered.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.12"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Transfusion History.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Labor and Delivery Events.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.4"]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Newborn Delivery Information.
+   </assert>
+<!--
+
+Removed Jan 28th, 2013.  Ambiguity in specification.
+
+   <assert test='.//cda:section[cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.5.3.4"]]//cda:section[cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.4.13.5"]]'>
+       Error: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+       for Vital Records Document must contain a(n) Pregnancy History and a Pregnancy Observation.
+   </assert>
+-->
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1-warnings">
+    <title>IHE QRPH Labor and Delivery Summary for Vital Records Specification - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1"]'>
+     <assert test='.//cda:templateId[@root = "2.16.840.1.113883.10.20.1.21"]'>
+         Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+         for Vital Records Document should contain a(n) Mother''s Encompassing Encounter.
+     </assert>
+
+     <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.20"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Adminission Medication History.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.5"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Assessment and Plan.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.5.1"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Coded Antenatal Testing and Surveillance.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.35"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Coded Advance Directives.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.1"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Birth Plan.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.6"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Intravenous Fluids Administered.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.3"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Intake and Output.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.2"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Estimated Blood Loss.
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.16.2.2"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) .
+       </assert>
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.5.3.7"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Payers.
+       </assert>
+
+<!--
+
+Removed Jan 28th, 2013.  Ambiguity in specification.
+
+       <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.16.2.1.1.1"]'>
+           Warning: In IHE QRPH Labor and Delivery Summary for Vital Records (1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1), the Labor and Delivery Summary
+           for Vital Records Document should contain a(n) Coded History of Infection Section.
+       </assert>
+-->
+
+    </rule>
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1-manual">
+    <title>IHE QRPH Labor and Delivery Summary for Vital Records Specification - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.19.1.1"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

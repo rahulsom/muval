@@ -1,0 +1,47 @@
+<!--  IHE PCC Labor and Delivery Section: 1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3-errors">
+    <title>IHE PCC Labor and Delivery Section - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3"]'>
+    <assert test='../cda:section'> 
+       Error: In IHE PCC Labor and Delivery Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3), the Labor and Delivery Section can only be 
+       used on sections. 
+    </assert> 
+    <!-- Verify the section type code --> 
+    <assert test='cda:code[@code = "XX-LABORANDDELIVERY"]'> 
+       Error: In IHE PCC Labor and Delivery Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3), the section type code of a Labor and Delivery 
+       Section must be XX-LABORANDDELIVERY. 
+    </assert> 
+    <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+       Error: In IHE PCC Labor and Delivery Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3), the section type code must come from 
+       the LOINC code system (2.16.840.1.113883.6.1). 
+    </assert> 
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3-warnings">
+    <title>IHE PCC Labor and Delivery Section - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3"]'>
+    <assert test='.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>
+       Warning: In IHE PCC Labor and Delivery Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3), a Problem subsection is required
+       if known.
+    </assert>
+    <assert test='.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.13.2.11"]'>
+       Warning: In IHE PCC Labor and Delivery Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3), a Procedures and Interventions
+       subsection is required if known.
+    </assert>
+    <assert test='.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9"]'>
+       Warning: In IHE PCC Labor and Delivery Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3), an Event Outcomes subsection is
+       required if known.
+    </assert>
+
+    </rule>
+
+  </pattern>
