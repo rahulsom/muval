@@ -1,0 +1,72 @@
+<!--  IHE PCC Risk Indicators for Hearing Loss: 1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1-errors">
+    <title>IHE PCC Risk Indicators for Hearing Loss - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1"]'>
+     <!-- Verify that the template id is used on the appropriate type of
+	       object --> 
+        <assert test='../cda:section'> 
+           Error: In IHE PCC Risk Indicators for Hearing Loss (1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1), the Cancer Diagnosis can only be used on 
+           sections. 
+        </assert>
+
+        <assert test='cda:title'>
+           Error: In IHE PCC Risk Indicators for Hearing Loss (1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1), the title element shall be present in each
+           section and should be valued with an appropriate text string representing the clinical data in that section.
+           See IHE PCC Technical Framework, Volume 2, Section 6.3.3.
+        </assert>
+
+        <assert test='cda:id'>
+           Error: In IHE PCC Risk Indicators for Hearing Loss (1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1), all sections SHALL have an instance id to 
+           uniquely identify that section content module.
+           See IHE PCC Technical Framework, Volume 2, Section 6.3.3.
+        </assert>     
+        <!-- Verify the section type code --> 
+        <assert test='cda:code[@code = "58232-0"]'> 
+           Error: In IHE PCC Risk Indicators for Hearing Loss (1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1), the section type code of a Risk Indicators 
+	   for Hearing Loss must be 58232-0. 
+        </assert> 
+
+        <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+           Error: In IHE PCC Risk Indicators for Hearing Loss (0.3.6.1.4.1.19376.1.7.3.1.1.15.3.1), the section type code of a 
+           Cancer Diagnosis must come from the LOINC code system (2.16.840.1.113883.6.1). 
+        </assert> 
+
+        <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.7.3.1.1.15.5.1"]'> 
+	      <!-- Verify that all required data elements are present -->
+           Error: In IHE PCC Risk Indicators for Hearing Loss (1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1), a Risk Indicator for Hearing Loss
+           must contain Risk Indicators for Hearing Loss Entry (1.3.6.1.4.1.19376.1.7.3.1.1.15.5.1).
+        </assert> 
+
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1-warnings">
+    <title>IHE PCC Risk Indicators for Hearing Loss - warning validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1"]'>
+      <report test="."/>
+    </rule>
+-->
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1-manual">
+    <title>IHE PCC Risk Indicators for Hearing Loss - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

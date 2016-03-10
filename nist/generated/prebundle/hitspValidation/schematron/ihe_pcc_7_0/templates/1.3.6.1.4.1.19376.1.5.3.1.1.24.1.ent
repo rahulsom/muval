@@ -1,0 +1,55 @@
+<!--  IHE PCC Reconciliation Content: 1.3.6.1.4.1.19376.1.5.3.1.1.24.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.1-errors">
+    <title>IHE PCC Reconciliation Content - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.1"]'>
+       Error: The IHE PCC Reconciliation of Diagnoses, Allergies and Medications document requires the 
+       IHE PCC Reconciliation Content template ID (1.3.6.1.4.1.19376.1.5.3.1.1.24.1).
+    </assert>
+    </rule>
+
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.1"]'>
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.1"]'>
+       Error: In IHE PCC Reconciliation Content (1.3.6.1.4.1.19376.1.5.3.1.1.24.1), the ClinicalDocument SHALL conform
+       to the Medical Documents template (1.3.6.1.4.1.19376.1.5.3.1.1.1).
+    </assert>
+    <assert test='.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.1"]'>
+       Error: In IHE PCC Reconciliation Content (1.3.6.1.4.1.19376.1.5.3.1.1.24.1), it SHALL contain at least one [1..*]
+       Reconciliation Act (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.1) to indicate where diagnoses, allergies and medications have
+       been reconciled in the Active Problems, Medications or Allergies and Other Adverse Reactions sections.
+    </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.1-warnings">
+    <title>IHE PCC Reconciliation Content - warning validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.1"]'>
+      <report test="."/>
+    </rule>
+-->
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.1-manual">
+    <title>IHE PCC Reconciliation Content - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.1"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

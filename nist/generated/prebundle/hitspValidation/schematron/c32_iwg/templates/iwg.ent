@@ -1,0 +1,88 @@
+
+<pattern id='p-iwg-errors'>
+
+
+ <rule context='/cda:ClinicalDocument'>   
+
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.102"]'>
+      Error: IWG Exchange Specification requires an Allergies Section (2.16.840.1.113883.3.88.11.83.102).
+   </assert>  
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.103"]'>
+      Error: IWG Exchange Specification requires a Problem List Section (2.16.840.1.113883.3.88.11.83.103).
+   </assert>
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.112"]'>
+      Error: IWG Exchange Specification requires a Medications Section (2.16.840.1.113883.3.88.11.83.112).
+   </assert>
+
+   <assert test='.//cda:informant'>
+      Error: IWG Exchange Specification requires an Information Source (cda:informant).
+   </assert>
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.117"]'>
+      Error: IWG Exchange Specification requires a Immunization Section (2.16.840.1.113883.3.88.11.83.117).
+   </assert>
+
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.119"]'>
+      Error: IWG Exchange Specification requires a Vital Signs Section (2.16.840.1.113883.3.88.11.83.119).
+   </assert>
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.126"]'>
+      Error: IWG Exchange Specification requires a Social History Section (2.16.840.1.113883.3.88.11.83.126).
+   </assert>
+
+
+
+ </rule>
+
+</pattern>
+
+
+
+<!-- Pattern for Warnings -->
+
+
+<pattern id='p-iwg-warning'>
+
+ <rule context='*[cda:templateId/@root="2.16.840.1.113883.3.88.11.32.1"]'>
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.4"]'>
+      Warning: IWG Exchange Specification sets Healthcare Provider (2.16.840.1.113883.3.88.11.83.4) as an R2 level requirement.
+   </assert>
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.101.1"]'>
+      Warning: IWG Exchange Specification sets Payers Section (2.16.840.1.113883.3.88.11.83.101.1) as an R2 level requirement.
+   </assert>
+
+   <assert test='.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.4.13.5"]'>
+      Warning: IWG Exchange Specification sets Pregnancy Section (1.3.6.1.4.1.19376.1.5.3.1.4.13.5) as an R2 level requirement.
+   </assert>
+
+   <assert test='.//cda:templateId[@root="2.16.840.1.113883.3.88.11.83.116"]'>
+      Warning: IWG Exchange Specification sets Advance Directive Section (2.16.840.1.113883.3.88.11.83.116) as an R2 level requirement.
+   </assert>
+
+
+
+</rule>
+
+</pattern>
+
+
+
+<!-- Pattern for Notes -->
+
+
+<pattern id='p-iwg-note'>
+
+ <rule context='*[cda:templateId/@root="2.16.840.1.113883.3.88.11.32.1"]'>
+
+
+
+ </rule>
+
+</pattern>
+

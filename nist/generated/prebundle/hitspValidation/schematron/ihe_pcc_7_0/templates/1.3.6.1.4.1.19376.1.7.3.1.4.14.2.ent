@@ -1,0 +1,99 @@
+<!--  IHE PCC TNM Stage Information: 1.3.6.1.4.1.19376.1.7.3.1.4.14.2 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.4.14.2-errors">
+    <title>IHE PCC TNM Stage Information - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.4.14.2"]'>
+
+   <assert test='cda:code[@code and @codeSystem="2.16.840.1.113883.6.1"]'>
+      Error: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), the code element indicates that this observation is 
+      the TNM Clinical Stage Information. This code SHALL be the LOINC code xxxxx-x.
+   </assert>
+
+   <assert test='cda:statusCode/@code="completed"'>
+      Error: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), the status code for all TNM Clinical Stage Information 
+      observations SHALL be 'completed'.
+   </assert>
+
+   <assert test='cda:value[@xsi:type="CD"]'>
+      Error: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), the value records the TNM Clinical Stage Group, which 
+      is a detailed site-specific code for the clinical stage group as defined by AJCC and recorded by the physician. This element is
+      required. It is always represented using the CD datatype (xsi:type='CD'), even though the value may be a coded or uncoded string.
+   </assert>
+
+   <assert test='cda:value/cda:qualifier[cda:name[@code="21909-7" and @codeSystem="2.16.840.1.113883.6.1"]]/cda:value'>
+      Error: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), a qualifier provides TNM Clinical Stage Descriptor 
+      information, indicating The AJCC clinical stage prefix/suffix recorded by the physician. AJCC stage descriptors identify special
+      cases that require separate analysis. The code and codeSystem attributes SHALL be recorded code="21909-7" and 
+      codeSystem="2.16.840.1.113883.6.1". The value records the TNM Clinical Stage Descriptor,
+   </assert>
+   <assert test='cda:value/cda:qualifier/cda:name[@code="21917-0" and @codeSystem="2.16.840.1.113883.6.1"]'>
+      Error: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), a qualifier provides TNM Edition Number information, 
+      indicating the edition number of the AJCC Staging Manual. The code and codeSystem attributes of name SHALL be recorded as
+      code="21917-0" and codeSystem="2.16.840.1.113883.6.1".
+   </assert>
+   <assert test='not(cda:participant) or (cda:participant/cda:participantRole/cda:code[@code="21910-5" and @codeSystem="2.16.840.1.113883.6.1"])'>
+      Error: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), the participant element should specify the person who 
+      recorded the AJCC staging elements and stage group in the patient''s medical record. The code and codeSystem attributes for
+      participantRole SHALL be recorded exactly as code="21910-5" and codeSystem="2.16.840.1.113883.6.1".
+   </assert>
+   <assert test='not(cda:participant) or (cda:participant/cda:participantRole/cda:playingEntity/cda:code)'>
+      Error: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), in participant, participantRole SHALL be recorded exactly as 
+      shown above. The code attribute of playingEntity indentifies the person who recorded the staging elements.
+   </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.4.14.2-warnings">
+    <title>IHE PCC TNM Stage Information - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.4.14.2"]'>
+
+   <assert test='cda:code[@displayName and @codeSystemName]'>
+      Warning: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), the code element indicates that this observation is the 
+      TNM Clinical Stage Information.  It is good style to include the displayName and codeSystemName to help debugging.
+   </assert>
+   <assert test='cda:participant'>
+      Warning: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), a participant element should specify the person who 
+      recorded the AJCC staging elements and stage group in the patient''s medical record. 
+   </assert>
+   <assert test='cda:entryRelationship[@inversionInd="false"]/cda:observation[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.13"]/
+                                     cda:code[@code="21905-5" and @codeSystem="2.16.840.1.113883.6.1"]'>
+      Warning: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), simple observations that describe the TNM Clinic Tumor,
+      SHALL be included if known and inversionInd SHALL be "false".
+   </assert>
+
+   <assert test='cda:entryRelationship[@inversionInd="false"]/cda:observation[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.13"]/
+                                     cda:code[@code="21906-3" and @codeSystem="2.16.840.1.113883.6.1"]'>
+      Warning: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), simple observations that describe the TNM Clinic Nodes,
+      SHALL be included if known and inversionInd SHALL be "false".
+   </assert>
+
+   <assert test='cda:entryRelationship[@inversionInd="false"]/cda:observation[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.13"]/
+                                       cda:code[@code="21907-1" and @codeSystem="2.16.840.1.113883.6.1"]'>
+      Warning: In IHE TNM Stage Information (1.3.6.1.4.1.19376.1.7.3.1.4.14.2), simple observations that describe the TNM Clinic Metastases,
+      SHALL be included if known and inversionInd SHALL be "false".
+   </assert>
+
+
+</rule>
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.4.14.2-manual">
+    <title>IHE PCC TNM Stage Information - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.4.14.2"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

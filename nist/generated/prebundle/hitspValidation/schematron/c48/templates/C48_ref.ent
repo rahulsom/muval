@@ -1,0 +1,142 @@
+
+<pattern id='p-C48_ref-errors'>
+
+
+ <rule context='/cda:ClinicalDocument'>   
+
+   <assert test='cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.3"'>
+      Error: HITSP/C48 Referral supports the IHE XDS-MS Referral Summary Specification as defined by IHE Patient Care
+      Coordination Technical Framework Revision 4.0 or later.  Therefore any HITSP/C48 Referral document must 
+      contain a TemplateID element with the root attribute set to the value 1.3.6.1.4.1.19376.1.5.3.1.1.3 which
+      is the template identifier for IHE XDS-MS Referral Summary Specification. 
+      See HITSP/C48 Section 2.2.1 and IHE PCC Technical Framework Volume 2 Section 5.5.1 and Section 6.1.1.3.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.11"]) = 1'>
+      Error: HITSP/C48 Referral requires a non-repeatable Active Problems.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+ 
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.1"]) = 1'>
+      Error: HITSP/C48 Referral requires a non-repeatable Advance Directives.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.2"]) = 1'>
+      Error: HITSP/C48 Referral requires a non-repeatable Allergies.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.8"]) = 1'>
+      Error: HITSP/C48 Referral requires a non-repeatable Current Meds.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.3.4"]) = 1'>
+      Error: HITSP/C48 Referral requires a non-repeatable History of Present Illness.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.10"]) = 1'>
+      Error: HITSP/C48 Referral requires a non-repeatable Plan of Care.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.3.1"]) = 1'>
+      Error: HITSP/C48 Referral requires a non-repeatable Reason for Referral.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+
+
+ </rule>
+
+</pattern>
+
+
+
+<!-- Pattern for Warnings -->
+
+
+<pattern id='p-C48_ref-warning'>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.3"]'>
+
+   <assert test='count(.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.3.14"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Family History if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.5"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Functional Status if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.6"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Immunizations if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.12"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable List of Surgeries if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.7"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Medical Equipment if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.9"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Pertinent Insurance Information if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.9.15"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Physical Exam if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.3.28"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Relevant Diagnostic Surgical Procedures / Clinical Reports and
+      Relevant Diagnostic Test and Reports if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.3.8"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Resolved Problems if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.15"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Social History if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+   <assert test='count(.//cda:templateId[@root="2.16.840.1.113883.10.20.1.16"]) = 1'>
+      Warning: HITSP/C48 Referral requires a non-repeatable Vital Signs if that information is known.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+
+</rule>
+
+</pattern>
+
+
+
+<!-- Pattern for Notes -->
+
+
+<pattern id='p-C48_ref-note'>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.3"]'>
+   <assert test='count(.//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.3.18"]) = 1'>
+      Note: HITSP/C48 Referral allows a non-repeatable Pertinent Review of Systems as an optional content module.
+      See HITSP/C48 Section 2.2.1, Table 2.2.1-1.
+   </assert>
+
+ </rule>
+
+</pattern>
+

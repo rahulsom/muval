@@ -1,0 +1,57 @@
+<!--  IHE PCC Immunization Recommendation: 1.3.6.1.4.1.19376.1.5.3.1.4.12.2 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.4.12.2-errors">
+    <title>IHE PCC Immunization Recommendation - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.12.2"]'>
+
+   <assert test='cda:templateId[@root="2.16.840.1.113883.10.20.1.25"]'>
+      Error: In IHE PCC Immunization Recommendation (1.3.6.1.4.1.19376.1.5.3.1.4.12.2), the element represents a plan of care activity
+      for the patient, and so shall conform to the CCD Plan of Care activity template.
+   </assert>
+
+   <assert test='cda:id'>
+      Error: In IHE PCC Immunization Recommendation (1.3.6.1.4.1.19376.1.5.3.1.4.12.2), each plan of care activity shall contain an
+      identifier.
+   </assert>
+
+   <assert test='cda:code'>
+      Error: In IHE PCC Immunization Recommendation (1.3.6.1.4.1.19376.1.5.3.1.4.12.2), an immunization care plan entry shall contain a
+      code identifying that this is in reference to an immunization.
+   </assert>
+
+
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.4.12.2-warnings">
+    <title>IHE PCC Immunization Recommendation - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.12.2"]'>
+   <assert test='cda:effectiveTime'>
+      Warning: In IHE PCC Immunization Recommendation (1.3.6.1.4.1.19376.1.5.3.1.4.12.2), the effectiveTime element should be present.
+
+   </assert>
+
+
+    </rule>
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.4.12.2-notes">
+    <title>IHE PCC Immunization Recommendation - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.12.2"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

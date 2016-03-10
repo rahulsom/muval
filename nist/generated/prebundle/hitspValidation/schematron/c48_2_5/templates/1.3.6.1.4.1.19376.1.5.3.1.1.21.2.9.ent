@@ -1,0 +1,37 @@
+<!--  IHE PCC Event Outcomes Section: 1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9-errors">
+    <title>IHE PCC Event Outcomes Section - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9"]'>
+    <assert test='../cda:section'> 
+       Error: In IHE PCC Event Outcomes Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9), the Event Outcomes Section can only be 
+       used on sections. 
+    </assert> 
+    <!-- Verify the section type code --> 
+    <assert test='cda:code[@code = "42545-4"]'> 
+       Error: In IHE PCC Event Outcomes Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9), the section type code of a Event Outcomes 
+       Section must be 42545-4. 
+    </assert> 
+    <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+       Error: In IHE PCC Event Outcomes Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9), the section type code must come from 
+       the LOINC code system (2.16.840.1.113883.6.1). 
+    </assert> 
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9-warnings">
+    <title>IHE PCC Event Outcomes Section - warning validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.9"]'>
+      <report test="."/>
+    </rule>
+-->
+
+  </pattern>

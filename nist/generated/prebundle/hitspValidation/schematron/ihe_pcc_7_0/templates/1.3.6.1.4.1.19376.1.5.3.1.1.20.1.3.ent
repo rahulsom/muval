@@ -1,0 +1,133 @@
+<!--  IHE PCC eNursing Summary: 1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3-errors">
+    <title>IHE PCC eNursing Summary - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3"]'>
+       Error: The eNursing Summary requires the eNursing Summary template ID (1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3).
+    </assert>
+    </rule>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3"]'>
+   <!-- Verify that the template id is used on the appropriate type of object -->
+   <assert test='../cda:ClinicalDocument'>
+     Error: The eNursing Summary can only be used on Clinical Documents.
+   </assert>
+
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.2"]'>
+       Error: In IHE PCC eNursing Summary (1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3), the parent template ID for
+       Medical Summaries is not present.
+    </assert>
+
+ 
+   <!-- Verify the document type code -->
+   <assert test='cda:code[@code = "28651-8"]'>
+     Error: The document type code of a eNursing Summary must be 28651-8.
+   </assert>
+   <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'>
+     Error: The document type code must come from the LOINC code 
+     system (2.16.840.1.113883.6.1).
+   </assert> 
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.13"]'> 
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain an Allergies and Other Adverse Reactions Section.
+   </assert> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.31"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Care Plan Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.35"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Coded Advance Directives Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain an Active Problems Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.1"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Chief Complaint Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.3"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Hospital Admission Diagnosis Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.7"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Discharge Diagnosis Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.5.3.5"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Medical Devices Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.2"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Diet and Nutrition Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.3"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Intake and Output Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.28"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Coded Results Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.21"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Medications Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.12.2.2"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Pain Scale Assessment Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.11"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Procedures and Interventions Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.1"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Provider Orders Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.4"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain an Assessments Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.25"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The eNursing Summary Document must contain a Vital Signs Section.
+   </assert>
+
+
+ 
+ </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3-warnings">
+    <title>IHE PCC eNursing Summary - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3"]'>
+
+    </rule>
+
+  </pattern>
+
+
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3-notes">
+    <title>IHE PCC eNursing Summary - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.20.1.3"]'>
+
+    </rule>
+
+  </pattern>
+

@@ -1,0 +1,39 @@
+<!--  IHE PCC Newborn Status at Maternal Discharge Section: 1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8-errors">
+    <title>IHE PCC Newborn Status at Maternal Discharge Section - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8"]'>
+
+   <assert test='../cda:section'> 
+      Error: In IHE PCC Newborn Status at Maternal Discharge Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8), the 
+      Newborn Status at Maternal Discharge Section can only be used on sections. 
+   </assert> 
+
+   <assert test='cda:code[@code = "XX-NEWBORNSTATUS"]'> 
+      Error: In IHE PCC Newborn Status at Maternal Discharge Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8), the section type code of a  
+      Newborn Status at Maternal Discharge Section must be XX-NEWBORNSTATUS.
+   </assert> 
+
+   <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+      Error: In IHE PCC Newborn Status at Maternal Discharge Section (1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8), the section type code must come 
+      from the LOINC code system (2.16.840.1.113883.6.1). 
+   </assert> 
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8-warnings">
+    <title>IHE PCC Newborn Status at Maternal Discharge Section - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.21.2.8"]'>
+
+    </rule>
+
+  </pattern>
+
+

@@ -1,0 +1,53 @@
+<!--  IHE PCC Subject Participant: 1.3.6.1.4.1.19376.1.5.3.1.4.15.2 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.4.15.2-errors">
+    <title>IHE PCC Subject Participant - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.15.2"]'>
+    <assert test='../cda:section'> 
+       Error: In IHE PCC Subject Participant (1.3.6.1.4.1.19376.1.5.3.1.4.15.2), the subject element SHALL be present.
+    </assert>
+
+    <assert test='cda:relatedSubject/@classCode="PRS"'>
+       Error: In IHE PCC Subject Participant (1.3.6.1.4.1.19376.1.5.3.1.4.15.2), it shall contain a relatedSubject element 
+       that is a personal relation of the patient (classCode='PRS').
+    </assert>
+
+    <assert test='cda:code/@codeSystem="2.16.840.1.113883.5.111"'>
+       Error: In IHE PCC Subject Participant (1.3.6.1.4.1.19376.1.5.3.1.4.15.2), the code element shall be present, and give 
+       the relationship of the subject to the patient. The code attribute shall be present, and shall contain a value from
+       the HL7 FamilyMember vocabulary.
+    </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.4.15.2-warnings">
+    <title>IHE PCC Subject Participant - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.4.15.2"]'>
+
+    <assert test='cda:subject/sdtc:id'>
+       Warning: In IHE PCC Subject Participant (1.3.6.1.4.1.19376.1.5.3.1.4.15.2), the sdtc:id element should be present. 
+       It is used to identify the patient relation to create a pedigree graph.
+    </assert>
+
+    <assert test='cda:subject/cda:administrativeGenderCode'>
+       Warning: In IHE PCC Subject Participant (1.3.6.1.4.1.19376.1.5.3.1.4.15.2), the administrativeGenderCode element 
+       should be present. It gives the gender of the relation.
+    </assert>
+
+    <assert test='cda:subject/cda:birthTime'>
+       Warning: In IHE PCC Subject Participant (1.3.6.1.4.1.19376.1.5.3.1.4.15.2), the birthTime element shall be present
+       when known.  It gives the birth date.  This data element should be precise at least to the year for most patients.
+       It should be precise to the hour for patients born in the last week (based on the document effective time).
+    </assert>
+
+
+    </rule>
+
+  </pattern>

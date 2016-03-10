@@ -15,7 +15,7 @@ sourceSets {
     main {
         java {
             srcDir 'src/main/java'
-            srcDir 'build/generated/src/java'
+            srcDir 'nist/generated/src/java'
         }
         resources {
             srcDir 'src/main/resources'
@@ -23,7 +23,6 @@ sourceSets {
         }
     }
 }
-
 
 repositories {
     jcenter()
@@ -37,7 +36,17 @@ Map<String, String> saxon(String subproject = null) {
     [group: 'net.sourceforge.saxon', name: 'saxon', version: '9.1.0.8', classifier: subproject]
 }
 
+configurations {
+    buildsrc
+}
+
 dependencies {
+
+    buildsrc 'org.codehaus.groovy:groovy-all:2.4.4'
+    buildsrc 'com.ning:async-http-client:1.9.33'
+    buildsrc 'io.netty:netty:3.10.5.Final'
+    buildsrc 'commons-lang:commons-lang:2.6'
+
     compile 'commons-cli:commons-cli:1.0'
     compile 'javax.xml.bind:jsr173_api:1.0'
     compile 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
@@ -62,52 +71,32 @@ dependencies {
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }
 
-def rulesets = [
-        [name: 'Ccd',            dir: 'ccd',                file: 'ccd.sch'          ],
-        [name: 'Cda4Cdt',        dir: 'cda4cdt',            file: 'HandP.IHE.PCC.sch'],
-        [name: 'C32_V25_C83_20', dir: 'c32_v_2_5_c83_2_0',  file: 'HITSP_C32.sch'    ],
-        [name: 'Hl7Phmr',        dir: 'HL7_PHMR_20120427',  file: 'PHMR.sch'         ],
-        [name: 'Hl7Qrda',        dir: 'HL7_QRDA',           file: 'qrdaCat1.sch'     ],
-        [name: 'Hl7QrdaBmi',     dir: 'HL7_QRDA',           file: 'bmi.sch'          ],
-        [name: 'IheBppc',        dir: 'IHE_BPPC_2010Dec10', file: 'BPPC.sch'         ],
-]
-rulesets.each { ruleset ->
-    task "create_${ruleset.name}"(type: Zip) {
-        from "schematron/${ruleset.dir}"
-        //include "**/*.*"
-        destinationDir file('build/generated/resources/schematron')
-        archiveName ruleset.name
-    }
+task downloadResources(type: JavaExec) {
+    description 'Download Schemas and Schematron files from NIST'
+    
+    classpath file("${rootDir}/buildSrc/build/classes/main")
+    classpath configurations.buildsrc
+
+    main = 'buildscript.DownloadHelper'
+    args = ['docTypes.xml', 'nist']
 }
 
-task "create_stylesheet"(type: Zip) {
+task "createStylesheet"(type: Zip) {
+    description "Package stylesheet"
     from "schematron"
     include "*.xsl"
-    destinationDir file('build/generated/resources/schematron')
+    destinationDir file('build/generated/resources')
     archiveName "stylesheet"
 }
 
-task "create_schema"(type: Zip) {
-    from "schema/cdar2c32"
-    destinationDir file('build/generated/resources/schematron')
-    archiveName "schema"
+task "createCachefile"(type: Zip) {
+    description "Package Cachefile"
+    from "nist/generated/prebundle"
+    destinationDir file('build/generated/resources')
+    archiveName "cachefile"
 }
 
-task packageRules() {
-    dependsOn rulesets*.name.collect { "create_${it}" }
-    dependsOn 'create_stylesheet', 'create_schema'
-    doLast {
-        file('build/generated/src/java/gov/nist/mu/validation').mkdirs()
-        def fileBody = 'package gov.nist.mu.validation;\nclass Rulesets {\n' + rulesets.
-                collect {
-                    $/    public static final Ruleset ${it.name} = new Ruleset("${it.name}", "${it.file}");/$
-                }.join('\n') +
-                "\n}\n"
-        file('build/generated/src/java/gov/nist/mu/validation/Rulesets.java').text = fileBody
-    }
-}
-
-compileJava.dependsOn 'packageRules'
+compileJava.dependsOn 'createStylesheet', 'createCachefile'
 
 publishing {
     publications {

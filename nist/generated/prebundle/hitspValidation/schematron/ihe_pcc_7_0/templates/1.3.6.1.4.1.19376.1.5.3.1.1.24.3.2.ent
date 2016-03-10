@@ -1,0 +1,54 @@
+<!--  IHE PCC Diagnoses Reconciliation Act: 1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2-errors">
+    <title>IHE PCC Diagnoses Reconciliation Act - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2"]'>
+
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.1"]'>
+       Error: In IHE PCC Diagnoses Reconciliation Act (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2), the act SHALL contain
+       templateId/@root containing the value 1.3.6.1.4.1.19376.1.5.3.1.1.24.3.1 to assert conformance to this
+       reconciliation act template.
+    </assert>
+
+    <assert test='cda:code[@code="DIAGREC" and @codeSystem="1.3.5.1.4.1.19376.1.5.3.2"]'>
+       Error: In IHE PCC Diagnoses Reconciliation Act (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2), the cda:code/@code attribute
+       SHALL be DIAGREC and the code/@codeSystem attribute SHALL be 1.3.5.1.4.1.19376.1.5.3.2.
+    </assert>
+
+    <assert test='count(cda:entryRelationship[@typeCode="SUBJ"]//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.4.5.2"]) = 1'>
+       Error: In IHE PCC Diagnoses Reconciliation Act (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2), the act SHALL contain at least one [1..*]
+       entryRelationship.  The entryRelationship/@typeCode SHALL contain the value SUBJ.  The entryRelationship SHALL contain one [1..1]
+       act conforming to the Problem Concern Entry (1.3.6.1.4.1.19376.1.5.3.1.4.5.2).
+    </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2-warnings">
+    <title>IHE PCC Diagnoses Reconciliation Act - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2"]'>
+    <assert test='cda:code[@codeSystemName="IHEActCode"]'>
+       Warning: In IHE PCC Diagnoses Reconciliation Act (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2), the code/@codeSystemName attribute
+       SHOULD be IHEActCode.
+    </assert>
+    </rule>
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2-manual">
+    <title>IHE PCC Diagnoses Reconciliation Act - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.2"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

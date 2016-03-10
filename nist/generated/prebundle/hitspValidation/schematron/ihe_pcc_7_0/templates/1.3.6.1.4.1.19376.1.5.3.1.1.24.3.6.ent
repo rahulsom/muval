@@ -1,0 +1,68 @@
+<!--  IHE PCC Reconciliation Clinical Data Source: 1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6-errors">
+    <title>IHE PCC Reconciliation Clinical Data Source - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6"]'>
+    <assert test='self::cda:reference[@typeCode="XCRPT"]'>
+       Error: In IHE PCC Reconciliation Clinical Data Source (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6), the reference element
+       SHALL contain only one [1..1] @typeCode attribute whose value is XCRPT.
+    </assert>
+    <assert test='count(cda:externalAct[@classCode="ACT" and @moodCode="EVN"]) = 1'>
+       Error: In IHE PCC Reconciliation Clinical Data Source (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6), there is exactly one
+       [1..1] externalAct element where the @classCode attribute is ACT and the @moodCode attribute is EVN.
+    </assert>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6"]/cda:externalAct[@classCode="ACT" and @moodCode="EVN"]'>
+    <assert test='count(cda:id) = 1'>
+       Error: In IHE PCC Reconciliation Clinical Data Source (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6), the externalAct SHALL
+       contain exactly one [1..1] id element.
+    </assert>
+
+    <assert test='not(cda:id/@nullFlavor)'>
+       Error: In IHE PCC Reconciliation Clinical Data Source (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6), the externalAct/id SHALL
+       NOT contain a @nullFlavor attribute.
+    </assert>
+
+    <assert test='count(cda:code) = 1'>
+       Error: In IHE PCC Reconciliation Clinical Data Source (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6), the externalAct SHALL
+       contain exactly one [1..1] code element.
+    </assert>
+
+    <assert test='not(cda:code/@nullFlavor)'>
+       Error: In IHE PCC Reconciliation Clinical Data Source (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6), the externalAct/code SHALL 
+       NOT contain a @nullFlavor attribute.
+    </assert>
+
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6-warnings">
+    <title>IHE PCC Reconciliation Clinical Data Source - warning validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6"]'>
+      <report test="."/>
+    </rule>
+-->
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6-manual">
+    <title>IHE PCC Reconciliation Clinical Data Source - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.6"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

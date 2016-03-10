@@ -1,0 +1,132 @@
+<!--  IHE QRPH PRPH-Ca: 1.3.6.1.4.1.19376.1.7.3.1.1.14.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.14.1-errors">
+    <title>IHE QRPH PRPH-Ca - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.7.3.1.1.14.1"]'>
+       Error: The Physical Reporting to a Public Health Repository -- Cancer Registry requires the 
+       Physical Reporting to a Public Health Repository -- Cancer Registry template ID (1.3.6.1.4.1.19376.1.7.3.1.1.14.1).
+    </assert>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.14.1"]'>
+
+   <assert test='../cda:ClinicalDocument'>
+     Error: The Physical Reporting to a Public Health Repository -- Cancer Registry can only be used on Clinical Documents.
+   </assert> 
+
+   <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.1"]'>
+     Error: The parent template identifier for Physical Reporting to a Public Health Repository -- Cancer Registry is not present.
+   </assert> 
+
+   <assert test='cda:code[@code = "x-physician-cancer-rep"]'>
+     Error: The document type code of a Physical Reporting to a Public Health Repository -- Cancer Registry must be x-physician-cancer-rep
+   </assert>
+   <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'>
+     Error: The document type code must come from the LOINC code 
+     system (2.16.840.1.113883.6.1).
+   </assert> 
+
+
+   <assert test='cda:componentOf/cda:encompassingEncounter/cda:encounterParticipant/@typeCode="REF"'>
+      Error: In Physical Reporting to a Public Health Repository -- Cancer Registry (1.3.6.1.4.1.19376.1.7.3.1.1.14.1), the Provider Referred 
+      From observation records the provider that referred the patient to the reporting facility.  This element SHALL be included as an 
+      encounterParticipant in the header of the CDA document in the event the patient was referred to this healthcare provider. An 
+      appropriate distinction of "None" is permitted. The typeCode SHALL be "REF".
+   </assert>
+
+   <assert test='cda:recordTarget/cda:patientRole/cda:patient/cda:birthplace'>
+      Error: In Physical Reporting to a Public Health Repository -- Cancer Registry (1.3.6.1.4.1.19376.1.7.3.1.1.14.1), the Birthplace 
+      observation records the birthplace of the patient.  This element SHALL be included in the patient section of the header of the 
+      CDA document. An appropriate distinction of "None" is permitted.
+
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.4.1.3.1"]'>
+     <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Encompassing Encounter.
+   </assert>
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.16.1"]'> 
+     <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Coded Social History Section .
+   </assert> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.5.3.7"]'>                               
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Payers Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.7.3.1.3.14.1"]'>
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Cancer Diagnosis Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Active Problems Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.7"]'>
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Progress Note Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.28"]'> 
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Coded Results Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "2.16.840.1.113883.10.20.1.12"]'>
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Procedures Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.19"]'>
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Medications Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.21"]'>
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Medications Administered Section.
+   </assert>
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.31"]'>
+   <!-- Verify that all required data elements are present -->
+      Error: The Physical Reporting to a Public Health Repository -- Cancer Registry must contain a(n) Care Plan.
+   </assert>
+
+</rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.14.1-warnings">
+    <title>IHE QRPH PRPH-Ca - warning validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.14.1"]'>
+      <report test="."/>
+    </rule>
+-->
+
+  </pattern>
+
+  <!-- manual -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.14.1-manual">
+    <title>IHE QRPH PRPH-Ca - manual validation phase</title>
+
+<!--
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.14.1"]'>
+      <report test="."/>
+    </rule>
+-->
+  </pattern>
+

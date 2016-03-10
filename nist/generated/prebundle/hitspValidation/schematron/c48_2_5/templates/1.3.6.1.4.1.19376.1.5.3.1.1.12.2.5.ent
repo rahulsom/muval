@@ -1,0 +1,100 @@
+<!-- Template_1.3.6.1.4.1.19376.1.5.3.1.1.12.2.5 -->
+<!-- IHE PCC Functional Status Assessment (FSA) -->
+<!-- IHE FSA Minimum Data Set (Physical Function) Sub-Section -->
+
+
+<pattern id='p-1.3.6.1.4.1.19376.1.5.3.1.1.12.2.5-errors'>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.12.2.5"]'> 
+
+     <!-- Verify that the template id is used on the appropriate type of object --> 
+   <assert test='../cda:section'> 
+     Error: The Physical Function templateId can only be used on sections. 
+   </assert> 
+
+   <!-- Verify the section type code --> 
+   <assert test='cda:code[@code = "46006-3"]'> 
+     Error: The section type code of a Physical Function must be 46006-3. 
+   </assert> 
+
+   <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'> 
+     Error: The section type code must come from the LOINC code system (2.16.840.1.113883.6.1). 
+   </assert> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.12.3.6"] or 
+                 .//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.12.3.7"]'>
+     Error: A Physical Function shall contain at least one Survey Panel or Survey Observation. 
+   </assert> 
+
+ </rule>
+ 
+</pattern>
+
+
+
+<!-- Pattern for Warnings -->
+
+<pattern id='p-1.3.6.1.4.1.19376.1.5.3.1.1.12.2.5-warnings'> 
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.12.2.5"]'>
+ 
+   <assert test='.//cda:organizer/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="46007-1"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 46007-1 survey panel (ADL self performance or support). 
+   </assert>
+ 
+   <assert test='.//cda:organizer/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="46008-9"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 46008-9 survey panel (Bathing). 
+   </assert>
+ 
+   <assert test='.//cda:organizer/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="46009-7"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 46009-7 survey panel (Test for balance). 
+   </assert>
+ 
+   <assert test='.//cda:organizer/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="46010-5"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 46010-5 survey panel (Functional limitation in range of motion). 
+   </assert>
+ 
+   <assert test='.//cda:organizer/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="46011-3"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 46011-3 survey panel (Modes of locomotion). 
+   </assert>
+ 
+   <assert test='.//cda:organizer/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="46012-1"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 46012-1 survey panel (Modes of transfer). 
+   </assert>
+ 
+   <assert test='.//cda:organizer/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="46013-9"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 46013-9 survey panel (ADL functional rehabilitation potential). 
+   </assert>
+ 
+   <assert test='.//cda:observation/cda:code[@codeSystem="2.16.840.1.113883.6.1" and @code="45611-1"]'> 
+     Warning: An FSA Physical Function data set should contain a LONIC 45611-1 Task segmentation observation. 
+   </assert>
+
+ </rule>
+
+</pattern>
+
+
+
+<!-- Pattern for Notes -->
+
+<pattern id='p-1.3.6.1.4.1.19376.1.5.3.1.1.12.2.5-notes'>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.12.2.5"]'> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.12.3.7"]'> 
+     <!-- Note any missing optional elements -->
+     Note: This Physical Function does not contain a Survey Panel. 
+     At least one Survey Panel or Survey Observation shall be present. 
+   </assert> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.12.3.6"]'> 
+     <!-- Note any missing optional elements -->
+     Note: This Physical Function does not contain Survey Observations.  
+     At least one Survey Panel or Survey Observation shall be present. 
+   </assert> 
+
+ </rule>
+
+</pattern>
+

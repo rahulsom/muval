@@ -1,0 +1,147 @@
+<!--  IHE PCC RECON Performer: 1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5-errors">
+    <title>IHE PCC RECON Performer - errors validation phase</title>
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]'>
+
+    <assert test='self::cda:performer[@typeCode="PRF"] and ancestor::cda:act'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the template SHALL be used
+       only in performer elements inside any CDA (V3) act.  The @typecode attribute of the performer
+       element SHALL use the value PRF.
+    </assert>
+    <assert test='count(cda:assignedEntity[@classCode="ASSIGNED"]) = 1'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer SHALL contain
+       only one [1..1] assignedEntity element.  The assignedEntity/@classCode value in ther performer
+       element SHALL be ASSIGNED.
+    </assert>
+    <assert test='cda:assignedEntity/cda:id'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..*] id element.
+    </assert>
+    <assert test='cda:assignedEntity/cda:addr'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..*] addr element.
+    </assert>
+    <assert test='cda:assignedEntity/cda:telecom'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..1] telecom element.
+    </assert>
+    <assert test='count(cda:assignedEntity/cda:assignedPerson) = 1'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain only one [1..1] assignedPerson elements further identifying the person.
+    </assert>
+    <assert test='cda:assignedEntity/cda:assignedPerson/cda:name'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..*] assignedPerson/name element.
+    </assert>
+    <assert test='count(cda:assignedEntity/cda:representedOrganization) = 1'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain only one [1..1] representedOrganization element.
+    </assert>
+    <assert test='cda:assignedEntity/cda:representedOrganization/cda:id'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..*] representedOrganization/id element.
+    </assert>
+    <assert test='cda:assignedEntity/cda:representedOrganization/cda:name'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..*] representedOrganization/name element.  The name of the organization
+       must appear.
+    </assert>
+    <assert test='not(cda:assignedEntity/cda:representedOrganization/cda:name[@nullFlavor])'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element, the name
+       element SHALL NOT use @nullFlavor to indicate that the information is unknown.
+    </assert>
+    <assert test='cda:assignedEntity/cda:representedOrganization/cda:addr'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..*] representedOrganization/addr element.
+    </assert>
+    <assert test='cda:assignedEntity/cda:representedOrganization/cda:telecom'>
+       Error: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the performer element SHALL
+       contain at least one [1..*] representedOrganization/telecom element.
+    </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5-warnings">
+    <title>IHE PCC RECON Performer - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]'>
+
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]/cda:assignedEntity/cda:id'>
+
+    <assert test='@root'>
+       Warning: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), there SHOULD be an
+       id/@root.
+    </assert>
+
+    </rule>
+
+  </pattern>
+
+  <!-- notes -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5-notes">
+    <title>IHE PCC RECON Performer - manual validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]'>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]/cda:assignedEntity/cda:id'>
+
+    <assert test='./@root or ./@nullFlavor'>
+       Note: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the id element MAY use the 
+       @nullFlavor attribute when information is unknown.  There SHOULD be an id/@root.
+    </assert>
+
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]/cda:assignedEntity/cda:addr'>
+
+    <assert test='* or @nullFlavor'>
+       Note: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the telecom element MAY use
+       the @nullFlavor attribute to indication that information is unknown.
+    </assert>
+
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]/cda:assignedEntity/cda:assignedPerson/cda:name'>  
+    <assert test='* or @nullFlavor'>
+       Note: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the assignedPerson/name element MAY
+       use @nullFlavor to indicate that the information is unknown.
+    </assert>
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]/cda:assignedEntity/cda:representedOrganization/cda:id'>
+
+    <assert test='* or @nullFlavor'>
+       Note: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the representedOrganization/id element
+       MAY use the @nullFlavor attribute to indicate that the identifier is unknown.
+    </assert>
+
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]/cda:assignedEntity/cda:representedOrganization/cda:addr'>
+    <assert test='* or @nullFlavor'>
+       Note: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the representedOrganization/addr element
+       MAY use the @nullFlavor attribute to indicate that the information is unknown.
+    </assert>
+
+    </rule>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5"]/cda:assignedEntity/cda:representedOrganization/cda:telecom'>
+    <assert test='* or @nullFlavor'>
+       Note: In PCC RECON Performer (1.3.6.1.4.1.19376.1.5.3.1.1.24.3.5), the representedOrganization/telecom element
+       MAY use the @nullFlavor attribute to indicate that the information is unknown.
+    </assert>
+    </rule>
+
+  </pattern>
+

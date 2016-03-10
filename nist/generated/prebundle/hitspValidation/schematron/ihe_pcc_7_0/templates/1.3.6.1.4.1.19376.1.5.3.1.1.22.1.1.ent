@@ -1,0 +1,124 @@
+<!--  IHE PCC Newborn Discharge Summary: 1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1-errors">
+    <title>IHE PCC Newborn Discharge Summary - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1"]'>
+       Error: The Newborn Discharge Summary requires the 
+       Newborn Discharge Summary template ID (1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1).
+    </assert>
+    </rule>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1"]'>
+   <!-- Verify that the template id is used on the appropriate type of object -->
+   <assert test='../cda:ClinicalDocument'>
+     Error: The Newborn Discharge Summary can only be used on Clinical Documents.
+   </assert> 
+
+    <assert test='cda:templateId[@root="1.3.6.1.4.1.19376.1.5.3.1.1.2"]'>
+       Error: In Newborn Discharge Summary, the parent template ID for Medical Summaries is not present.
+    </assert>
+
+
+   <!-- Verify the document type code -->
+   <assert test='cda:code[@code = "XX-NewbornDischargeSummary"]'>
+     Error: The document type code of a Newborn Discharge Summary must be XX-NewbornDischargeSummary.
+   </assert>
+   <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'>
+     Error: The document type code must come from the LOINC code 
+     system (2.16.840.1.113883.6.1).
+   </assert> 
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.3"]'> 
+     <!-- Verify that all required data elements are present -->
+     Error: The Newborn Discharge Summary Document must contain a Labor and Delivery Section.
+   </assert> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.21.2.4"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Newborn Discharge Summary Document must contain a Newborn Delivery Information Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1.2.1"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Newborn Discharge Summary Document must contain an Admission Physical Exam Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.31"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Newborn Discharge Summary Document must contain a Care Plan Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.26"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Newborn Discharge Summary Document must contain a Hospital Discharge Physical Exam Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.7"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Newborn Discharge Summary Document must contain a Discharge Diagnosis  Section.
+   </assert>
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.20.2.3"]'>
+     <!-- Verify that all required data elements are present -->
+     Error: The Newborn Discharge Summary Document must contain an Intake and Output Section.
+   </assert>
+
+
+ 
+ </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1-warnings">
+    <title>IHE PCC Newborn Discharge Summary - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1"]'>
+
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.5.3.4"]'>
+       Warning: In a Newborn Discharge Summary Document, a Pregnancy History Section is required if known.
+    </assert>
+
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.16.1"]'>
+       Warning: In a Newborn Discharge Summary Document, a Coded Social History Section is required if known.
+    </assert>
+
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.15"]'>
+       Warning: In a Newborn Discharge Summary Document, a Coded Family Medical History Section is required if known.
+    </assert>
+
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.28"]'>
+       Warning: In a Newborn Discharge Summary Document, a Coded Results Section is required if known.
+    </assert>
+
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.33"]'>
+       Warning: In a Newborn Discharge Summary Document, a Discharge Diet Section is required if known.
+    </assert>
+
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.21"]'>
+       Warning: In a Newborn Discharge Summary Document, a Medications Administered Section is required if known.
+    </assert>
+
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>
+       Warning: In a Newborn Discharge Summary Document, a Problems Section is required if known.
+    </assert>
+
+
+
+    </rule>
+
+  </pattern>
+
+
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1-notes">
+    <title>IHE PCC Newborn Discharge Summary - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.5.3.1.1.22.1.1"]'>
+    <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.4.12"]'>
+       Note: A Newborn Discharge Summary Document may contain an Immunizations Section.
+    </assert>
+
+    </rule>
+
+  </pattern>
+

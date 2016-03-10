@@ -1,0 +1,153 @@
+<!--  IHE PCC Early Hearing Care Plan: 1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1 -->
+
+<!-- errors -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1-errors">
+    <title>IHE PCC Early Hearing Care Plan - errors validation phase</title>
+
+    <rule context='/'>
+    <assert test='//cda:templateId[@root="1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1"]'>
+       Error: The Early Hearing Care Plan requires the 
+       Early Hearing Care Plan template ID (1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1).
+    </assert>
+    </rule>
+
+ <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1"]'>
+   <!-- Verify that the template id is used on the appropriate type of object -->
+   <assert test='../cda:ClinicalDocument'>
+     Error: The Early Hearing Care Plan can only be used on Clinical Documents.
+   </assert> 
+   <!-- Verify the document type code -->
+   <assert test='cda:code[@code = "34817-7"]'>
+     Error: The document type code of a Early Hearing Care Plan must be 34817-7.
+     Please note that this rule appears to violate the requirement that a Early Hearing Care Plan SHALL include a template 
+     ID of 2.16.840.1.113883.10.20.1 (CCD Header).
+   </assert>
+   <assert test='cda:code[@codeSystem = "2.16.840.1.113883.6.1"]'>
+     Error: The document type code must come from the LOINC code 
+     system (2.16.840.1.113883.6.1).
+   </assert> 
+
+   <assert test='cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.1"]'> 
+     <!-- Verify that all required data elements are present -->
+     Error: The Early Hearing Care Plan Document must contain a(n)  parent template for Medical Documents.
+   </assert> 
+
+<!--
+Note: 2012/12/20 This requirement is removed in a CP, although not yet in the specification.
+
+   <assert test='cda:templateId[@root = "2.16.840.1.113883.10.20.1"]'>
+      Error: In Early Hearing Care Plan Document, CDA Release 2.0 documents that conform to the requirements of 
+      this content module inherit from the CCD. Thus, CDA Release 2.0 documents that conform to this profile 
+      SHALL include header elements specified in the general header constraint template 2.16.840.1.113883.10.20.1 
+      - see EHCP TF Trial Implementation Supplement Section 6.3.1.A.5. Also, please note: the profile''s claim 
+      that EHCP documents inherit from the CCD document specification appears to violate the requirement that the 
+      document code specification for Early Hearing Care Plan documents SHALL be 34817-7. Valid CCD documents are 
+      required to have a document code of 34133-9.
+   </assert>
+-->
+
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.7.3.1.1.15.3.1"]'>              
+   <!-- Verify that all required data elements are present -->
+      Error: The Early Hearing Care Plan Document must contain a(n) Risk Indicators For Hearing Loss Section.
+   </assert> 
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.6"]'>              
+        <!-- Verify that all required data elements are present -->
+     Error: The Early Hearing Care Plan Document must contain a(n) Active Problems Section.
+        </assert> 
+
+<!--
+
+2012/12/20: Items removed because of ambiguious langauage/tables in specification.
+
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.9.15"]'>
+     Error: The Early Hearing Care Plan Document must contain a(n) Physical Examination Section.
+        </assert>
+	-->
+<!--
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.18"]'>
+     Error: The Early Hearing Care Plan Document must contain a(n) Review of Systems Section.
+        </assert> 
+-->	
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.3.31"]'>
+        <!-- Verify that all required data elements are present -->
+     Error: The Early Hearing Care Plan Document must contain a(n) Coded Care Plan Section.
+        </assert> 
+<!--	
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.1.13.2.11"]'>
+     Error: The Early Hearing Care Plan Document must contain a(n) Procedures and Interventions Section.
+        </assert>
+	--> 
+   <assert test='.//cda:templateId[@root = "1.3.6.1.4.1.19376.1.7.3.1.1.15.3.2"]'>
+     Error: The Early Hearing Care Plan Document must contain a(n) Hearing Screening Coded Results Section.
+   </assert> 
+
+
+
+   <assert test='cda:recordTarget/cda:patientRole/cda:patient/cda:name'>
+      Error: In Early Hearing Care Plan Document, name is required.
+   </assert>
+   <assert test='cda:recordTarget/cda:patientRole/cda:addr'>
+      Error: In Early Hearing Care Plan Document, Addr is required.
+   </assert>
+   <assert test='cda:recordTarget/cda:patientRole/cda:patient/cda:raceCode'>
+      Error: In Early Hearing Care Plan Document, race is required.
+   </assert>
+   <assert test='cda:recordTarget/cda:patientRole/cda:patient/cda:ethnicGroupCode'>
+      Error: In Early Hearing Care Plan Document, ethnicity is required.
+   </assert>
+
+
+
+
+ </rule>
+
+  </pattern>
+
+  <!-- warning -->
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1-warnings">
+    <title>IHE PCC Early Hearing Care Plan - warning validation phase</title>
+
+    <rule context='/'>
+   <assert test='//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.2.1"]'>   
+      Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Languages Communication.
+   </assert>
+   <assert test='//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.2.2"]'>
+      Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Employer and School Contacts.
+   </assert>
+   <assert test='//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.2.3"]'>
+      Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Healthcare Providers and Pharmacies.
+  </assert>
+   <assert test='//cda:templateId[@root = "1.3.6.1.4.1.19376.1.5.3.1.2.4"]'>
+      Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Patient Contacts.
+   </assert>
+   <assert test='//cda:recordTarget/cda:patientRole/cda:patient/cda:religiousAffliationCode'>
+      Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Religion.
+   </assert>
+   <assert test='//cda:recordTarget/cda:patientRole/cda:patient/cda:telecom'>
+        Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Patient Home Telephone.
+     </assert>
+     <assert test='//cda:recordTarget/cda:patientRole/cda:patient/cda:birthTime'>
+        Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Date/Time of Birth.
+     </assert>
+     <assert test='//cda:recordTarget/cda:patientRole/cda:patient/cda:administrativeGenderCode'>
+        Warning: The Early Hearing Care Plan Document SHOULD contain a(n) Administrative Sex.
+     </assert>
+    </rule>
+
+  </pattern>
+
+
+
+  <pattern id="p-1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1-notes">
+    <title>IHE PCC Early Hearing Care Plan - warning validation phase</title>
+
+    <rule context='*[cda:templateId/@root="1.3.6.1.4.1.19376.1.7.3.1.1.15.4.1"]'>
+
+    </rule>
+
+  </pattern>
+

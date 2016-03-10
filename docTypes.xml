@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<documentTypes xmlns="urn:gov:nist:cdaGuidelineValidator"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="urn:hl7-org:v3 docTypes.xsd">
+
+    <documentType id="cdar2">
+        <displayName>CDA R2</displayName>
+        <description>HL7 CDA R2 (with no extensions)</description>
+        <validation type="schema"
+            >http://localhost:11080/hitspValidation/schema/cdar2/infrastructure/cda/CDA.xsd</validation>
+        <dependencies/>
+    </documentType>
+
+    <documentType id="ccd">
+        <displayName>CCD</displayName>
+        <description>Continuity of Care Document</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/ccd/ccd.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="crs">
+        <displayName>CRS Level 1 &amp; 2</displayName>
+        <description>HL7 Care Record Summary</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/crs/crs.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="crsIhe" backendOnly="true">
+        <displayName>CRS Level 1 (With IHE PCC Modifications)</displayName>
+        <description>HL7 Care Record Summary (With IHE PCC Modifications)</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/crsIhe/crs.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="cda4Cdt" backendOnly="false">
+        <displayName>CDA4CDT (header only)</displayName>
+        <description>HL7 CDA For Common Document Types (CDA4CDT) -- header only</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/cda4cdt/HandP.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="cda4CdtIhe" backendOnly="true">
+        <displayName>CDA4CDT (header only and with IHE modifications)</displayName>
+        <description>HL7 CDA For Common Document Types (CDA4CDT) -- header only and with IHE modifications</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/cda4cdt/HandP.IHE.PCC.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c32_v_2_5_c83_2_0">
+        <displayName>HITSP/C32 v2.5 -- HITSP/C83 v2.0</displayName>
+        <description>HITSP/C32 v2.5 Summary Documents Using HL7 CCD</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/c32_v_2_5_c83_2_0/HITSP_C32.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c32_iwg">
+        <displayName>HITSP/C32 (IWG -- IP)</displayName>
+        <description>HITSP/C32 v2.5 Summary Documents Using HL7 CCD (as modified by Interoperability Workgroup for INPATIENT Encounters) - (BETA!)</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/c32_iwg/iwg.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+   
+
+    <documentType id="c32_v2_5">
+        <displayName>HITSP/C32 v2.5 -- HITSP/C83 v1.1</displayName>
+        <description>HITSP/C32 v2.5 Summary Documents Using HL7 CCD (using HITSP/C83 v1.1)</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/c32_v_2_5/HITSP_C32.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="c32_v2_4">
+        <displayName>HITSP/C32 v2.4</displayName>
+        <description>HITSP/C32 v2.4 Summary Documents Using HL7 CCD (using HITSP/C83 v1.0)</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/new/c32/new_c32.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="c32">
+        <displayName>HITSP/C32 v2.1</displayName>
+        <description>HITSP/C32 v2.1 Summary Documents Using HL7 CCD</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c32/HITSP_C32.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="phmr">
+        <displayName>PHMR v1.1</displayName>
+        <description>HL7 Personal Healthcare Monitoring Report Release 1.1</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/phmr/PHMR.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="summaryPatientRecord">
+        <displayName>NHIN Summary Patient Record</displayName>
+        <description>NHIN Summary Patient Record (based on HITSP/C32)</description>
+        <validation type="schematron">
+            http://localhost:11080/hitspValidation/schematron/nhin/summaryPatientRecord/summaryPatientRecord.sch
+        </validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+            <dependency sequenceNumber="3">c32</dependency>
+        </dependencies>
+    </documentType>
+    
+    
+    <documentType id="cdar2ihelab" backendOnly="true">
+        <displayName>CDA R2 (With IHE LAB Extensions)</displayName>
+        <description>HL7 CDA R2 (With IHE LAB Extensions)</description>
+        <validation type="schema"
+            >http://localhost:11080/hitspValidation/schema/cdar2ihelab/infrastructure/cda/LabCDA.xsd</validation>
+    </documentType>
+
+    <documentType id="cdar2c32" backendOnly="true">
+        <displayName>CDA R2 (With HITSP Extensions)</displayName>
+        <description>HL7 CDA R2 (With HITSP Extensions)</description>
+        <validation type="schema"
+            >http://localhost:11080/hitspValidation/schema/cdar2c32/infrastructure/cda/C32_CDA.xsd</validation>
+    </documentType>
+
+    <documentType id="cdar2pcc" backendOnly="true">
+        <displayName>CDA R2 (With IHE PCC Extensions)</displayName>
+        <description>HL7 CDA R2 (With IHE PCC Extensions)</description>
+        <validation type="schema"
+            >http://localhost:11080/hitspValidation/schema/cdar2pcc/infrastructure/cda/PCC_CDA.xsd</validation>
+    </documentType>
+
+
+    <documentType id="cdar2ihe" backendOnly="true">
+        <displayName>CDA R2 (With IHE PCC/LAB Extensions)</displayName>
+        <description>HL7 CDA R2 (With IHE PCC/LAB Extensions)</description>
+        <validation type="schema"
+            >http://localhost:11080/hitspValidation/schema/cdar2ihe/infrastructure/cda/IHE_CDA.xsd</validation>
+    </documentType>
+
+
+
+    <documentType id="iheLab40">
+        <displayName>IHE Lab v4.0</displayName>
+        <description>IHE Laboratory Report -- v4.0</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/ihe_lab_40/iheLab4_0.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2ihe</dependency>
+        </dependencies>
+    </documentType>
+
+  <documentType id="iheLab2011">
+        <displayName>IHE Lab v3.0</displayName>
+        <description>IHE Laboratory Report -- v3.0</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/IHELab2011/HITSP_C37.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2ihe</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="iheLab">
+        <displayName>IHE Lab 2008</displayName>
+        <description>IHE Laboratory Report -- 2008</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/newLab/HITSP_C37.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2ihelab</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="c37">
+        <displayName>HITSP/C37</displayName>
+        <description>IHE Laboratory Report -- 2007</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c37/HITSP_C37.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2ihelab</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c28nursing">
+        <displayName>HITSP/C28 (Nursing)</displayName>
+        <description>IHE PCC - Emergency Department Nursing Note -- 2008</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c28/edNursingNote.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c28physician">
+        <displayName>HITSP/C28 (Physician)</displayName>
+        <description>IHE PCC - Emergency Department Physician Note -- 2008</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c28/edPhysicianNote.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+    
+    <documentType id="c28triage">
+        <displayName>HITSP/C28 (Triage)</displayName>
+        <description>IHE PCC - Emergency Department Triage Note -- 2008</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c28/edTriageNote.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="edNursing">
+        <displayName>IHE EDES Nursing Note</displayName>
+        <description>IHE PCC - Emergency Department Nursing Note -- 2012</description>
+        <validation type="schematron"
+            >http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/edNursingNote.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="edPhysician">
+        <displayName>IHE EDES Physician Note</displayName>
+        <description>IHE PCC - Emergency Department Physician Note -- 2012</description>
+        <validation type="schematron"
+            >http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/edPhysicianNote.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="edTriage">
+        <displayName>IHE EDES Triage Note</displayName>
+        <description>IHE PCC - Emergency Department Triage Note -- 2012</description>
+        <validation type="schematron"
+            >http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/edTriageNote.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="edComposite">
+        <displayName>IHE EDES Composite Triage and Nursing Note</displayName>
+        <description>IHE PCC - Emergency Department Composite Triage and Nursing Note -- 2012</description>
+        <validation type="schematron"
+            >http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/edComposite.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c78_1_1">
+        <displayName>HITSP/C78 v1.1</displayName>
+        <description>HITSP/C78 Immunization Document Component</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c78_1_1/HITSP_C78.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+   
+    <documentType id="c78">
+        <displayName>HITSP/C78 v1.0</displayName>
+        <description>HITSP/C78 Immunization Document Component v1.0</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c78/HITSP_C78.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c48ref_2_5">
+        <displayName>HITSP/C48 Referral v2.5 -- HITSP/C83 v1.1</displayName>
+        <description>HITSP/C48 Encounter Document Using IHE Medical Summary (XDS-MS) Component v2.5 (using HITSP/C83 v1.1) -- Referral</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c48_2_5/HITSP_C48_ref.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c48dis_2_5">
+        <displayName>HITSP/C48 Discharge v2.5 -- HITSP/C83 v1.1</displayName>
+        <description>HITSP/C48 Encounter Document Using IHE Medical Summary (XDS-MS) Component v2.5 (using HITSP/C83 v1.1)-- Discharge</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c48_2_5/HITSP_C48_dis.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="c48ref">
+        <displayName>HITSP/C48 Referral v2.4</displayName>
+        <description>HITSP/C48 Encounter Document Using IHE Medical Summary (XDS-MS) Component v2.4 -- Referral</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c48/HITSP_C48_ref.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="c48dis">
+        <displayName>HITSP/C48 Discharge v2.4</displayName>
+        <description>HITSP/C48 Encounter Document Using IHE Medical Summary (XDS-MS) Component v2.4 -- Discharge</description>
+        <validation type="schematron"
+            >http://localhost:11080/hitspValidation/schematron/c48/HITSP_C48_dis.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2c32</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+ 
+    <documentType id="iheXdsMsReferral">
+        <displayName>XDS-MS Referral Summary</displayName>
+        <description>IHE PCC - XDS-MS Referral Summary -- 2012</description>
+        <validation type="schematron"
+            >http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/xdsMsReferral.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="iheXdsMsDischarge">
+        <displayName>XDS-MS Discharge Summary</displayName>
+        <description>IHE PCC - XDS-MS Discharge Summary -- 2012</description>
+        <validation type="schematron"
+            >http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/xdsMsDischarge.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="iheEdReferral">
+        <displayName>IHE ED Referral</displayName>
+        <description>IHE PCC - Emergency Department Referral -- 2012</description>
+        <validation type="schematron"
+            >http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/edReferral.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+    
+    <documentType id="ihePhrExtract">
+        <displayName>IHE PHR Extract</displayName>
+        <description>IHE PCC - PHR Extract (from XPHR Profile) -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/xphrExtract.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="ihePhrUpdate">
+        <displayName>IHE PHR Update</displayName>
+        <description>IHE PCC - PHR Update (from XPHR Profile) -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/xphrUpdate.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <!--
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            -->
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+    
+    <documentType id="iheAps">
+        <displayName>IHE APS</displayName>
+        <description>IHE PCC - Antepartum Summary -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/aps.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+        
+    </documentType>
+    
+    <documentType id="iheAphp">
+        <displayName>IHE APHP</displayName>
+        <description>IHE PCC - Antepartum History and Physical -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/aphp.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>            
+        </dependencies>
+    </documentType>
+    
+    
+    <documentType id="iheApe">
+        <displayName>IHE APE</displayName>
+        <description>IHE PCC - Antepartum Education -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/ape.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>            
+        </dependencies>
+    </documentType>
+    
+    <documentType id="iheId">
+        <displayName>IHE IC</displayName>
+        <description>IHE PCC - Immunization Content -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/immunizationDetail.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>            
+        </dependencies>
+    </documentType>
+    
+   <!-- 
+    <documentType id="fsa">
+        <displayName>IHE FSA</displayName>
+        <description>IHE PCC - Functional Status Assessment - 2007</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/ihe/fsa.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+-->
+    <documentType id="iheCrd">
+        <displayName>IHE CRD</displayName>
+        <description>IHE QRPH - Clinical Research Data Capture (CRD) -- CCD Option Only! -- 2010</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/crd.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>            
+        </dependencies>
+    </documentType>    
+
+    <documentType id="iheBppc">
+        <displayName>IHE BPPC</displayName>
+        <description>IHE Basic Patient Privacy Concern -- 2010</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe/bppc/BPPC.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="iheMds">
+        <displayName>IHE MDS</displayName>
+        <description>IHE PCC - Labor and Delivery Record - Maternal Discharge Summary -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/mds.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="iheLds">
+        <displayName>IHE LDS</displayName>
+        <description>IHE PCC - Labor and Delivery Record - Labor and Delivery Summary -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/lds.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="iheLdhp">
+        <displayName>IHE LDHP</displayName>
+        <description>IHE PCC - Labor and Delivery Record - Labor and Delivery Admission History and Physical -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/ldhp.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="iheEns">
+        <displayName>IHE ENS</displayName>
+        <description>IHE PCC - eNursing Summary -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/ens.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="ihePpvs">
+        <displayName>IHE PPVS</displayName>
+        <description>IHE PCC - Postpartum Visit Summary -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/ppvs.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="ihePpoc">
+        <displayName>IHE PPOC</displayName>
+        <description>IHE PCC - Patient Plan of Care (Care Plan Specification) -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/ppoc.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="iheNds">
+        <displayName>IHE NDS</displayName>
+        <description>IHE PCC - Newborn Discharge Summary -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/nds.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">cda4CdtIhe</dependency>
+            <dependency sequenceNumber="3">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="ihePrphca">
+        <displayName>IHE PRPH-CA</displayName>
+        <description>IHE QRPH - Physician Reporting to a Public Health Repository - Cancer Registry -- 2011</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/prphca.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="ihePrphcaConnectathon">
+        <displayName>IHE PRPH-CA CONNECTATHON VERSION</displayName>
+        <description>IHE QRPH - Physician Reporting to a Public Health Repository - Cancer Registry -- 2011 -- Connectathon Version (includes changes from CP-QRPH-0057)</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/prphca-connectathon.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="iheEhcp">
+        <displayName>IHE EHCP</displayName>
+        <description>IHE QRPH - Early Hearing Care Plan -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/ehcp.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="nhsr">
+        <displayName>NHSR</displayName>
+        <description>NHSR - Newborn Hearing Screening Result</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/nhsr.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="iheLdsVr">
+        <displayName>IHE LDSVR</displayName>
+        <description>IHE QRPH - Labor and Delivery Summary for Vital Records -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/ldsvr.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+
+    <documentType id="iheRecon">
+        <displayName>IHE RECON</displayName>
+        <description>IHE PCC RECON - Reconciliation of Diagnoses, Allergies and Medications -- 2012</description>
+        <validation type="schematron">http://cda-validation.nist.gov:11080/hitspValidation/schematron/ihe_pcc_7_0/recon.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2pcc</dependency>
+            <dependency sequenceNumber="2">ccd</dependency>
+        </dependencies>
+    </documentType>
+
+
+    <documentType id="hl7QrdaCat1">
+        <displayName>HL7 QRDA Category I</displayName>
+        <description>HL7 Quality Reporting Document Architecture (QRDA) - Category I</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/quality/qrdaCat1.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+        </dependencies>
+    </documentType>
+
+    <documentType id="hl7QrdaBmi">
+        <displayName>HL7 QRDA BMI</displayName>
+        <description>HL7 Quality Reporting Document Architecture (QRDA) - Pediatric Body Mass Index Percentile (BMI)</description>
+        <validation type="schematron">http://localhost:11080/hitspValidation/schematron/quality/bmi.sch</validation>
+        <dependencies>
+            <dependency sequenceNumber="1">cdar2</dependency>
+        </dependencies>
+    </documentType>
+    
+</documentTypes>

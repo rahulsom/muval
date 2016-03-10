@@ -1,0 +1,14 @@
+plugins {
+    id 'groovy'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.4'
+    compile 'com.ning:async-http-client:1.9.33'
+    compile 'io.netty:netty:3.10.5.Final'
+    compile 'commons-lang:commons-lang:2.6'
+}
