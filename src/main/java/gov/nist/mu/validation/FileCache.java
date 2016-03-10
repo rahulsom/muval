@@ -6,10 +6,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
- * Created by rahul on 3/9/16.
+ * Extracts cache to a temp directory. This is required because of the way schematron validators work.
+ * They expect to be on the file system. Loading them via classpath is hard.
+ *
+ * @author rahul somasunderam
+ *
  */
-public class FileCache {
-    static class Holder {
+class FileCache {
+    private static class Holder {
         static FileCache instance = new FileCache();
     }
 
@@ -18,6 +22,7 @@ public class FileCache {
     }
 
     private File destFile;
+
     private FileCache() {
         try {
             destFile = Files.createTempDirectory("muval").toFile();
@@ -30,7 +35,7 @@ public class FileCache {
         }
     }
 
-    public File getDestFile() {
+    File getDestFile() {
         return destFile;
     }
 
@@ -65,7 +70,6 @@ public class FileCache {
         }
         bos.close();
     }
-
 
 
 }

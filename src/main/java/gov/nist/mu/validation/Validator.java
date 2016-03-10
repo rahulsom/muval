@@ -14,8 +14,6 @@
  */
 package gov.nist.mu.validation;
 
-import net.sf.saxon.StandardURIResolver;
-import net.sf.saxon.trans.XPathException;
 import org.apache.commons.cli.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,16 +36,15 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 
 /**
  * @author andrew.mccaffrey
  */
 public class Validator {
 
-    public static final Ruleset schemaLocation = Rulesets.Cdar2c32;
-    public static final Ruleset skeletonLocation = Ruleset.stylesheet;
-    public static TransformerFactory factory = null;
+    private static final Ruleset schemaLocation = Rulesets.Cdar2c32;
+    private static final Ruleset skeletonLocation = Ruleset.stylesheet;
+    private static TransformerFactory factory = null;
 
 
     public static void main(String[] args) {
@@ -87,7 +84,7 @@ public class Validator {
         writeOutput(output, outputfilename);
     }
 
-    public static final String[][] phases =
+    private static final String[][] phases =
             {{"error", "errors"}, {"manual"}, {"note", "notes"}, {"violation"}, {"warning", "warnings"}};
 
     public static Results[] validate(Ruleset schema, InputStream file, Ruleset... schematrons) {
@@ -101,8 +98,10 @@ public class Validator {
                 try {
                     JAXBContext jaxbContext = JAXBContext.newInstance(Results.class);
                     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-                    Object unmarshal = unmarshaller.unmarshal(new ByteArrayInputStream(result.getBytes()));
-                    results[i*phases.length + j] = (Results) unmarshal;
+                    Object unmarshal = unmarshaller.unmarshal(
+                            new ByteArrayInputStream(result != null ? result.getBytes() : new byte[0])
+                    );
+                    results[i * phases.length + j] = (Results) unmarshal;
                 } catch (JAXBException e) {
                     e.printStackTrace();
                 }
@@ -134,8 +133,7 @@ public class Validator {
     }
 
     private static FileInputStream getInputFile(CommandLine line) {
-        String input = null;
-        input = line.getOptionValue("input");
+        String input = line.getOptionValue("input");
         try {
             return new FileInputStream(input);
         } catch (FileNotFoundException e) {
@@ -166,7 +164,7 @@ public class Validator {
     }
 
     private static String computeOutputFilename(CommandLine line) {
-        String outputfilename = null;
+        String outputfilename;
 
         if (line.hasOption("output")) {
             outputfilename = line.getOptionValue("output");
@@ -185,25 +183,23 @@ public class Validator {
             outputStream.write(output);
         } catch (IOException ex) {
             ex.printStackTrace();
-            return;
         } finally {
             if (outputStream != null) {
                 try {
                     outputStream.close();
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    return;
                 }
             }
         }
     }
 
 
-    public static Document generateReport(Document doc, SchemaValidationErrorHandler errorHandler,
-                                          Node[] messages) {
+    private static Document generateReport(Document doc, SchemaValidationErrorHandler errorHandler,
+                                           Node[] messages) {
 
         Document result = null;
-        DocumentBuilder builder = null;
+        DocumentBuilder builder;
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             result = builder.newDocument();
@@ -227,8 +223,7 @@ public class Validator {
         //}
 
         if (messages != null) {
-            for (int i = 0; i < messages.length; i++) {
-                Node message = messages[i];
+            for (Node message : messages) {
                 report.appendChild(result.importNode(message.getFirstChild(), true));
             }
         }
@@ -284,13 +279,12 @@ public class Validator {
         result.setAttribute("severity", "schemaViolation");
         result.setAttribute("specification", "cda_r2");
         if (errorHandler.hasErrors()) {
-            Iterator<String> it = errorHandler.getErrors().iterator();
-            while (it.hasNext()) {
+            for (String s : errorHandler.getErrors()) {
                 Element issue = doc.createElement("issue");
                 result.appendChild(issue);
 
                 Element message = doc.createElement("message");
-                message.setTextContent(it.next());
+                message.setTextContent(s);
                 issue.appendChild(message);
             }
         }
@@ -299,20 +293,19 @@ public class Validator {
     }
 
 
-    public static int getMessageCount(Node[] messages) {
+    private static int getMessageCount(Node[] messages) {
 
         if (messages == null || messages.length == 0) return 0;
 
         int count = 0;
-        for (int i = 0; i < messages.length; i++) {
-            Node message = messages[i];
+        for (Node message : messages) {
             count += message.getFirstChild().getChildNodes().getLength();
         }
         return count;
     }
 
 
-    protected static Document validateWithSchema(InputStream xml, SchemaValidationErrorHandler handler, Ruleset schemaLocation) {
+    private static Document validateWithSchema(InputStream xml, SchemaValidationErrorHandler handler, Ruleset schemaLocation) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
         factory.setValidating(true);
@@ -326,7 +319,7 @@ public class Validator {
             e.printStackTrace();
         }
         factory.setIgnoringElementContentWhitespace(true);
-        DocumentBuilder builder = null;
+        DocumentBuilder builder;
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException pce) {
@@ -357,7 +350,7 @@ public class Validator {
     // generating it on every run.  That is left as an exercise for the
     // implementor.
 
-    public static String validateWithSchematron(Document xml, Ruleset schematronLocation, Ruleset skeletonLocation, Object phase) {
+    private static String validateWithSchematron(Document xml, Ruleset schematronLocation, Ruleset skeletonLocation, Object phase) {
 
         StringBuilder result = new StringBuilder();
         try {
@@ -372,7 +365,7 @@ public class Validator {
         }
     }
 
-    public static Node doTransform(File originalXml, File transform, Object phase) {
+    private static Node doTransform(File originalXml, File transform, Object phase) {
 
         System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
         DOMResult result = new DOMResult();
@@ -395,7 +388,7 @@ public class Validator {
         return result.getNode();
     }
 
-    public static String doTransform(Document originalXml, Node transform) {
+    private static String doTransform(Document originalXml, Node transform) {
 
         System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -420,22 +413,22 @@ public class Validator {
     }
 
 
-    public static TransformerFactory getTransformerFactory() {
+    private static TransformerFactory getTransformerFactory() {
         if (factory == null) {
             factory = TransformerFactory.newInstance();
-            factory.setURIResolver(new StandardURIResolver() {
-                @Override
-                public Source resolve(String href, String base) throws XPathException {
-                    InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream(href);
-                    return resourceAsStream == null ?
-                            super.resolve(href, base) : new StreamSource(resourceAsStream);
+            final URIResolver oldResolver = factory.getURIResolver();
+            factory.setURIResolver((href, base) -> {
+                InputStream resourceAsStream = Validator.class.getClassLoader().getResourceAsStream(href);
+                if (resourceAsStream != null) {
+                    return new StreamSource(resourceAsStream);
                 }
+                return oldResolver.resolve(href, base);
             });
         }
         return factory;
     }
 
-    public static Document stringToDom(String xmlSource) throws SAXException, ParserConfigurationException, IOException {
+    private static Document stringToDom(String xmlSource) throws SAXException, ParserConfigurationException, IOException {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setIgnoringElementContentWhitespace(true);
@@ -443,11 +436,16 @@ public class Validator {
         return builder.parse(new InputSource(new StringReader(xmlSource)));
     }
 
+    @SuppressWarnings("AccessStaticViaInstance")
     private static Options setCliOptions() throws IllegalArgumentException {
         Option help = new Option("help", "display this message");
 
-        Option input = OptionBuilder.withArgName("input").hasArg().withDescription("input filename").create("input");
-        Option output = OptionBuilder.withArgName("output").hasArg().withDescription("output filename (without this option, the default filename is validationResult[timestamp].xml)").create("output");
+        Option input = OptionBuilder.withArgName("input").hasArg()
+                .withDescription("input filename")
+                .create("input");
+        Option output = OptionBuilder.withArgName("output").hasArg()
+                .withDescription("output filename (without this option, the default filename is validationResult[timestamp].xml)")
+                .create("output");
 
         Options cliOptions = new Options();
 
@@ -458,13 +456,13 @@ public class Validator {
         return cliOptions;
     }
 
-    public static String createDateOfTest() {
+    private static String createDateOfTest() {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date();
         return dateFormat.format(date);
     }
 
-    public static String createTimeOfTest() {
+    private static String createTimeOfTest() {
         DateFormat dateFormat = new SimpleDateFormat("HHmmss.SSSS ZZZZ");
         Date date = new Date();
         return dateFormat.format(date);
@@ -472,7 +470,7 @@ public class Validator {
 
 
     // TODO: For testing/debugging purposes only!
-    public static String xmlToString(Node inputNode) {
+    private static String xmlToString(Node inputNode) {
         try {
             Source source = new DOMSource(inputNode);
             StringWriter stringWriter = new StringWriter();

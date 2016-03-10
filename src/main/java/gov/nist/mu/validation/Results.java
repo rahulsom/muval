@@ -6,7 +6,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
- * Created by rahul on 3/6/16.
+ * Represents results of running a validator
+ *
+ * @author rahul somasunderam
+ *
  */
 @XmlRootElement(name = "Results")
 public class Results {

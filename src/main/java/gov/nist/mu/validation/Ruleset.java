@@ -5,6 +5,12 @@ import java.nio.file.Files;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+/**
+ * Represents a Ruleset that can be used to perform validation
+ *
+ * @author rahul somasunderam
+ *
+ */
 public class Ruleset {
     private final String resource;
     private final String fileName;
