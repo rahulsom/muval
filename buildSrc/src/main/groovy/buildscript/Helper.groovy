@@ -169,7 +169,7 @@ class Helper {
              * ${documentType.displayName}
              * ${documentType.description}
              */
-            public static final Ruleset ${constName} = new Ruleset("${urlParts[3..-2].join('/')}", "${urlParts[-1]}");
+            public static final Ruleset ${constName} = new Ruleset("${urlParts[3..-2].join('/')}", "${urlParts[-1]}", "${documentType.validation.type}");
 
             """.stripIndent(8)
     }

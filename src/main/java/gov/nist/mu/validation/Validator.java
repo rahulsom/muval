@@ -45,12 +45,12 @@ import java.util.Iterator;
  */
 public class Validator {
 
-    public static final Ruleset schemaLocation = Ruleset.schema;
+    public static final Ruleset schemaLocation = Rulesets.Cdar2c32;
     public static final Ruleset skeletonLocation = Ruleset.stylesheet;
     public static TransformerFactory factory = null;
 
 
-    public static final void main(String[] args) {
+    public static void main(String[] args) {
 
         Options cliOptions = Validator.setCliOptions();
         CommandLine line = getCommandLine(args, cliOptions);
@@ -65,7 +65,7 @@ public class Validator {
             return;
         }
 
-        Ruleset[] rulesets = {Rulesets.Ccd, Rulesets.Cda4Cdt, Rulesets.C32_V25_C83_20};
+        Ruleset[] rulesets = {Rulesets.Ccd, Rulesets.Cda4Cdt, Rulesets.C32_v_2_5_c83_2_0};
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
 
         Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
