@@ -87,19 +87,25 @@ public class Validator {
         writeOutput(output, outputfilename);
     }
 
-    public static Results[] validate(InputStream file, Ruleset... rulesets) {
+    public static final String[][] phases =
+            {{"error", "errors"}, {"manual"}, {"note", "notes"}, {"violation"}, {"warning", "warnings"}};
+
+    public static Results[] validate(Ruleset schema, InputStream file, Ruleset... schematrons) {
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
-        Document doc = Validator.validateWithSchema(file, errorHandler, schemaLocation);
-        Results[] results = new Results[rulesets.length];
-        for (int i = 0; i < rulesets.length; i++) {
-            String result = Validator.validateWithSchematron(doc, rulesets[i], skeletonLocation, "errors");
-            try {
-                JAXBContext jaxbContext = JAXBContext.newInstance(Results.class);
-                Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-                Object unmarshal = unmarshaller.unmarshal(new ByteArrayInputStream(result.getBytes()));
-                results[i] = (Results) unmarshal;
-            } catch (JAXBException e) {
-                e.printStackTrace();
+        Document doc = Validator.validateWithSchema(file, errorHandler, schema);
+        Results[] results = new Results[schematrons.length * phases.length];
+        for (int i = 0; i < schematrons.length; i++) {
+            for (int j = 0; j < phases.length; j++) {
+                String result = Validator.validateWithSchematron(doc, schematrons[i], skeletonLocation, phases[j]);
+                System.out.println(result);
+                try {
+                    JAXBContext jaxbContext = JAXBContext.newInstance(Results.class);
+                    Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+                    Object unmarshal = unmarshaller.unmarshal(new ByteArrayInputStream(result.getBytes()));
+                    results[i*phases.length + j] = (Results) unmarshal;
+                } catch (JAXBException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -351,7 +357,7 @@ public class Validator {
     // generating it on every run.  That is left as an exercise for the
     // implementor.
 
-    public static String validateWithSchematron(Document xml, Ruleset schematronLocation, Ruleset skeletonLocation, String phase) {
+    public static String validateWithSchematron(Document xml, Ruleset schematronLocation, Ruleset skeletonLocation, Object phase) {
 
         StringBuilder result = new StringBuilder();
         try {
@@ -366,7 +372,7 @@ public class Validator {
         }
     }
 
-    public static Node doTransform(File originalXml, File transform, String phase) {
+    public static Node doTransform(File originalXml, File transform, Object phase) {
 
         System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
         DOMResult result = new DOMResult();
