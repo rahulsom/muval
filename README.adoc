@@ -13,10 +13,6 @@ Also they consider their code to be public domain.
 That makes it possible for this project to exist.
 I am thankful for that.
 
-== Are we there yet?
-
-Yes
-
 == Usage
 
 This supports the legacy CLI usage as well as programmatic usage
