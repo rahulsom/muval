@@ -42,8 +42,8 @@ import java.util.Date;
  */
 public class Validator {
 
-    private static final Ruleset schemaLocation = Rulesets.Cdar2c32;
-    private static final Ruleset skeletonLocation = Rulesets.stylesheet;
+    private static final Schema schemaLocation = Rulesets.Cdar2c32;
+    private static final Stylesheet skeletonLocation = Rulesets.stylesheet;
     private static TransformerFactory factory = null;
 
 
@@ -84,15 +84,15 @@ public class Validator {
         writeOutput(output, outputfilename);
     }
 
-    private static final String[][] phases =
-            {{"error", "errors"}, {"manual"}, {"note", "notes"}, {"violation"}, {"warning", "warnings"}};
+    static final String[] phases =
+            {"error", "errors", "manual", "note", "notes", "violation", "warning", "warnings"};
 
-    public static Results validate(Ruleset schema, InputStream file, Ruleset... schematrons) {
+    public static Results validate(Schema schema, InputStream file, Schematron... schematrons) {
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
         Document doc = Validator.validateWithSchema(file, errorHandler, schema);
         Results retval = new Results();
         for (Ruleset schematron : schematrons) {
-            for (String[] phase : phases) {
+            for (String phase : phases) {
                 String result = Validator.validateWithSchematron(doc, schematron, skeletonLocation, phase);
                 try {
                     JAXBContext jaxbContext = JAXBContext.newInstance(Results.class);
@@ -350,7 +350,7 @@ public class Validator {
     // generating it on every run.  That is left as an exercise for the
     // implementor.
 
-    private static String validateWithSchematron(Document xml, Ruleset schematronLocation, Ruleset skeletonLocation, Object phase) {
+    private static String validateWithSchematron(Document xml, Ruleset schematronLocation, Ruleset skeletonLocation, String phase) {
 
         StringBuilder result = new StringBuilder();
         try {
@@ -365,7 +365,7 @@ public class Validator {
         }
     }
 
-    private static Node doTransform(File originalXml, File transform, Object phase) {
+    private static Node doTransform(File originalXml, File transform, String phase) {
 
         System.setProperty("javax.xml.transform.TransformerFactory", "net.sf.saxon.TransformerFactoryImpl");
         DOMResult result = new DOMResult();

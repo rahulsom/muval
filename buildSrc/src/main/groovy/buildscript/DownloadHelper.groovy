@@ -125,7 +125,6 @@ class DownloadHelper {
                 def calculated = newUrl.contains('/') ?
                         (NIST_HOME + newUrl):
                         computeUrl(newUrl, url)
-            printlnclr "Will request $calculated"
             curl calculated, root
         }
     }
@@ -188,12 +187,12 @@ class DownloadHelper {
         sb.append """\
             package gov.nist.mu.validation;
 
-            class Rulesets {
+            public class Rulesets {
 
                 /**
                  * Stylesheet for schematron
                  */
-                public static final Ruleset stylesheet = new Ruleset("hitspValidation/schematron", "schematron-Validator-report.xsl", "stylesheet");
+                public static final Stylesheet stylesheet = new Stylesheet("hitspValidation/schematron", "schematron-Validator-report.xsl");
             """.stripIndent()
 
         docTypes.documentType.each { DocumentType documentType ->
@@ -210,12 +209,13 @@ class DownloadHelper {
     }
 
     private String getConst(DocumentType documentType, String constName, String[] urlParts) {
+        def clazz = documentType.validation.type == 'schema' ? 'Schema' : 'Schematron'
         """\
             /**
              * ${documentType.displayName}
              * ${documentType.description}
              */
-            public static final Ruleset ${constName} = new Ruleset("${urlParts[3..-2].join('/')}", "${urlParts[-1]}", "${documentType.validation.type}");
+            public static final ${clazz} ${constName} = new ${clazz}("${urlParts[3..-2].join('/')}", "${urlParts[-1]}");
 
             """.stripIndent(8)
     }

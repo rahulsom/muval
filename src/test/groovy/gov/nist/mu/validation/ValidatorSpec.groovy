@@ -15,9 +15,10 @@ class ValidatorSpec extends Specification {
                 Rulesets.Ccd, Rulesets.Cda4Cdt, Rulesets.C32_v_2_5_c83_2_0
         )
 
-        then: "There are 0 errors and 98 issues"
-        result.validationResults*.issue.flatten().size() == 98
-        result.validationResults*.issue.findAll { it.severity == 'errors' }.size() == 0
+        then: "There are 50 errors and 98 issues"
+        result.allIssues.size() == 98
+        result.errors.size() == 50
+        result.otherIssues.isEmpty()
     }
 
     def "MU Rev0 has 0 errors"() {
@@ -28,8 +29,9 @@ class ValidatorSpec extends Specification {
         )
 
         then: "There are 0 errors and 4 issues "
-        result.validationResults*.issue.flatten().size() == 4
-        result.validationResults*.issue.findAll { it.severity == 'errors' }.size() == 0
+        result.allIssues.size() == 4
+        result.errors.size() == 0
+        result.otherIssues.isEmpty()
     }
 
     def "MU Rev1 has no errors"() {
@@ -40,8 +42,9 @@ class ValidatorSpec extends Specification {
         )
 
         then: "There are 0 errors and 32 issues "
-        result.validationResults*.issue.flatten().size() == 32
-        result.validationResults*.issue.findAll { it.severity == 'errors' }.size() == 0
+        result.allIssues.size() == 32
+        result.errors.size() == 0
+        result.otherIssues.isEmpty()
     }
 
     def "MU Rev2 has no errors"() {
@@ -52,8 +55,9 @@ class ValidatorSpec extends Specification {
         )
 
         then: "There are 0 errors and 53 issues "
-        result.validationResults*.issue.flatten().size() == 53
-        result.validationResults*.issue.findAll { it.severity == 'errors' }.size() == 0
+        result.allIssues.size() == 53
+        result.errors.size() == 0
+        result.otherIssues.isEmpty()
     }
 
     def "MU Rev3 has no errors"() {
@@ -64,8 +68,9 @@ class ValidatorSpec extends Specification {
         )
 
         then: "There are 0 errors and 44 issues "
-        result.validationResults*.issue.flatten().size() == 44
-        result.validationResults*.issue.findAll { it.severity == 'errors' }.size() == 0
+        result.allIssues.size() == 44
+        result.errors.size() == 0
+        result.otherIssues.isEmpty()
     }
 
     def "BPPC has no errors"() {
@@ -76,7 +81,8 @@ class ValidatorSpec extends Specification {
         )
 
         then: "There are 0 errors and 2 issues "
-        result.validationResults*.issue.flatten().size() == 2
-        result.validationResults*.issue.findAll { it.severity == 'errors' }.size() == 0
+        result.allIssues.size() == 2
+        result.errors.size() == 0
+        result.otherIssues.isEmpty()
     }
 }

@@ -6,7 +6,12 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Represents results of running a validator
@@ -112,4 +117,48 @@ public class Results {
                 .append("validationResults", validationResults)
                 .toString();
     }
+
+    private List<Issue> getIssues(List<String> severities) {
+        return this.getValidationResults().stream()
+                .map(ValidationResult::getIssue)
+                .filter(issue -> severities == null || severities.contains(issue.getSeverity()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Issue> getAllIssues() {
+        return getIssues(null);
+    }
+
+    private static final List<String> allPhases = Arrays.asList(
+            "error", "errors", "warning", "warnings", "note", "notes", "violation", "manual");
+
+    public List<Issue> getOtherIssues() {
+
+        return this.getValidationResults().stream()
+                .map(ValidationResult::getIssue)
+                .filter(issue -> !allPhases.contains(issue.getSeverity()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Issue> getErrors() {
+        return getIssues(Arrays.asList("error", "errors"));
+    }
+
+    public List<Issue> getWarnings() {
+        return getIssues(Arrays.asList("warning", "warnings"));
+    }
+
+    public List<Issue> getNotes() {
+        return getIssues(Arrays.asList("note", "notes"));
+    }
+
+    public List<Issue> getViolations() {
+        return getIssues(Collections.singletonList("violation"));
+    }
+
+    public List<Issue> getManualChecks() {
+        return getIssues(Collections.singletonList("manual"));
+    }
+
+
 }
