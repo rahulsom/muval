@@ -23,16 +23,12 @@ This supports the legacy CLI usage as well as programmatic usage
 
 === CLI Usage
 
-Build the jar
-[source,bash]
-----
-./gradlew clean shadowJar
-----
+Download the jar from https://bintray.com/artifact/download/rahulsom/m2/com/github/rahulsom/muval/0.1/muval-0.1-all.jar[here]
 
 Then use it
 [source,bash]
 ----
-java -jar libs/muval-0.1-all.jar -input sampleCCD.xml -output result.xml
+java -jar muval-all.jar -input sampleCCD.xml -output result.xml
 ----
 
 === Programmatic usage
@@ -68,3 +64,18 @@ class ValidatorSpec extends Specification {
 
 }
 ----
+
+== Updating Schema and Schematron files
+
+The `downloadResources` task will do the job. You need to delete the `nist` directory before that.
+
+[source,bash]
+----
+./gradlew downloadResources
+----
+
+If you run into network problems, you may rerun that command.
+
+== Contributing
+
+Please feel free to raise Issues with test cases or send Pull Requests. This uses the github issue tracker.
