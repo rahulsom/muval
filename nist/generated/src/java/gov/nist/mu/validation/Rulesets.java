@@ -19,7 +19,7 @@ public class Rulesets {
     public static final Schematron Ccd = new Schematron("hitspValidation/schematron/ccd", "ccd.sch");
 
     /**
-     * CRS Level 1 & 2
+     * CRS Level 1 &amp; 2
      * HL7 Care Record Summary
      */
     public static final Schematron Crs = new Schematron("hitspValidation/schematron/crs", "crs.sch");

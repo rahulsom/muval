@@ -1,5 +1,6 @@
 package buildscript
 
+import org.apache.commons.lang.StringEscapeUtils
 import org.apache.commons.lang.StringUtils
 
 import javax.xml.bind.JAXBContext
@@ -212,8 +213,8 @@ class DownloadHelper {
         def clazz = documentType.validation.type == 'schema' ? 'Schema' : 'Schematron'
         """\
             /**
-             * ${documentType.displayName}
-             * ${documentType.description}
+             * ${StringEscapeUtils.escapeHtml(documentType.displayName)}
+             * ${StringEscapeUtils.escapeHtml(documentType.description)}
              */
             public static final ${clazz} ${constName} = new ${clazz}("${urlParts[3..-2].join('/')}", "${urlParts[-1]}");
 

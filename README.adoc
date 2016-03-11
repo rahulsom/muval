@@ -19,7 +19,7 @@ This supports the legacy CLI usage as well as programmatic usage
 
 === CLI Usage
 
-Download the jar from https://bintray.com/artifact/download/rahulsom/m2/com/github/rahulsom/muval/0.1/muval-0.1-all.jar[here]
+Download the jar from https://bintray.com/artifact/download/rahulsom/m2/com/github/rahulsom/muval/0.2/muval-0.2-all.jar[here]
 
 Then use it
 [source,bash]
@@ -34,7 +34,7 @@ Import the dependency using maven, gradle, sbt, leingen or ivy. Example below is
 ----
 dependencies {
     // ...
-    compile 'com.github.rahulsom:muval:0.1'
+    compile 'com.github.rahulsom:muval:0.2'
 }
 ----
 
@@ -53,9 +53,10 @@ class ValidatorSpec extends Specification {
                 Rulesets.Ccd, Rulesets.Cda4Cdt, Rulesets.C32_v_2_5_c83_2_0
         )
 
-        then: "There are 0 errors and 98 issues"
-        result.validationResults*.issue.flatten().size() == 98
-        result.validationResults*.issue.findAll { it.severity == 'errors' }.size() == 0
+        then: "There are 50 errors and 98 issues"
+        result.allIssues.size() == 98
+        result.errors.size() == 50
+        result.otherIssues.isEmpty()
     }
 
 }
