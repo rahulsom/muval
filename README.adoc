@@ -29,9 +29,15 @@ java -jar muval-all.jar -input sampleCCD.xml -output result.xml
 
 === Programmatic usage
 
-Import the dependency using maven, gradle, sbt, leingen or ivy. Example below is for gradle
+Import the dependency using maven, gradle, sbt, leingen or ivy.
+You will need to use jcenter. I'll try to make the next version available on Maven Central.
+Example below is for gradle.
 [source,gradle]
 ----
+repositories {
+    // ...
+    jcenter()
+}
 dependencies {
     // ...
     compile 'com.github.rahulsom:muval:0.2'
@@ -42,16 +48,19 @@ Then use it in your code. This example is a Spock Specification. You could use i
 [source,groovy]
 ----
 import spock.lang.Specification
-import gov.nist.mu.validation.*
 
-class ValidatorSpec extends Specification {
+import static gov.nist.mu.validation.Rulesets.*
+import static gov.nist.mu.validation.Validator.validate
+
+class MyCcdSpec extends Specification {
+
+    private InputStream file(String resourceName) {
+        this.class.getClassLoader().getResourceAsStream(resourceName)
+    }
 
     def "sample ccd should validate"() {
         when: "I validate a CCD"
-        def result = Validator.validate(Rulesets.Cdar2c32,
-                file('SampleCCDDocument.xml'),
-                Rulesets.Ccd, Rulesets.Cda4Cdt, Rulesets.C32_v_2_5_c83_2_0
-        )
+        def result = validate(Cdar2c32, file('SampleCCDDocument.xml'), Ccd, Cda4Cdt, C32_v_2_5_c83_2_0)
 
         then: "There are 50 errors and 98 issues"
         result.allIssues.size() == 98
