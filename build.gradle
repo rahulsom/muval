@@ -1,13 +1,25 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3"
+    }
+}
+
 plugins {
     id 'java'
     id 'groovy'
     id 'application'
-    id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '1.2.3'
-    id "com.jfrog.bintray" version "1.6"
-    id "nebula.source-jar" version "4.4.4"
-    id "nebula.javadoc-jar" version "4.4.4"
+    id "com.bmuschko.nexus" version "2.3.1"
 }
+
+apply from: 'gradle/codegen.gradle'
+apply from: 'gradle/publishing.gradle'
+apply plugin: 'io.codearte.nexus-staging'
 
 group = 'com.github.rahulsom' // This could become 'gov.nist'
 version = '0.2'
@@ -37,10 +49,6 @@ Map<String, String> xmlbeans(String subproject = null) {
 
 Map<String, String> saxon(String subproject = null) {
     [group: 'net.sourceforge.saxon', name: 'saxon', version: '9.1.0.8', classifier: subproject]
-}
-
-configurations {
-    buildsrc
 }
 
 dependencies {
@@ -74,47 +82,5 @@ dependencies {
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
 }
 
-task downloadResources(type: JavaExec) {
-    description 'Download Schemas and Schematron files from NIST'
-    
-    classpath file("${rootDir}/buildSrc/build/classes/main")
-    classpath configurations.buildsrc
-
-    main = 'buildscript.DownloadHelper'
-    args = ['docTypes.xml', 'nist']
-}
-
-task "createStylesheet"(type: Zip) {
-    description "Package stylesheet"
-    from "schematron"
-    include "*.xsl"
-    destinationDir file('build/generated/resources')
-    archiveName "stylesheet"
-}
-
-task "createCachefile"(type: Zip) {
-    description "Package Cachefile"
-    from "nist/generated/prebundle"
-    destinationDir file('build/generated/resources')
-    archiveName "cachefile"
-}
-
 compileJava.dependsOn 'createStylesheet', 'createCachefile'
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifact shadowJar
-        }
-    }
-    repositories {
-        maven {
-            url "https://api.bintray.com/maven/rahulsom/m2/muval"
-            credentials {
-                username = System.getenv('BINTRAY_USER')
-                password = System.getenv('BINTRAY_KEY')
-            }
-        }
-    }
-}
+closeAndPromoteRepository.mustRunAfter 'uploadArchives'

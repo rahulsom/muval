@@ -30,14 +30,9 @@ java -jar muval-all.jar -input sampleCCD.xml -output result.xml
 === Programmatic usage
 
 Import the dependency using maven, gradle, sbt, leingen or ivy.
-You will need to use jcenter. I'll try to make the next version available on Maven Central.
 Example below is for gradle.
 [source,gradle]
 ----
-repositories {
-    // ...
-    jcenter()
-}
 dependencies {
     // ...
     compile 'com.github.rahulsom:muval:0.2'
