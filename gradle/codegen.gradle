@@ -26,3 +26,8 @@ task "createCachefile"(type: Zip) {
     destinationDir file('build/generated/resources')
     archiveName "cachefile"
 }
+
+project.afterEvaluate {
+    project.tasks.findByName('compileJava').dependsOn 'createStylesheet', 'createCachefile'
+
+}

@@ -29,6 +29,11 @@ modifyPom {
                 url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                 distribution 'repo'
             }
+            license {
+                name 'NIST License'
+                url 'http://www.nist.gov/public_affairs/disclaimer.cfm'
+                distribution 'repo'
+            }
         }
 
         developers {
@@ -37,6 +42,11 @@ modifyPom {
                 name 'Rahul Somasunderam'
                 email 'rahul.som@gmail.com'
             }
+        }
+
+        issueManagement {
+            system 'Github'
+            url 'https://github.com/rahulsom/muval/issues'
         }
     }
 }
@@ -48,8 +58,12 @@ extraArchive {
 }
 
 task release() {
+    description = 'Release artifacts to nexus'
     dependsOn 'uploadArchives', 'closeAndPromoteRepository'
     doLast {
         println "Released $version"
     }
+}
+project.afterEvaluate {
+    project.tasks.findByName('closeAndPromoteRepository').mustRunAfter 'uploadArchives'
 }
