@@ -53,11 +53,6 @@ Map<String, String> saxon(String subproject = null) {
 
 dependencies {
 
-    buildsrc 'org.codehaus.groovy:groovy-all:2.4.4'
-    buildsrc 'com.ning:async-http-client:1.9.33'
-    buildsrc 'io.netty:netty:3.10.5.Final'
-    buildsrc 'commons-lang:commons-lang:2.6'
-
     compile 'commons-cli:commons-cli:1.0'
     compile 'javax.xml.bind:jsr173_api:1.0'
     compile 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
