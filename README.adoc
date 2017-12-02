@@ -31,6 +31,10 @@ java -jar muval-all.jar -input sampleCCD.xml -output result.xml
 
 Import the dependency using maven, gradle, sbt, leingen or ivy.
 Example below is for gradle.
+Look up instructions for your build tool from this badge.
+
+image::https://maven-badges.herokuapp.com/maven-central/com.github.rahulsom/muval/badge.svg[link=https://maven-badges.herokuapp.com/maven-central/com.github.rahulsom/muval]
+
 [source,gradle]
 ----
 dependencies {
