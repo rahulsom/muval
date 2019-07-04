@@ -53,7 +53,8 @@ Map<String, String> saxon(String subproject = null) {
 
 dependencies {
 
-    compile 'commons-cli:commons-cli:1.0'
+    compile 'commons-cli:commons-cli:1.4'
+    compile 'commons-lang:commons-lang:2.6'
     compile 'javax.xml.bind:jsr173_api:1.0'
     compile 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
 
