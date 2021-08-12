@@ -16,18 +16,21 @@ task "createStylesheet"(type: Zip) {
     description "Package stylesheet"
     from "schematron"
     include "*.xsl"
-    destinationDir file('build/generated/resources')
+    destinationDir file('build/generated/resources/stylesheetDir')
     archiveName "stylesheet"
 }
 
 task "createCachefile"(type: Zip) {
     description "Package Cachefile"
     from "nist/generated/prebundle"
-    destinationDir file('build/generated/resources')
+    destinationDir file('build/generated/resources/cachefileDir')
     archiveName "cachefile"
 }
 
 project.afterEvaluate {
     project.tasks.findByName('compileJava').dependsOn 'createStylesheet', 'createCachefile'
+    project.tasks.findByName('processResources').dependsOn 'createStylesheet', 'createCachefile'
 
 }
+
+processResources.duplicatesStrategy = 'include'

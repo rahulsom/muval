@@ -3,12 +3,12 @@ plugins {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-    compile localGroovy()
-    compile 'com.ning:async-http-client:1.9.33'
-    compile 'io.netty:netty:3.10.5.Final'
-    compile 'commons-lang:commons-lang:2.6'
+    implementation localGroovy()
+    implementation 'com.ning:async-http-client:1.9.33'
+    implementation 'io.netty:netty:3.10.5.Final'
+    implementation 'commons-lang:commons-lang:2.6'
 }

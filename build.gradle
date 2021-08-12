@@ -1,25 +1,12 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.2"
-    }
-}
-
 plugins {
-    id 'java'
-    id 'groovy'
-    id 'application'
-    id 'com.github.johnrengelman.shadow' version '6.0.0'
-    id "com.bmuschko.nexus" version "2.3.1"
+    id("java")
+    id("groovy")
+    id("application")
+    id("com.github.rahulsom.waena.root").version("0.2.2")
+    id("com.github.rahulsom.waena.published").version("0.2.2")
 }
 
 apply from: 'gradle/codegen.gradle'
-apply from: 'gradle/publishing.gradle'
-apply plugin: 'io.codearte.nexus-staging'
 
 group = 'com.github.rahulsom' // This could become 'gov.nist'
 version = '0.2'
@@ -34,13 +21,14 @@ sourceSets {
         }
         resources {
             srcDir 'src/main/resources'
-            srcDir 'build/generated/resources'
+            srcDir 'build/generated/resources/cachefileDir'
+            srcDir 'build/generated/resources/stylesheetDir'
         }
     }
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 Map<String, String> xmlbeans(String subproject = null) {
