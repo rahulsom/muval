@@ -2,8 +2,8 @@ plugins {
     id("java")
     id("groovy")
     id("application")
-    id("com.github.rahulsom.waena.root").version("0.2.2")
-    id("com.github.rahulsom.waena.published").version("0.2.2")
+    id("com.github.rahulsom.waena.root").version("0.3.0")
+    id("com.github.rahulsom.waena.published").version("0.3.0")
 }
 
 apply from: 'gradle/codegen.gradle'
