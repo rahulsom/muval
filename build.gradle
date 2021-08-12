@@ -12,6 +12,7 @@ group = 'com.github.rahulsom' // This could become 'gov.nist'
 version = '0.2'
 
 mainClassName = "gov.nist.mu.validation.Validator"
+description = "Meaningful Use Validator based on NIST's own."
 
 sourceSets {
     main {
