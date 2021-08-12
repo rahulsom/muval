@@ -74,3 +74,9 @@ contacts {
         github("https://github.com/rahulsom")
     }
 }
+
+tasks.prepare.doFirst {
+    println """
+Version: $version
+"""
+}
