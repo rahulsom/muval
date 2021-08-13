@@ -76,8 +76,6 @@ contacts {
     }
 }
 
-tasks.prepare.doFirst {
-    println """
+println """
 Version: $version
 """
-}
