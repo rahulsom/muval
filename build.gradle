@@ -8,11 +8,10 @@ plugins {
 
 apply from: 'gradle/codegen.gradle'
 
-group = 'com.github.rahulsom' // This could become 'gov.nist'
-version = '0.2'
+group = 'com.github.rahulsom'
+description = "Meaningful Use Validator based on NIST's own."
 
 mainClassName = "gov.nist.mu.validation.Validator"
-description = "Meaningful Use Validator based on NIST's own."
 
 sourceSets {
     main {
