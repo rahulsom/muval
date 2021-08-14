@@ -45,7 +45,7 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'javax.xml.bind:jsr173_api:1.0'
     implementation 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
-    implementation 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.5'
 
