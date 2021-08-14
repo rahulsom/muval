@@ -13,5 +13,5 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
     implementation 'com.sun.xml.bind:jaxb-core:2.3.0.1'
-    implementation 'com.sun.xml.bind:jaxb-impl:2.3.0'
+    implementation 'com.sun.xml.bind:jaxb-impl:2.3.5'
 }
