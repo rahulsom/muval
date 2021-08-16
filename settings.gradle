@@ -1,4 +1,4 @@
-import groovy.json.JsonBuilder
+import com.gradle.scan.plugin.PublishedBuildScan
 
 plugins {
     id "com.gradle.enterprise" version "3.6.3"
@@ -9,12 +9,8 @@ gradleEnterprise {
         termsOfServiceUrl = "https://gradle.com/terms-of-service"
         termsOfServiceAgree = "yes"
         publishAlways()
-        buildScanPublished {
-            file("build/gradle-scan.json").text = new JsonBuilder([
-                    date        : new Date(),
-                    buildScanId : this.buildScanId,
-                    buildScanUri: this.buildScanUri
-            ]).toPrettyString()
+        buildScanPublished { PublishedBuildScan scan ->
+            file("build/gradle-scan.md").text = """Gradle Build Scan - [`${scan.buildScanId}`](${scan.buildScanUri})"""
         }
     }
 }
