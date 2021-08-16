@@ -38,6 +38,7 @@ jobs:
         run: ./gradlew check build --stacktrace --parallel
 
       - id: get-comment-body
+        if: always()
         run: |
           body=$(cat build/gradle-scan.md)
           body="${body//'%'/'%25'}"
@@ -47,6 +48,7 @@ jobs:
 
       - name: Find Comment
         uses: peter-evans/find-comment@v1
+        if: always()
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -55,8 +57,15 @@ jobs:
 
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v1
+        if: always()
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: ${{ steps.get-comment-body.outputs.body }}
           edit-mode: replace
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v2
+        if: always()
+        with:
+          report_paths: '**/build/test-results/test/TEST-*.xml'
