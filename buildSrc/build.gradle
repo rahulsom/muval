@@ -8,7 +8,7 @@ repositories {
 
 dependencies {
     implementation localGroovy()
-    implementation 'com.ning:async-http-client:1.9.33'
+    implementation 'com.ning:async-http-client:1.9.40'
     implementation 'io.netty:netty:3.10.5.Final'
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
