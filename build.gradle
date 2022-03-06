@@ -65,7 +65,7 @@ dependencies {
     implementation xmlbeans('qname')
     implementation xmlbeans('xmlpublic')
 
-    testImplementation 'org.codehaus.groovy:groovy:3.0.9'
+    testImplementation 'org.codehaus.groovy:groovy:3.0.10'
     testImplementation "org.spockframework:spock-core:2.1-groovy-3.0"
     testImplementation 'javax.activation:activation:1.1.1'
 }
