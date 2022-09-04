@@ -45,7 +45,6 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'javax.xml.bind:jsr173_api:1.0'
     implementation 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
     implementation 'com.sun.xml.bind:jaxb-impl:3.0.2'
 
     implementation saxon()
@@ -81,7 +80,3 @@ contacts {
         github("https://github.com/rahulsom")
     }
 }
-
-println """
-Version: $version
-"""

@@ -3,8 +3,8 @@ package buildscript
 import org.apache.commons.lang.StringEscapeUtils
 import org.apache.commons.lang.StringUtils
 
-import javax.xml.bind.JAXBContext
-import javax.xml.bind.Unmarshaller
+import jakarta.xml.bind.JAXBContext
+import jakarta.xml.bind.Unmarshaller
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
