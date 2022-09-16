@@ -81,7 +81,3 @@ contacts {
         github("https://github.com/rahulsom")
     }
 }
-
-println """
-Version: $version
-"""
