@@ -1,14 +1,7 @@
 [versions]
 saxon = "9.1.0.8"
-xmlbeans = "2.6.0"
+xmlbeans = "3.1.0"
 
 [libraries]
 saxon = { module = "net.sourceforge.saxon:saxon", version.ref = "saxon" }
-
-xmlbeans-core = { module = "org.apache.xmlbeans:xmlbeans", version.ref = "xmlbeans" }
-xmlbeans-xpath = { module = "org.apache.xmlbeans:xmlbeans-xpath", version.ref = "xmlbeans" }
-xmlbeans-qname = { module = "org.apache.xmlbeans:xmlbeans-qname", version.ref = "xmlbeans" }
-xmlbeans-xmlpublic = { module = "org.apache.xmlbeans:xmlbeans-xmlpublic", version.ref = "xmlbeans" }
-
-[bundles]
-xmlbeans = [ "xmlbeans-core", "xmlbeans-xpath", "xmlbeans-qname", "xmlbeans-xmlpublic" ]
+xmlbeans = { module = "org.apache.xmlbeans:xmlbeans", version.ref = "xmlbeans" }

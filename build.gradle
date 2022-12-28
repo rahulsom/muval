@@ -48,7 +48,7 @@ dependencies {
     implementation(variantOf(libs.saxon) { classifier("xom") })
     implementation(variantOf(libs.saxon) { classifier("xqj") })
     implementation(variantOf(libs.saxon) { classifier("sql") })
-    implementation(libs.bundles.xmlbeans) {
+    implementation(libs.xmlbeans) {
         exclude group: 'net.sf.saxon'
     }
 
