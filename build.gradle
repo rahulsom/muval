@@ -31,16 +31,7 @@ repositories {
     mavenCentral()
 }
 
-Map<String, String> xmlbeans(String subproject = null) {
-    [group: 'org.apache.xmlbeans', name: subproject ? "xmlbeans-$subproject" : 'xmlbeans', version: '2.4.0']
-}
-
-Map<String, String> saxon(String subproject = null) {
-    [group: 'net.sourceforge.saxon', name: 'saxon', version: '9.1.0.8', classifier: subproject]
-}
-
 dependencies {
-
     implementation 'commons-cli:commons-cli:1.5.0'
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'javax.xml.bind:jsr173_api:1.0'
@@ -49,28 +40,24 @@ dependencies {
     implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
     implementation 'com.sun.xml.bind:jaxb-impl:2.3.7'
 
-    implementation saxon()
-    implementation saxon('dom')
-    implementation saxon('dom4j')
-    implementation saxon('jdom')
-    implementation saxon('s9api')
-    implementation saxon('sql')
-    implementation saxon('xom')
-    implementation saxon('xqj')
-
-    implementation xmlbeans()
-    implementation(xmlbeans('xpath')) {
+    implementation(libs.saxon)
+    implementation(variantOf(libs.saxon) { classifier("dom") })
+    implementation(variantOf(libs.saxon) { classifier("dom4j") })
+    implementation(variantOf(libs.saxon) { classifier("jdom") })
+    implementation(variantOf(libs.saxon) { classifier("s9api") })
+    implementation(variantOf(libs.saxon) { classifier("xom") })
+    implementation(variantOf(libs.saxon) { classifier("xqj") })
+    implementation(variantOf(libs.saxon) { classifier("sql") })
+    implementation(libs.bundles.xmlbeans) {
         exclude group: 'net.sf.saxon'
     }
-    implementation xmlbeans('qname')
-    implementation xmlbeans('xmlpublic')
 
     testImplementation "org.spockframework:spock-core:2.3-groovy-4.0"
     testImplementation 'javax.activation:activation:1.1.1'
 }
 
 test {
-  useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 contacts {
