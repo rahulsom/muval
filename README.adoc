@@ -19,7 +19,7 @@ This supports the legacy CLI usage as well as programmatic usage
 
 === CLI Usage
 
-Download the jar from https://bintray.com/artifact/download/rahulsom/m2/com/github/rahulsom/muval/0.2/muval-0.2-all.jar[here]
+Download the jar from http://oss.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.github.rahulsom&a=muval&v=LATEST&c=all[here]
 
 Then use it
 [source,bash]
@@ -39,7 +39,7 @@ image::https://maven-badges.herokuapp.com/maven-central/com.github.rahulsom/muva
 ----
 dependencies {
     // ...
-    compile 'com.github.rahulsom:muval:0.2'
+    compile 'com.github.rahulsom:muval:<VERSION>'
 }
 ----
 
