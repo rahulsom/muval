@@ -1,6 +1,6 @@
 [versions]
 saxon = "9.1.0.8"
-xmlbeans = "2.4.0"
+xmlbeans = "2.6.0"
 
 [libraries]
 saxon = { module = "net.sourceforge.saxon:saxon", version.ref = "saxon" }
