@@ -1,6 +1,14 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "automerge": true
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base"
+    ],
+    "automerge": true,
+    "packageRules": [
+        {
+            "packagePatterns": ["com.github.rahulsom.waena.*"],
+            "groupName": "Waena",
+            "groupSlug": "com.github.rahulsom.waena"
+        }
+    ]
 }
