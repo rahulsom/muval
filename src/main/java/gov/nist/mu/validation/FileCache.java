@@ -21,6 +21,7 @@ class FileCache {
         return Holder.instance;
     }
 
+    @lombok.Getter(lombok.AccessLevel.PACKAGE)
     private File destFile;
 
     private FileCache() {
@@ -30,10 +31,6 @@ class FileCache {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    File getDestFile() {
-        return destFile;
     }
 
     private static void extract(String resource, File destFile) throws IOException {
