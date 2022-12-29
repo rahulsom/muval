@@ -14,6 +14,7 @@
  */
 package gov.nist.mu.validation;
 
+import lombok.Data;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -22,9 +23,10 @@ import java.util.Iterator;
 import java.util.Vector;
 
 /**
- * 
+ *
  * @author andrew.mccaffrey
  */
+@Data
 public class SchemaValidationErrorHandler implements ErrorHandler {
 
     private Vector<String> warnings = null;
@@ -52,6 +54,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         this.addError(exception.getMessage(), Integer.toString(exception.getLineNumber()));
     }
 
+    /**
+     * Whether the result has warnings.
+     *
+     * @return true if warnings exist, false otherwise.
+     */
     public boolean hasWarnings() {
         if(getWarnings() == null)
             return false;
@@ -60,6 +67,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return true;
     }
 
+    /**
+     * Whether the result has errors.
+     *
+     * @return true if errors exist, false otherwise.
+     */
     public boolean hasErrors() {
         if(getErrors() == null)
             return false;
@@ -68,6 +80,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return true;
     }
 
+    /**
+     * Whether the result has fatal errors.
+     *
+     * @return true if fatal errors exist, false otherwise.
+     */
     public boolean hasFatalErrors() {
         if(getFatalErrors() == null)
             return false;
@@ -76,6 +93,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return true;
     }
 
+    /**
+     * Gets a string representation of warnings.
+     *
+     * @return a string representation of warnings.
+     */
     public String getPrintableWarnings() {
         if(getWarnings() == null)
             return "";
@@ -87,6 +109,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return sb.toString();
     }
 
+    /**
+     * Gets a string representation of errors.
+     *
+     * @return a string representation of errors.
+     */
     public String getPrintableErrors() {
         if(getErrors() == null)
             return "";
@@ -99,6 +126,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
 
     }
 
+    /**
+     * Gets a string representation of fatal errors.
+     *
+     * @return a string representation of fatal errors.
+     */
     public String getPrintableFatalErrors() {
         if(getFatalErrors() == null)
             return "";
@@ -110,6 +142,13 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return sb.toString();
     }
 
+    /**
+     * Adds a warning.
+     *
+     * @param warning message
+     * @param lineNumber the line with the warning
+     * @return true if the warning was added, false otherwise.
+     */
     public boolean addWarning(String warning, String lineNumber) {
         if(getWarnings() == null) {
             setWarnings(new Vector<String>());
@@ -118,6 +157,13 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return (getWarnings().add(warning) && getLinesWarnings().add(lineNumber));
     }
 
+    /**
+     * Adds an error.
+     *
+     * @param error message
+     * @param lineNumber the line with the error
+     * @return true if the error was added, false otherwise.
+     */
     public boolean addError(String error, String lineNumber) {
         if(getErrors() == null) {
             setErrors(new Vector<String>());
@@ -126,6 +172,13 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return (getErrors().add(error) && getLinesErrors().add(lineNumber));
     }
 
+    /**
+     * Adds a fatal error.
+     *
+     * @param fatalError message
+     * @param lineNumber the line with the fatal error
+     * @return true if the fatal error was added, false otherwise.
+     */
     public boolean addFatalError(String fatalError, String lineNumber) {
         if(getFatalErrors() == null) {
             setFatalErrors(new Vector<String>());
@@ -134,54 +187,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         return (getFatalErrors().add(fatalError) && getLinesErrors().add(lineNumber));
     }
 
-    public Vector<String> getWarnings() {
-        return warnings;
-    }
-
-    public void setWarnings(Vector<String> warnings) {
-        this.warnings = warnings;
-    }
-
-    public Vector<String> getLinesWarnings() {
-        return linesWarnings;
-    }
-
-    public void setLinesWarnings(Vector<String> linesWarnings) {
-        this.linesWarnings = linesWarnings;
-    }
-
-    public Vector<String> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(Vector<String> errors) {
-        this.errors = errors;
-    }
-
-    public Vector<String> getLinesErrors() {
-        return linesErrors;
-    }
-
-    public void setLinesErrors(Vector<String> linesErrors) {
-        this.linesErrors = linesErrors;
-    }
-
-    public Vector<String> getFatalErrors() {
-        return fatalErrors;
-    }
-
-    public void setFatalErrors(Vector<String> fatalErrors) {
-        this.fatalErrors = fatalErrors;
-    }
-
-    public Vector<String> getLinesFatalErrors() {
-        return linesFatalErrors;
-    }
-
-    public void setLinesFatalErrors(Vector<String> linesFatalErrors) {
-        this.linesFatalErrors = linesFatalErrors;
-    }
-
+    /**
+     * Gets the number of errors.
+     *
+     * @return the number of errors
+     */
     public int getNumberErrors() {
         try {
             return linesErrors.size();
@@ -190,6 +200,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         }
     }
 
+    /**
+     * Gets the number of warnings.
+     *
+     * @return the number of warnings
+     */
     public int getNumberWarnings() {
         try {
             return linesWarnings.size();
@@ -198,6 +213,11 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
         }
     }
 
+    /**
+     * Gets the number of fatal errors.
+     *
+     * @return the number of fatal errors
+     */
     public int getNumberFatalErrors() {
         try {
             return linesFatalErrors.size();

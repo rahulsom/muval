@@ -39,6 +39,7 @@ import java.util.Date;
 
 /**
  * @author andrew.mccaffrey
+ * @author rahul somasunderam
  */
 public class Validator {
 
@@ -46,7 +47,11 @@ public class Validator {
     private static final Stylesheet skeletonLocation = Rulesets.stylesheet;
     private static TransformerFactory factory = null;
 
-
+    /**
+     * Entrypoint for CLI.
+     *
+     * @param args command line args
+     */
     public static void main(String[] args) {
 
         Options cliOptions = Validator.setCliOptions();
@@ -87,6 +92,14 @@ public class Validator {
     static final String[] phases =
             {"error", "errors", "manual", "note", "notes", "violation", "warning", "warnings"};
 
+    /**
+     * Validates a file with a schema.
+     *
+     * @param schema      the schema to validate against
+     * @param file        the file to validate
+     * @param schematrons the schematrons to validate against
+     * @return the validation results
+     */
     public static Results validate(Schema schema, InputStream file, Schematron... schematrons) {
         SchemaValidationErrorHandler errorHandler = new SchemaValidationErrorHandler();
         Document doc = Validator.validateWithSchema(file, errorHandler, schema);

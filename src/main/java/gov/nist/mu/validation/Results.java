@@ -1,6 +1,7 @@
 package gov.nist.mu.validation;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import lombok.Data;
+import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,110 +13,61 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Represents results of running a validator
+ * Represents results of running a validator.
  *
  * @author rahul somasunderam
  */
 @XmlRootElement(name = "Results", namespace = "urn:gov:nist:cdaGuideValidator")
 public class Results {
+    @Setter
     private List<ValidationResult> validationResults = new ArrayList<>();
 
+    /**
+     * Returns the validation results.
+     *
+     * @return the validation results
+     */
     @XmlElement(name = "validationResult")
     public List<ValidationResult> getValidationResults() {
         return validationResults;
     }
 
-    public void setValidationResults(List<ValidationResult> validationResults) {
-        this.validationResults = validationResults;
-    }
-
-    private static class ValidationResult {
+    /**
+     * Represents a single validation result.
+     */
+    @Data
+    public static class ValidationResult {
         private Issue issue;
-
-        public Issue getIssue() {
-            return issue;
-        }
-
-        public void setIssue(Issue issue) {
-            this.issue = issue;
-        }
-
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("issue", issue)
-                    .toString();
-        }
     }
 
-    private static class Issue {
+    /**
+     * Represents an issue that was found during validation.
+     */
+    @Data
+    public static class Issue {
         private String message;
         private String context;
         private String test;
         private String severity;
         private String specification;
 
-        @Override
-        public String toString() {
-            return new ToStringBuilder(this)
-                    .append("message", message)
-                    .append("context", context)
-                    .append("test", test)
-                    .append("severity", severity)
-                    .append("specification", specification)
-                    .toString();
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public String getContext() {
-            return context;
-        }
-
-        public void setContext(String context) {
-            this.context = context;
-        }
-
-        public String getTest() {
-            return test;
-        }
-
-        public void setTest(String test) {
-            this.test = test;
-        }
-
+        /**
+         * Returns the severity of the issue.
+         *
+         * @return the severity
+         */
         @XmlAttribute
         public String getSeverity() {
             return severity;
         }
-
-        public void setSeverity(String severity) {
-            this.severity = severity;
-        }
-
-        public String getSpecification() {
-            return specification;
-        }
-
-        public void setSpecification(String specification) {
-            this.specification = specification;
-        }
-
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("validationResults", validationResults)
-                .toString();
-    }
-
+    /**
+     * Returns a list of issues for a given list of severity levels.
+     *
+     * @param severities list of severity levels
+     * @return list of issues
+     */
     private List<Issue> getIssues(List<String> severities) {
         return this.getValidationResults().stream()
                 .map(ValidationResult::getIssue)
@@ -123,6 +75,11 @@ public class Results {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get all issues.
+     *
+     * @return list of issues
+     */
     public List<Issue> getAllIssues() {
         return getIssues(null);
     }
@@ -130,6 +87,11 @@ public class Results {
     private static final List<String> allPhases = Arrays.asList(
             "error", "errors", "warning", "warnings", "note", "notes", "violation", "manual");
 
+    /**
+     * Get issues for unknown phases.
+     *
+     * @return list of issues
+     */
     public List<Issue> getOtherIssues() {
 
         return this.getValidationResults().stream()
@@ -138,25 +100,49 @@ public class Results {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Gets issues for severity level error.
+     *
+     * @return list of issues
+     */
     public List<Issue> getErrors() {
         return getIssues(Arrays.asList("error", "errors"));
     }
 
+    /**
+     * Gets issues for severity level warning.
+     *
+     * @return list of issues
+     */
     public List<Issue> getWarnings() {
         return getIssues(Arrays.asList("warning", "warnings"));
     }
 
+    /**
+     * Gets issues for severity level note.
+     *
+     * @return list of issues
+     */
     public List<Issue> getNotes() {
         return getIssues(Arrays.asList("note", "notes"));
     }
 
+    /**
+     * Gets issues for severity level violation.
+     *
+     * @return list of issues
+     */
     public List<Issue> getViolations() {
         return getIssues(Collections.singletonList("violation"));
     }
 
+    /**
+     * Gets issues for severity level manual.
+     *
+     * @return list of issues
+     */
     public List<Issue> getManualChecks() {
         return getIssues(Collections.singletonList("manual"));
     }
-
 
 }
