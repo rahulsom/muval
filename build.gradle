@@ -40,9 +40,9 @@ dependencies {
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'javax.xml.bind:jsr173_api:1.0'
     implementation 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
     implementation 'com.sun.xml.bind:jaxb-core:4.0.1'
-    implementation 'com.sun.xml.bind:jaxb-impl:2.3.7'
+    implementation 'com.sun.xml.bind:jaxb-impl:4.0.1'
 
     implementation(libs.saxon)
     implementation(variantOf(libs.saxon) { classifier("dom") })
