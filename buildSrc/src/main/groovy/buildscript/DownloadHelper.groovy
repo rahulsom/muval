@@ -1,10 +1,10 @@
 package buildscript
 
+import jakarta.xml.bind.JAXBContext
+import jakarta.xml.bind.Unmarshaller
 import org.apache.commons.lang.StringEscapeUtils
 import org.apache.commons.lang.StringUtils
 
-import javax.xml.bind.JAXBContext
-import javax.xml.bind.Unmarshaller
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
@@ -16,7 +16,7 @@ import com.ning.http.client.*
 @Singleton
 class DownloadHelper {
 
-    public static final String ANSI_CL = "\u001B[0K";
+    public static final String ANSI_CL = "\u001B[0K"
     public static final String NIST_HOME = 'http://cda-validation.nist.gov:11080/'
 
     JAXBContext context = JAXBContext.newInstance(DocumentTypes)
@@ -35,10 +35,10 @@ class DownloadHelper {
     AtomicInteger errors = new AtomicInteger(0)
     Set<String> knownUrls = [] as Set
     List<String> pendingUrls = []
-    Object lock = new Object()
+    final Object lock = new Object()
     ExecutorService filePool = Executors.newSingleThreadExecutor()
 
-    String massageUrl(String url) {
+    static String massageUrl(String url) {
         url.replace('http://localhost:11080/',  NIST_HOME).
                 replace('http://cda-validation.nist.gov:11079/', NIST_HOME)
     }
@@ -80,7 +80,7 @@ class DownloadHelper {
             asyncHttpClient.prepareGet(url).
                     execute(new AsyncCompletionHandler<File>() {
                         @Override
-                        public File onCompleted(Response response) throws Exception {
+                        File onCompleted(Response response) throws Exception {
                             def body = massageUrl(response.responseBody)
                             outFile.text = body.replace(NIST_HOME, '').
                                     replace(urlParts[3..-2].join('/') + '/', '')
@@ -91,7 +91,7 @@ class DownloadHelper {
                         }
 
                         @Override
-                        public void onThrowable(Throwable t) {
+                        void onThrowable(Throwable t) {
                             printlnclr "Could not download $url"
                             t.printStackTrace()
                             receivedResponses.incrementAndGet()
@@ -153,7 +153,7 @@ class DownloadHelper {
         }
     }
 
-    private String computeUrl(String newUrl, String url) {
+    private static String computeUrl(String newUrl, String url) {
         def parts = (newUrl.split('/').toList() as List).reverse()
         def oldParts = url.split('/')[0..-2].toList() as List
         while (parts) {
@@ -209,7 +209,7 @@ class DownloadHelper {
         new File(srcDir, 'Rulesets.java').text = sb.toString()
     }
 
-    private String getConst(DocumentType documentType, String constName, String[] urlParts) {
+    private static String getConst(DocumentType documentType, String constName, String[] urlParts) {
         def clazz = documentType.validation.type == 'schema' ? 'Schema' : 'Schematron'
         """\
             /**
@@ -221,7 +221,7 @@ class DownloadHelper {
             """.stripIndent(8)
     }
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         assert args.length == 2
         DownloadHelper.instance.downloadFrom(new File(args[0]), new File(args[1]))
     }

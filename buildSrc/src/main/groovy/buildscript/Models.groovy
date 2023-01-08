@@ -1,7 +1,7 @@
 package buildscript
 
 import groovy.transform.ToString
-import javax.xml.bind.annotation.*
+import jakarta.xml.bind.annotation.*
 
 @XmlRootElement(namespace = 'urn:gov:nist:cdaGuidelineValidator')
 @XmlAccessorType(XmlAccessType.NONE)
