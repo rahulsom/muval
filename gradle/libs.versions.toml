@@ -3,7 +3,7 @@ saxon = "9.1.0.8"
 xmlbeans = "5.1.1"
 lombok = "1.18.26"
 jaxb-api = "4.0.0"
-sun-jaxb = "4.0.1"
+sun-jaxb = "4.0.2"
 
 [libraries]
 saxon = { module = "net.sourceforge.saxon:saxon", version.ref = "saxon" }
