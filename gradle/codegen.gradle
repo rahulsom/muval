@@ -2,35 +2,34 @@ configurations {
     buildsrc
 }
 
-task downloadResources(type: JavaExec) {
+tasks.register('downloadResources', JavaExec) {
     description 'Download Schemas and Schematron files from NIST'
 
     classpath file("${rootDir}/buildSrc/build/classes/main")
     classpath configurations.buildsrc
 
-    main = 'buildscript.DownloadHelper'
+    mainClass.set 'buildscript.DownloadHelper'
     args = ['docTypes.xml', 'nist']
 }
 
-task "createStylesheet"(type: Zip) {
+tasks.register("createStylesheet", Zip) {
     description "Package stylesheet"
     from "schematron"
     include "*.xsl"
-    destinationDir file('build/generated/resources/stylesheetDir')
-    archiveName "stylesheet"
+    destinationDirectory.set file('build/generated/resources/stylesheetDir')
+    archiveFileName.set "stylesheet"
 }
 
-task "createCachefile"(type: Zip) {
+tasks.register("createCachefile", Zip) {
     description "Package Cachefile"
     from "nist/generated/prebundle"
-    destinationDir file('build/generated/resources/cachefileDir')
-    archiveName "cachefile"
+    destinationDirectory.set file('build/generated/resources/cachefileDir')
+    archiveFileName.set "cachefile"
 }
 
 project.afterEvaluate {
-    project.tasks.findByName('compileJava').dependsOn 'createStylesheet', 'createCachefile'
-    project.tasks.findByName('processResources').dependsOn 'createStylesheet', 'createCachefile'
-
+    project.tasks.named('compileJava') { it.dependsOn 'createStylesheet', 'createCachefile' }
+    project.tasks.named('processResources') { it.dependsOn 'createStylesheet', 'createCachefile' }
 }
 
 processResources.duplicatesStrategy = 'include'
