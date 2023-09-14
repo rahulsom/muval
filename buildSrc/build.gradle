@@ -11,7 +11,7 @@ dependencies {
     implementation 'com.ning:async-http-client:1.9.40'
     implementation 'io.netty:netty:3.10.6.Final'
     implementation 'commons-lang:commons-lang:2.6'
-    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.1'
     implementation 'com.sun.xml.bind:jaxb-core:4.0.3'
     implementation 'com.sun.xml.bind:jaxb-impl:4.0.3'
 }
