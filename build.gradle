@@ -36,7 +36,7 @@ dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
 
-    implementation 'commons-cli:commons-cli:1.5.0'
+    implementation 'commons-cli:commons-cli:1.6.0'
     implementation 'commons-lang:commons-lang:2.6'
     implementation 'javax.xml.bind:jsr173_api:1.0'
     implementation 'org.dspace.xmlui.xml:xml-commons-resolver:1.1'
