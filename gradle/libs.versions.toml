@@ -2,7 +2,7 @@
 saxon = "9.1.0.8"
 xmlbeans = "5.2.0"
 lombok = "1.18.30"
-jaxb-api = "4.0.1"
+jaxb-api = "4.0.2"
 sun-jaxb = "4.0.4"
 
 [libraries]
