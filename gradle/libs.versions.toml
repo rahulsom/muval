@@ -1,6 +1,6 @@
 [versions]
 saxon = "9.1.0.8"
-xmlbeans = "5.2.0"
+xmlbeans = "5.2.1"
 lombok = "1.18.32"
 jaxb-api = "4.0.2"
 sun-jaxb = "4.0.5"
