@@ -2,8 +2,8 @@ plugins {
     id("java")
     id("groovy")
     id("application")
-    id("com.github.rahulsom.waena.root").version("0.6.1")
-    id("com.github.rahulsom.waena.published").version("0.6.1")
+    id("com.github.rahulsom.waena.root").version("0.15.0")
+    id("com.github.rahulsom.waena.published").version("0.15.0")
     id("com.github.johnrengelman.shadow").version("8.1.1")
 }
 
