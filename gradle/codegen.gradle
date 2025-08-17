@@ -33,5 +33,5 @@ project.afterEvaluate {
 }
 
 processResources.duplicatesStrategy = 'include'
-tasks.sourceJar.dependsOn('createCachefile', 'createStylesheet')
-tasks.sourceJar.duplicatesStrategy = 'include'
+tasks.sourcesJar.dependsOn('createCachefile', 'createStylesheet')
+tasks.sourcesJar.duplicatesStrategy = 'include'
