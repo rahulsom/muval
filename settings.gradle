@@ -1,17 +1,11 @@
-import com.gradle.scan.plugin.PublishedBuildScan
-
 plugins {
-    id "com.gradle.enterprise" version "3.19.2"
+    id 'com.gradle.develocity' version '4.1'
 }
 
-gradleEnterprise {
+develocity {
     buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlways()
-        buildScanPublished { PublishedBuildScan scan ->
-            file("build/gradle-scan.md").text = """Gradle Build Scan - [`${scan.buildScanId}`](${scan.buildScanUri})"""
-        }
+        termsOfUseUrl.set("https://gradle.com/terms-of-service")
+        termsOfUseAgree.set("yes")
     }
 }
 
