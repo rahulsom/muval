@@ -1,6 +1,18 @@
 = muval
+:package: com.github.rahulsom
+:package-path: com/github/rahulsom
+:package-path-encoded: com%2Fgithub%2Frahulsom
+:snapshot-prefix: image:https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Fcentral.sonatype.com%2Frepository%2Fmaven-snapshots%2F{package-path-encoded}%2F
+:snapshot-middle: %2Fmaven-metadata.xml&style=for-the-badge&label=S[alt=Maven Snapshot,height=30,link="https://central.sonatype.com/repository/maven-snapshots/{package-path}/
+:snapshot-suffix: /maven-metadata.xml"]
+:central-prefix: image:https://img.shields.io/maven-central/v/{package}/
+:central-middle: ?style=for-the-badge&label=R&color=green[alt=Maven Central Version,height=30,link="https://central.sonatype.com/artifact/{package}/
+:central-suffix: /overview"]
+:deprecated-middle: ?style=for-the-badge&label=R&color=lightgrey[alt=Maven Central Version,height=30,link="https://central.sonatype.com/artifact/{package}/
 
 Meaningful Use Validator based on NIST's own.
+
+image:https://img.shields.io/github/commits-since/rahulsom/muval/latest?style=for-the-badge[GitHub commits since latest release, link="https://github.com/rahulsom/nothing/releases/new"]
 
 == Introduction
 
@@ -33,8 +45,10 @@ Import the dependency using maven, gradle, sbt, leingen or ivy.
 Example below is for gradle.
 Look up instructions for your build tool from this badge.
 
-image:https://maven-badges.herokuapp.com/maven-central/com.github.rahulsom/muval/badge.svg[link=https://maven-badges.herokuapp.com/maven-central/com.github.rahulsom/muval]
-image:https://img.shields.io/github/commits-since/rahulsom/muval/latest[GitHub commits since latest release (by date) for a branch]
+==== Available versions
+
+{central-prefix}muval{central-middle}muval{central-suffix}
+{snapshot-prefix}muval{snapshot-middle}muval{snapshot-suffix}
 
 [source,gradle]
 ----
