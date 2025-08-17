@@ -1,3 +1,5 @@
+import com.github.rahulsom.waena.WaenaExtension
+
 plugins {
     id("java")
     id("groovy")
@@ -74,4 +76,8 @@ contacts {
         roles("owner")
         github("https://github.com/rahulsom")
     }
+}
+
+waena {
+     publishMode.set(WaenaExtension.PublishMode.Central)
 }
