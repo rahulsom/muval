@@ -1,17 +1,43 @@
 [versions]
-saxon = "9.1.0.8"
-xmlbeans = "5.3.0"
-lombok = "1.18.38"
+activation = "1.1.1"
+commons-cli = "1.10.0"
+commons-lang = "2.6"
 jaxb-api = "4.0.2"
+jsr173_api = "1.0"
+junit-jupiter = "5.13.4"
+junit-platform = "1.13.4"
+lombok = "1.18.38"
+saxon = "9.1.0.8"
+shadow = "9.0.2"
+spock = "2.3-groovy-4.0"
 sun-jaxb = "4.0.5"
+waena = "0.15.0"
+xml-commons-resolver = "1.1"
+xmlbeans = "5.3.0"
 
 [libraries]
-saxon = { module = "net.sourceforge.saxon:saxon", version.ref = "saxon" }
-xmlbeans = { module = "org.apache.xmlbeans:xmlbeans", version.ref = "xmlbeans" }
-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+activation = { module = "javax.activation:activation", version.ref = "activation" }
+commons-cli = { module = "commons-cli:commons-cli", version.ref = "commons-cli" }
+commons-lang = { module = "commons-lang:commons-lang", version.ref = "commons-lang" }
 jaxb-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jaxb-api" }
 jaxb-core = { module = "com.sun.xml.bind:jaxb-core", version.ref = "sun-jaxb" }
 jaxb-impl = { module = "com.sun.xml.bind:jaxb-impl", version.ref = "sun-jaxb" }
+jsr173_api = { module = "javax.xml.bind:jsr173_api", version.ref = "jsr173_api" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+saxon = { module = "net.sourceforge.saxon:saxon", version.ref = "saxon" }
+spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
+xml-commons-resolver = { module = "org.dspace.xmlui.xml:xml-commons-resolver", version.ref = "xml-commons-resolver" }
+xmlbeans = { module = "org.apache.xmlbeans:xmlbeans", version.ref = "xmlbeans" }
+
 
 [bundles]
 jaxb = [ "jaxb-api", "jaxb-core", "jaxb-impl" ]
+junit-runtime = [ "junit-jupiter-engine", "junit-platform-launcher" ]
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+waena-published = { id = "com.github.rahulsom.waena.published", version.ref = "waena" }
+waena-root = { id = "com.github.rahulsom.waena.root", version.ref = "waena" }
