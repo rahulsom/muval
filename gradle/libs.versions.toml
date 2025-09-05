@@ -11,7 +11,7 @@ saxon = "9.1.0.8"
 shadow = "9.1.0"
 spock = "2.3-groovy-4.0"
 sun-jaxb = "4.0.5"
-waena = "0.15.1"
+waena = "0.16.0"
 xml-commons-resolver = "1.1"
 xmlbeans = "5.3.0"
 
