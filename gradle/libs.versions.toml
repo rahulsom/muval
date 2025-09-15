@@ -2,7 +2,7 @@
 activation = "1.1.1"
 commons-cli = "1.10.0"
 commons-lang = "2.6"
-jaxb-api = "4.0.2"
+jaxb-api = "4.0.4"
 jsr173_api = "1.0"
 junit-jupiter = "5.13.4"
 junit-platform = "1.13.4"
