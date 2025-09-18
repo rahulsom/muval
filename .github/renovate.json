@@ -3,14 +3,5 @@
     "extends": [
         "config:recommended"
     ],
-    "automerge": true,
-    "packageRules": [
-        {
-            "groupName": "Waena",
-            "groupSlug": "com.github.rahulsom.waena",
-            "matchPackageNames": [
-                "/com.github.rahulsom.waena.*/"
-            ]
-        }
-    ]
+    "automerge": true
 }
