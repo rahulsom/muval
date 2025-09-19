@@ -9,6 +9,12 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 apply from: 'gradle/codegen.gradle'
 
 group = 'com.github.rahulsom'
