@@ -14,7 +14,7 @@ import java.util.List;
 @XmlRootElement(namespace = "urn:gov:nist:cdaGuidelineValidator")
 @XmlAccessorType(XmlAccessType.NONE)
 class DocumentTypes {
-    @XmlElement 
+    @XmlElement(namespace = "urn:gov:nist:cdaGuidelineValidator")
     private List<DocumentType> documentType;
 
 }
@@ -22,15 +22,15 @@ class DocumentTypes {
 @Data
 @XmlAccessorType(XmlAccessType.NONE)
 class DocumentType {
-    @XmlAttribute 
+    @XmlAttribute
     private String id;
-    @XmlElement 
+    @XmlElement(namespace = "urn:gov:nist:cdaGuidelineValidator")
     private String displayName;
-    @XmlElement 
+    @XmlElement(namespace = "urn:gov:nist:cdaGuidelineValidator")
     private String description;
-    @XmlElement 
+    @XmlElement(namespace = "urn:gov:nist:cdaGuidelineValidator")
     private Validation validation;
-    @XmlElement 
+    @XmlElement(namespace = "urn:gov:nist:cdaGuidelineValidator")
     private Dependencies dependencies;
 
 }
@@ -38,9 +38,9 @@ class DocumentType {
 @Data
 @XmlAccessorType(XmlAccessType.NONE)
 class Validation {
-    @XmlAttribute 
+    @XmlAttribute
     private String type;
-    @XmlValue 
+    @XmlValue
     private String url;
 
 }
@@ -48,7 +48,7 @@ class Validation {
 @Data
 @XmlAccessorType(XmlAccessType.NONE)
 class Dependencies {
-    @XmlElement 
+    @XmlElement(namespace = "urn:gov:nist:cdaGuidelineValidator")
     private List<Dependency> dependency;
 
 }
@@ -56,9 +56,9 @@ class Dependencies {
 @Data
 @XmlAccessorType(XmlAccessType.NONE)
 class Dependency {
-    @XmlAttribute 
+    @XmlAttribute
     private Integer sequenceNumber;
-    @XmlValue 
+    @XmlValue
     private String id;
 
 }
