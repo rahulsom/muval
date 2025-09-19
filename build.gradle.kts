@@ -1,8 +1,10 @@
 import com.github.rahulsom.waena.WaenaExtension
+import nebula.plugin.contacts.Contact
+import nebula.plugin.contacts.ContactsExtension
 
 plugins {
-    id("java")
-    id("application")
+    java
+    application
     alias(libs.plugins.waena.root)
     alias(libs.plugins.waena.published)
     alias(libs.plugins.shadow)
@@ -14,9 +16,9 @@ java {
     }
 }
 
-apply from: 'gradle/codegen.gradle'
+apply(from = "gradle/codegen.gradle.kts")
 
-group = 'com.github.rahulsom'
+group = "com.github.rahulsom"
 description = "Meaningful Use Validator based on NIST's own."
 
 application {
@@ -26,13 +28,13 @@ application {
 sourceSets {
     main {
         java {
-            srcDir 'src/main/java'
-            srcDir 'nist/generated/src/java'
+            srcDir("src/main/java")
+            srcDir("nist/generated/src/java")
         }
         resources {
-            srcDir 'src/main/resources'
-            srcDir 'build/generated/resources/cachefileDir'
-            srcDir 'build/generated/resources/stylesheetDir'
+            srcDir("src/main/resources")
+            srcDir("build/generated/resources/cachefileDir")
+            srcDir("build/generated/resources/stylesheetDir")
         }
     }
 }
@@ -60,7 +62,7 @@ dependencies {
     implementation(variantOf(libs.saxon) { classifier("xqj") })
     implementation(variantOf(libs.saxon) { classifier("sql") })
     implementation(libs.xmlbeans) {
-        exclude group: 'net.sf.saxon'
+        exclude(group = "net.sf.saxon")
     }
 
     testImplementation(libs.junit.jupiter.api)
@@ -70,17 +72,16 @@ dependencies {
     testRuntimeOnly(libs.bundles.junit.runtime)
 }
 
-test {
+tasks.test {
     useJUnitPlatform()
 }
 
-contacts {
-    validateEmails = true
-    'rahulsom@noreply.github.com' {
+extensions.findByType<ContactsExtension>()?.apply {
+    addPerson("rahulsom@noreply.github.com", delegateClosureOf<Contact> {
         moniker("Rahul Somasunderam")
         roles("owner")
         github("https://github.com/rahulsom")
-    }
+    })
 }
 
 waena {
