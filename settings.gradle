@@ -10,3 +10,5 @@ develocity {
 }
 
 rootProject.name = 'muval'
+
+includeBuild("gradle/build-plugin")
