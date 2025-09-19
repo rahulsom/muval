@@ -1,10 +1,10 @@
-val buildsrc by configurations.creating
+val downloadConfig by configurations.creating
 
 tasks.register<JavaExec>("downloadResources") {
     description = "Download Schemas and Schematron files from NIST"
 
     classpath(file("${rootDir}/buildSrc/build/classes/main"))
-    classpath(configurations.getByName("buildsrc"))
+    classpath(downloadConfig)
 
     mainClass.set("buildscript.DownloadHelper")
     args = listOf("docTypes.xml", "nist")
