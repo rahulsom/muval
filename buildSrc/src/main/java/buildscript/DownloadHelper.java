@@ -293,11 +293,4 @@ public class DownloadHelper {
             System.err.println("Failed to write file: " + file + " - " + e.getMessage());
         }
     }
-
-    public static void main(String[] args) {
-        if (args.length != 2) {
-            throw new IllegalArgumentException("Expected 2 arguments");
-        }
-        DownloadHelper.getInstance().downloadFrom(new File(args[0]), new File(args[1]));
-    }
 }
