@@ -2,7 +2,6 @@ import com.github.rahulsom.waena.WaenaExtension
 
 plugins {
     id("java")
-    id("groovy")
     id("application")
     alias(libs.plugins.waena.root)
     alias(libs.plugins.waena.published)
@@ -64,10 +63,10 @@ dependencies {
         exclude group: 'net.sf.saxon'
     }
 
-    testImplementation(libs.spock.core)
-    testImplementation(libs.activation)
-
     testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.assertj.core)
+    testImplementation(libs.activation)
+    
     testRuntimeOnly(libs.bundles.junit.runtime)
 }
 

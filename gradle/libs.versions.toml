@@ -1,5 +1,6 @@
 [versions]
 activation = "1.1.1"
+assertj = "3.26.3"
 commons-cli = "1.10.0"
 commons-lang = "2.6"
 jaxb-api = "4.0.4"
@@ -9,7 +10,6 @@ junit-platform = "1.13.4"
 lombok = "1.18.42"
 saxon = "9.1.0.8"
 shadow = "9.1.0"
-spock = "2.3-groovy-4.0"
 sun-jaxb = "4.0.5"
 waena = "0.18.0"
 xml-commons-resolver = "1.1"
@@ -17,6 +17,7 @@ xmlbeans = "5.3.0"
 
 [libraries]
 activation = { module = "javax.activation:activation", version.ref = "activation" }
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 commons-cli = { module = "commons-cli:commons-cli", version.ref = "commons-cli" }
 commons-lang = { module = "commons-lang:commons-lang", version.ref = "commons-lang" }
 jaxb-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jaxb-api" }
@@ -28,7 +29,6 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 saxon = { module = "net.sourceforge.saxon:saxon", version.ref = "saxon" }
-spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
 xml-commons-resolver = { module = "org.dspace.xmlui.xml:xml-commons-resolver", version.ref = "xml-commons-resolver" }
 xmlbeans = { module = "org.apache.xmlbeans:xmlbeans", version.ref = "xmlbeans" }
 
