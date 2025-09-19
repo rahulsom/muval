@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class DownloadHelper {
 
     public static final String ANSI_CL = "\u001B[0K";
-    public static final String NIST_HOME = "http://cda-validation.nist.gov:11080/";
+    public static final String NIST_HOME = "https://cda-validation.nist.gov/";
 
     private static final DownloadHelper INSTANCE = new DownloadHelper();
 
@@ -156,7 +156,7 @@ public class DownloadHelper {
     }
 
     private void fetchCodefiles(String body, String url, File root) {
-        Pattern pattern = Pattern.compile("document\\(['\"](.*)['\")]");
+        Pattern pattern = Pattern.compile("document\\(['\"](.*)['\")]\\)");
         Matcher matcher = pattern.matcher(body);
         while (matcher.find()) {
             String newUrl = matcher.group(1);
@@ -233,6 +233,10 @@ public class DownloadHelper {
 
             StringBuilder sb = new StringBuilder();
             sb.append("package gov.nist.mu.validation;\n\n")
+              .append("/**\n")
+              .append(" * Constants of all rulesets.\n")
+              .append(" *\n")
+              .append(" */\n")
               .append("public class Rulesets {\n\n")
               .append("    /**\n")
               .append("     * Stylesheet for schematron\n")
@@ -261,11 +265,11 @@ public class DownloadHelper {
         String[] pathParts = Arrays.copyOfRange(urlParts, 3, urlParts.length - 1);
         return String.format(
                 """
-                                /**
-                                 * %s
-                                 * %s
-                                 */
-                                public static final %s %s = new %s("%s", "%s");
+                            /**
+                             * %s
+                             * %s
+                             */
+                            public static final %s %s = new %s("%s", "%s");
                         
                         """,
                 StringEscapeUtils.escapeHtml(documentType.getDisplayName()),
