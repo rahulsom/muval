@@ -13,8 +13,8 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("org.projectlombok:lombok:1.18.28")
-    compileOnly("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+    compileOnly("org.projectlombok:lombok:1.18.42")
     implementation 'com.ning:async-http-client:1.9.40'
     implementation 'io.netty:netty:3.10.6.Final'
     implementation 'commons-lang:commons-lang:2.6'
