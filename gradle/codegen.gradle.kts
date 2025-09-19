@@ -25,10 +25,8 @@ tasks.register<Zip>("createCachefile") {
     archiveFileName.set("cachefile")
 }
 
-project.afterEvaluate {
-    tasks.named("compileJava") { dependsOn("createStylesheet", "createCachefile") }
-    tasks.named("processResources") { dependsOn("createStylesheet", "createCachefile") }
-}
+tasks.named("compileJava") { dependsOn("createStylesheet", "createCachefile") }
+tasks.named("processResources") { dependsOn("createStylesheet", "createCachefile") }
 
 tasks.named<ProcessResources>("processResources") {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
