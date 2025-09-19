@@ -19,10 +19,9 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.help.HelpFormatter;
 import org.apache.commons.cli.Option;
-import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.w3c.dom.Document;
@@ -178,17 +177,21 @@ public class Validator {
     }
 
     private static boolean printHelp(String[] args, Options cliOptions, CommandLine line) {
-        HelpFormatter formatter = new HelpFormatter();
+        HelpFormatter formatter = HelpFormatter.builder().get();
         if (line.hasOption("help") || args.length == 0 || !line.hasOption("input")) {
-            formatter.printHelp("java -jar Validator.jar", cliOptions);
-            System.out.println("\n\nExample: user@localhost:~/cdafiles> java -jar Validator.jar -input CCD.xml -output report.xml\n");
+            try {
+                formatter.printHelp("java -jar Validator.jar", "", cliOptions, "", true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Example: user@localhost:~/cdafiles> java -jar Validator.jar -input CCD.xml -output report.xml");
             return true;
         }
         return false;
     }
 
     private static CommandLine getCommandLine(String[] args, Options cliOptions) {
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine line = null;
         try {
             line = parser.parse(cliOptions, args);
@@ -489,16 +492,19 @@ public class Validator {
         return builder.parse(new InputSource(new StringReader(xmlSource)));
     }
 
-    @SuppressWarnings("AccessStaticViaInstance")
     private static Options setCliOptions() throws IllegalArgumentException {
         Option help = new Option("help", "display this message");
 
-        Option input = OptionBuilder.withArgName("input").hasArg()
-                .withDescription("input filename")
-                .create("input");
-        Option output = OptionBuilder.withArgName("output").hasArg()
-                .withDescription("output filename (without this option, the default filename is validationResult[timestamp].xml)")
-                .create("output");
+        Option input = Option.builder("input")
+                .argName("input")
+                .hasArg()
+                .desc("input filename")
+                .build();
+        Option output = Option.builder("output")
+                .argName("output")
+                .hasArg()
+                .desc("output filename (without this option, the default filename is validationResult[timestamp].xml)")
+                .build();
 
         Options cliOptions = new Options();
 
