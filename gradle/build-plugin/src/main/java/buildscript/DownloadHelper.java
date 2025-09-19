@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class DownloadHelper {
 
     public static final String ANSI_CL = "\u001B[0K";
-    public static final String NIST_HOME = "http://cda-validation.nist.gov:11080/";
+    public static final String NIST_HOME = "https://cda-validation.nist.gov/";
 
     private static final DownloadHelper INSTANCE = new DownloadHelper();
 
