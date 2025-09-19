@@ -233,6 +233,10 @@ public class DownloadHelper {
 
             StringBuilder sb = new StringBuilder();
             sb.append("package gov.nist.mu.validation;\n\n")
+              .append("/**\n")
+              .append(" * Constants of all rulesets.\n")
+              .append(" *\n")
+              .append(" */\n")
               .append("public class Rulesets {\n\n")
               .append("    /**\n")
               .append("     * Stylesheet for schematron\n")
@@ -261,11 +265,11 @@ public class DownloadHelper {
         String[] pathParts = Arrays.copyOfRange(urlParts, 3, urlParts.length - 1);
         return String.format(
                 """
-                                /**
-                                 * %s
-                                 * %s
-                                 */
-                                public static final %s %s = new %s("%s", "%s");
+                            /**
+                             * %s
+                             * %s
+                             */
+                            public static final %s %s = new %s("%s", "%s");
                         
                         """,
                 StringEscapeUtils.escapeHtml(documentType.getDisplayName()),
