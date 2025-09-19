@@ -156,7 +156,7 @@ public class DownloadHelper {
     }
 
     private void fetchCodefiles(String body, String url, File root) {
-        Pattern pattern = Pattern.compile("document\\(['\"](.*)['\")]");
+        Pattern pattern = Pattern.compile("document\\(['\"](.*)['\")]\\)");
         Matcher matcher = pattern.matcher(body);
         while (matcher.find()) {
             String newUrl = matcher.group(1);
