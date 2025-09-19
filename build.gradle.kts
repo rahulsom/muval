@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.waena.root)
     alias(libs.plugins.waena.published)
     alias(libs.plugins.shadow)
+    id("io.github.rahulsom.muval")
 }
 
 java {
@@ -15,8 +16,6 @@ java {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
-
-apply(from = "gradle/codegen.gradle.kts")
 
 group = "com.github.rahulsom"
 description = "Meaningful Use Validator based on NIST's own."
@@ -86,4 +85,13 @@ extensions.findByType<ContactsExtension>()?.apply {
 
 waena {
      publishMode.set(WaenaExtension.PublishMode.Central)
+}
+
+tasks.named<ProcessResources>("processResources") {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.named<Jar>("sourcesJar") {
+    dependsOn("createCachefile", "createStylesheet")
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

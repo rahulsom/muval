@@ -1,5 +1,5 @@
 plugins {
-    java
+    `java-gradle-plugin`
 }
 
 java {
@@ -21,4 +21,11 @@ dependencies {
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.4")
     implementation("com.sun.xml.bind:jaxb-core:4.0.5")
     implementation("com.sun.xml.bind:jaxb-impl:4.0.5")
+}
+
+gradlePlugin {
+    val muval by plugins.creating {
+        id = "io.github.rahulsom.muval"
+        implementationClass = "buildscript.MuvalPlugin"
+    }
 }
