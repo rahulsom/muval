@@ -11,7 +11,7 @@ lombok = "1.18.42"
 saxon = "9.1.0.8"
 shadow = "9.1.0"
 sun-jaxb = "4.0.5"
-waena = "0.18.0"
+waena = "0.18.1"
 xml-commons-resolver = "1.1"
 xmlbeans = "5.3.0"
 
