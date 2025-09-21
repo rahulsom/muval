@@ -12,7 +12,7 @@
 
 Meaningful Use Validator based on NIST's own.
 
-image:https://img.shields.io/github/commits-since/rahulsom/muval/latest?style=for-the-badge[GitHub commits since latest release, link="https://github.com/rahulsom/nothing/releases/new"]
+image:https://img.shields.io/github/commits-since/rahulsom/muval/latest?style=for-the-badge[GitHub commits since latest release, link="https://github.com/rahulsom/muval/releases/new"]
 
 == Introduction
 
