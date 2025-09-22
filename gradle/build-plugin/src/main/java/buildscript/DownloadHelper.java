@@ -1,9 +1,9 @@
 package buildscript;
 
-import com.ning.http.client.AsyncCompletionHandler;
-import com.ning.http.client.AsyncHttpClient;
-import com.ning.http.client.AsyncHttpClientConfig;
-import com.ning.http.client.Response;
+import org.asynchttpclient.AsyncCompletionHandler;
+import org.asynchttpclient.Dsl;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.Response;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import org.apache.commons.lang.StringEscapeUtils;
@@ -43,10 +43,10 @@ public class DownloadHelper {
         try {
             JAXBContext context = JAXBContext.newInstance(DocumentTypes.class);
             this.unmarshaller = context.createUnmarshaller();
-            this.asyncHttpClient = new AsyncHttpClient(
-                    new AsyncHttpClientConfig.Builder()
+            this.asyncHttpClient = Dsl.asyncHttpClient(
+                    Dsl.config()
                             .setMaxRequestRetry(4)
-                            .setAllowPoolingConnections(true)
+                            
                             .setConnectTimeout(30000)
                             .setReadTimeout(30000)
                             .setRequestTimeout(30000)
@@ -105,9 +105,9 @@ public class DownloadHelper {
                 printlnclr("Curling " + url);
                 writeFile(outFile, templateText);
                 asyncHttpClient.prepareGet(url)
-                        .execute(new AsyncCompletionHandler<File>() {
+                        .execute(new AsyncCompletionHandler<Void>() {
                             @Override
-                            public File onCompleted(Response response) throws Exception {
+                            public Void onCompleted(Response response) throws Exception {
                                 String body = massageUrl(response.getResponseBody());
                                 String processedBody = body.replace(NIST_HOME, "")
                                         .replace(String.join("/", dirParts) + "/", "");
@@ -115,7 +115,7 @@ public class DownloadHelper {
                                 fetchDependencies(processedBody, url, root);
                                 receivedResponses.incrementAndGet();
                                 markUrlDone(url);
-                                return outFile;
+                                return null;
                             }
 
                             @Override

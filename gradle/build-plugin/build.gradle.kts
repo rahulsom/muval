@@ -16,7 +16,7 @@ dependencies {
     annotationProcessor(libs.lombok)
     compileOnly(libs.lombok)
     implementation(libs.async.http.client)
-    implementation(libs.netty3)
+    implementation(libs.netty)
     implementation(libs.commons.lang)
     implementation(libs.bundles.jaxb)
 }
