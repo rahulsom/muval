@@ -13,14 +13,12 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("org.projectlombok:lombok:1.18.42")
-    compileOnly("org.projectlombok:lombok:1.18.42")
-    implementation("com.ning:async-http-client:1.9.40")
-    implementation("io.netty:netty:3.10.6.Final")
-    implementation("commons-lang:commons-lang:2.6")
-    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.4")
-    implementation("com.sun.xml.bind:jaxb-core:4.0.5")
-    implementation("com.sun.xml.bind:jaxb-impl:4.0.5")
+    annotationProcessor(libs.lombok)
+    compileOnly(libs.lombok)
+    implementation(libs.async.http.client)
+    implementation(libs.netty3)
+    implementation(libs.commons.lang)
+    implementation(libs.bundles.jaxb)
 }
 
 gradlePlugin {
