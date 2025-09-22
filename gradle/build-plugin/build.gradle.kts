@@ -17,7 +17,7 @@ dependencies {
     compileOnly(libs.lombok)
     implementation(libs.async.http.client)
     implementation(libs.netty)
-    implementation(libs.commons.lang)
+    implementation(libs.commons.lang3)
     implementation(libs.bundles.jaxb)
 }
 
