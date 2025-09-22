@@ -1,6 +1,6 @@
 [versions]
 activation = "1.1.1"
-assertj = "3.27.5"
+assertj = "3.27.6"
 async-http-client = "2.12.4"
 commons-cli = "1.10.0"
 commons-lang3 = "3.18.0"
