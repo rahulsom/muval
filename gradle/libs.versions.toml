@@ -3,7 +3,7 @@ activation = "1.1.1"
 assertj = "3.27.5"
 async-http-client = "2.12.4"
 commons-cli = "1.10.0"
-commons-lang = "2.6"
+commons-lang3 = "3.18.0"
 jaxb-api = "4.0.4"
 jsr173_api = "1.0"
 junit-jupiter = "5.13.4"
@@ -22,7 +22,7 @@ activation = { module = "javax.activation:activation", version.ref = "activation
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 async-http-client = { module = "org.asynchttpclient:async-http-client", version.ref = "async-http-client" }
 commons-cli = { module = "commons-cli:commons-cli", version.ref = "commons-cli" }
-commons-lang = { module = "commons-lang:commons-lang", version.ref = "commons-lang" }
+commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
 jaxb-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jaxb-api" }
 jaxb-core = { module = "com.sun.xml.bind:jaxb-core", version.ref = "sun-jaxb" }
 jaxb-impl = { module = "com.sun.xml.bind:jaxb-impl", version.ref = "sun-jaxb" }

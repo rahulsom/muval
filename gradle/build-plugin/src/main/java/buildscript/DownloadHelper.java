@@ -6,8 +6,8 @@ import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.Response;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -272,8 +272,8 @@ public class DownloadHelper {
                             public static final %s %s = new %s("%s", "%s");
                         
                         """,
-                StringEscapeUtils.escapeHtml(documentType.getDisplayName()),
-                StringEscapeUtils.escapeHtml(documentType.getDescription()),
+                StringEscapeUtils.escapeHtml4(documentType.getDisplayName()),
+                StringEscapeUtils.escapeHtml4(documentType.getDescription()),
                 clazz,
                 constName,
                 clazz,

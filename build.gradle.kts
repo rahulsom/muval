@@ -47,7 +47,7 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     implementation(libs.commons.cli)
-    implementation(libs.commons.lang)
+    implementation(libs.commons.lang3)
     implementation(libs.jsr173.api)
     implementation(libs.xml.commons.resolver)
     implementation(libs.bundles.jaxb)
