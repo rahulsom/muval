@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,10 +47,9 @@ public class DownloadHelper {
             this.asyncHttpClient = Dsl.asyncHttpClient(
                     Dsl.config()
                             .setMaxRequestRetry(4)
-                            
-                            .setConnectTimeout(30000)
-                            .setReadTimeout(30000)
-                            .setRequestTimeout(30000)
+                            .setConnectTimeout(Duration.ofSeconds(30))
+                            .setReadTimeout(Duration.ofSeconds(30))
+                            .setRequestTimeout(Duration.ofSeconds(30))
                             .build()
             );
         } catch (Exception e) {
