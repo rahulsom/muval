@@ -1,7 +1,7 @@
 [versions]
 activation = "1.1.1"
 assertj = "3.27.6"
-async-http-client = "2.12.4"
+async-http-client = "3.0.3"
 commons-cli = "1.10.0"
 commons-lang3 = "3.18.0"
 jaxb-api = "4.0.4"
