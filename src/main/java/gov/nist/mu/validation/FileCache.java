@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -44,12 +45,21 @@ class FileCache {
         ZipEntry entry = zipIn.getNextEntry();
 
         while (entry != null) {
-            String filePath = destFile + File.separator + entry.getName();
+            File outFile = new File(destFile, entry.getName());
+            String destDirPath = destFile.getCanonicalPath();
+            String outFilePath = outFile.getCanonicalPath();
+            if (!outFilePath.startsWith(destDirPath + File.separator)) {
+                throw new IOException("Zip entry is outside of the target dir: " + entry.getName());
+            }
             if (!entry.isDirectory()) {
-                extractFile(zipIn, filePath);
+                // Ensure parent directories exist
+                File parent = outFile.getParentFile();
+                if (parent != null && !parent.exists()) {
+                    parent.mkdirs();
+                }
+                extractFile(zipIn, outFile);
             } else {
-                File dir = new File(filePath);
-                dir.mkdir();
+                outFile.mkdirs();
             }
             zipIn.closeEntry();
             entry = zipIn.getNextEntry();
@@ -59,8 +69,8 @@ class FileCache {
 
     private static final int BUFFER_SIZE = 4096;
 
-    private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+    private static void extractFile(ZipInputStream zipIn, File outFile) throws IOException {
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outFile));
         byte[] bytesIn = new byte[BUFFER_SIZE];
         int read = 0;
         while ((read = zipIn.read(bytesIn)) != -1) {
