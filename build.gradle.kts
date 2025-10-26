@@ -76,11 +76,11 @@ tasks.test {
 }
 
 extensions.findByType<ContactsExtension>()?.apply {
-    addPerson("rahulsom@noreply.github.com", delegateClosureOf<Contact> {
+    with(addPerson("rahulsom@noreply.github.com")) {
         moniker("Rahul Somasunderam")
         roles("owner")
         github("https://github.com/rahulsom")
-    })
+    }
 }
 
 waena {
