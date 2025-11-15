@@ -54,34 +54,39 @@ Look up instructions for your build tool from this badge.
 ----
 dependencies {
     // ...
-    compile 'com.github.rahulsom:muval:<VERSION>'
+    implementation 'com.github.rahulsom:muval:<VERSION>'
 }
 ----
 
-Then use it in your code. This example is a Spock Specification. You could use it in test or production code.
-[source,groovy]
+Then use it in your code.
+This example is a JUnit 5 Test.
+You could use it in test or production code.
+
+[source,java]
 ----
-import spock.lang.Specification
+import org.junit.jupiter.api.Test;
 
-import static gov.nist.mu.validation.Rulesets.*
-import static gov.nist.mu.validation.Validator.validate
+import java.io.InputStream;
 
-class MyCcdSpec extends Specification {
+import static gov.nist.mu.validation.Rulesets.*;
+import static gov.nist.mu.validation.Validator.validate;
+import static org.assertj.core.api.Assertions.assertThat;
 
+class MyCcdTest {
     private InputStream file(String resourceName) {
-        this.class.getClassLoader().getResourceAsStream(resourceName)
+        return this.getClass().getClassLoader().getResourceAsStream(resourceName);
     }
 
-    def "sample ccd should validate"() {
-        when: "I validate a CCD"
-        def result = validate(Cdar2c32, file('SampleCCDDocument.xml'), Ccd, Cda4Cdt, C32_v_2_5_c83_2_0)
+    @Test
+    void sampleCcdShouldValidate() {
+        // when: "I validate a CCD"
+        var result = validate(Cdar2c32, file("SampleCCDDocument.xml"), Ccd, Cda4Cdt, C32_v_2_5_c83_2_0);
 
-        then: "There are 50 errors and 98 issues"
-        result.allIssues.size() == 98
-        result.errors.size() == 50
-        result.otherIssues.isEmpty()
+        // then: "There are 50 errors and 98 issues"
+        assertThat(result.getAllIssues()).hasSize(98);
+        assertThat(result.getErrors()).hasSize(50);
+        assertThat(result.getOtherIssues()).isEmpty();
     }
-
 }
 ----
 
