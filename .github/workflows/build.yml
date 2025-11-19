@@ -1,7 +1,10 @@
 name: Gradle Build
 
 permissions:
+  security-events: write
+  actions: read
   contents: read
+  packages: read
 
 on:
   pull_request:
@@ -19,3 +22,5 @@ jobs:
       ORG_GRADLE_PROJECT_SONATYPEPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPEPASSWORD }}
       ORG_GRADLE_PROJECT_SIGNINGKEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
       ORG_GRADLE_PROJECT_SIGNINGPASSWORD: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+    with:
+      codeql: true
