@@ -1,8 +1,12 @@
 package gov.nist.mu.validation;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.InputStream;
+import java.util.stream.Stream;
 
 import static gov.nist.mu.validation.Rulesets.*;
 import static gov.nist.mu.validation.Validator.validate;
@@ -23,50 +27,24 @@ class ValidatorTest {
         assertThat(result.getOtherIssues()).isEmpty();
     }
 
-    @Test
-    void muRev0HasZeroErrors() {
-        var result = validate(Cdar2c32,
-                file("MUExamplesJan2011/MU_Rev0_HITSP_BaseC32v2.5_RequiredTemplateIds_FourErrors.xml"),
-                Ccd, Cda4Cdt, C32_v_2_5_c83_2_0
+    static Stream<Arguments> muRevTestData() {
+        return Stream.of(
+                Arguments.of("MUExamplesJan2011/MU_Rev0_HITSP_BaseC32v2.5_RequiredTemplateIds_FourErrors.xml", 4),
+                Arguments.of("MUExamplesJan2011/MU_Rev1_HITSP_C32C83_4Sections_NoInformationEntries_NoErrors.xml", 32),
+                Arguments.of("MUExamplesJan2011/MU_Rev2_HITSP_C32C83_4Sections_MeaningfulEntryContent_NoErrors.xml", 53),
+                Arguments.of("MUExamplesJan2011/MU_Rev3_HITSP_C32C83_4Sections_RobustEntries_NoErrors.xml", 44)
         );
-
-        assertThat(result.getAllIssues()).hasSize(4);
-        assertThat(result.getErrors()).isEmpty();
-        assertThat(result.getOtherIssues()).isEmpty();
     }
 
-    @Test
-    void muRev1HasNoErrors() {
+    @ParameterizedTest
+    @MethodSource("muRevTestData")
+    void muRevTests(String fileName, int expectedAllIssues) {
         var result = validate(Cdar2c32,
-                file("MUExamplesJan2011/MU_Rev1_HITSP_C32C83_4Sections_NoInformationEntries_NoErrors.xml"),
+                file(fileName),
                 Ccd, Cda4Cdt, C32_v_2_5_c83_2_0
         );
 
-        assertThat(result.getAllIssues()).hasSize(32);
-        assertThat(result.getErrors()).isEmpty();
-        assertThat(result.getOtherIssues()).isEmpty();
-    }
-
-    @Test
-    void muRev2HasNoErrors() {
-        var result = validate(Cdar2c32,
-                file("MUExamplesJan2011/MU_Rev2_HITSP_C32C83_4Sections_MeaningfulEntryContent_NoErrors.xml"),
-                Ccd, Cda4Cdt, C32_v_2_5_c83_2_0
-        );
-
-        assertThat(result.getAllIssues()).hasSize(53);
-        assertThat(result.getErrors()).isEmpty();
-        assertThat(result.getOtherIssues()).isEmpty();
-    }
-
-    @Test
-    void muRev3HasNoErrors() {
-        var result = validate(Cdar2c32,
-                file("MUExamplesJan2011/MU_Rev3_HITSP_C32C83_4Sections_RobustEntries_NoErrors.xml"),
-                Ccd, Cda4Cdt, C32_v_2_5_c83_2_0
-        );
-
-        assertThat(result.getAllIssues()).hasSize(44);
+        assertThat(result.getAllIssues()).hasSize(expectedAllIssues);
         assertThat(result.getErrors()).isEmpty();
         assertThat(result.getOtherIssues()).isEmpty();
     }

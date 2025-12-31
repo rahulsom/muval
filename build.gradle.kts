@@ -66,6 +66,7 @@ dependencies {
     implementation(variantOf(libs.saxon) { classifier("xqj") })
 
     testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.params)
     testImplementation(libs.assertj.core)
     testImplementation(libs.activation)
     
