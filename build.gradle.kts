@@ -1,5 +1,4 @@
 import com.github.rahulsom.waena.WaenaExtension
-import nebula.plugin.contacts.Contact
 import nebula.plugin.contacts.ContactsExtension
 
 plugins {
@@ -7,7 +6,7 @@ plugins {
     application
     alias(libs.plugins.waena.root)
     alias(libs.plugins.waena.published)
-    alias(libs.plugins.shadow)
+    distribution
     id("io.github.rahulsom.muval")
 }
 
@@ -22,10 +21,6 @@ description = "Meaningful Use Validator based on NIST's own."
 
 application {
     mainClass.set("gov.nist.mu.validation.Validator")
-}
-
-val applicationOnly by configurations.creating {
-    extendsFrom(configurations.runtimeOnly.get())
 }
 
 sourceSets {
@@ -51,7 +46,7 @@ dependencies {
     annotationProcessor(libs.lombok)
 
     implementation(libs.slf4j.api)
-    applicationOnly(libs.slf4j.simple)
+    runtimeOnly(libs.slf4j.simple)
 
     implementation(libs.commons.cli)
     implementation(libs.commons.lang3)
@@ -103,12 +98,14 @@ tasks.named<Jar>("sourcesJar") {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    configurations = listOf(applicationOnly)
-}
-
-configurations {
-    getByName("runtimeClasspath") {
-        extendsFrom(applicationOnly)
+afterEvaluate {
+    configure<PublishingExtension> {
+        publications {
+            withType<MavenPublication> {
+                artifact(tasks.named("distZip")) {
+                    builtBy(tasks.named("distZip"))
+                }
+            }
+        }
     }
 }
