@@ -151,13 +151,7 @@ public class Validator {
         for (int i = 0; i < results.length; i++) {
             try {
                 retval[i] = Validator.stringToDom(results[i]);
-            } catch (SAXException ex) {
-                ex.printStackTrace();
-                return null;
-            } catch (ParserConfigurationException ex) {
-                ex.printStackTrace();
-                return null;
-            } catch (IOException ex) {
+            } catch (SAXException | IOException | ParserConfigurationException ex) {
                 ex.printStackTrace();
                 return null;
             }
@@ -215,20 +209,10 @@ public class Validator {
     }
 
     private static void writeOutput(String output, String outputfilename) {
-        FileWriter outputStream = null;
-        try {
-            outputStream = new FileWriter(outputfilename);
+        try (FileWriter outputStream = new FileWriter(outputfilename)) {
             outputStream.write(output);
         } catch (IOException ex) {
             ex.printStackTrace();
-        } finally {
-            if (outputStream != null) {
-                try {
-                    outputStream.close();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
         }
     }
 
@@ -499,12 +483,12 @@ public class Validator {
                 .argName("input")
                 .hasArg()
                 .desc("input filename")
-                .build();
+                .get();
         Option output = Option.builder("output")
                 .argName("output")
                 .hasArg()
                 .desc("output filename (without this option, the default filename is validationResult[timestamp].xml)")
-                .build();
+                .get();
 
         Options cliOptions = new Options();
 
