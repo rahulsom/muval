@@ -17,11 +17,11 @@ image:https://img.shields.io/github/commits-since/rahulsom/muval/latest?style=fo
 == Introduction
 
 NIST's Meaningful Use Validator is great to check if your CCDs are valid.
-However it runs as as a Command Line Utility that outputs XML.
+However, it runs as a Command Line Utility that outputs XML.
 If you want to make validation part of your unit tests, you need it to be callable from code.
 This project aims to do just that.
 NIST made its code available http://cda-validation.nist.gov/cda-validation/downloads.html[here].
-Also they consider their code to be public domain.
+Also, they consider their code to be public domain.
 That makes it possible for this project to exist.
 I am thankful for that.
 
@@ -33,7 +33,7 @@ This supports the legacy CLI usage as well as programmatic usage
 
 Download the jar from http://oss.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.github.rahulsom&a=muval&v=LATEST&c=all[here]
 
-Then use it
+Then use it.
 [source,bash]
 ----
 java -jar muval-all.jar -input sampleCCD.xml -output result.xml
@@ -41,8 +41,8 @@ java -jar muval-all.jar -input sampleCCD.xml -output result.xml
 
 === Programmatic usage
 
-Import the dependency using maven, gradle, sbt, leingen or ivy.
-Example below is for gradle.
+Import the dependency using Maven, Gradle, sbt, leiningen or Ivy.
+The example below is for Gradle.
 Look up instructions for your build tool from this badge.
 
 ==== Available versions
@@ -103,4 +103,5 @@ If you run into network problems, you may rerun that command.
 
 == Contributing
 
-Please feel free to raise Issues with test cases or send Pull Requests. This uses the github issue tracker.
+Please feel free to raise Issues with test cases or send Pull Requests.
+This uses the GitHub issue tracker.
