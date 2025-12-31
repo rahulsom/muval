@@ -233,10 +233,12 @@ public class DownloadHelper {
 
             StringBuilder sb = new StringBuilder();
             sb.append("package gov.nist.mu.validation;\n\n")
+              .append("import lombok.NoArgsConstructor;\n\n")
               .append("/**\n")
               .append(" * Constants of all rulesets.\n")
               .append(" *\n")
               .append(" */\n")
+              .append("@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)\n")
               .append("public class Rulesets {\n\n")
               .append("    /**\n")
               .append("     * Stylesheet for schematron\n")
