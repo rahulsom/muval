@@ -16,7 +16,6 @@ package gov.nist.mu.validation;
 
 import lombok.Data;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import java.util.ArrayList;
@@ -36,21 +35,15 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
     private List<String> fatalErrors = null;
     private List<String> linesFatalErrors = null;
 
-    /**
-     * Creates a new instance of SchemaValidationErrorHandler
-     */
-    public SchemaValidationErrorHandler() {
-    }
-
-    public void warning(SAXParseException exception) throws SAXException {
+    public void warning(SAXParseException exception) {
         this.addWarning(exception.getMessage(), Integer.toString(exception.getLineNumber()));
     }
 
-    public void fatalError(SAXParseException exception) throws SAXException {
+    public void fatalError(SAXParseException exception) {
         this.addFatalError(exception.getMessage(), Integer.toString(exception.getLineNumber()));
     }
 
-    public void error(SAXParseException exception) throws SAXException {
+    public void error(SAXParseException exception) {
         this.addError(exception.getMessage(), Integer.toString(exception.getLineNumber()));
     }
 
@@ -60,11 +53,7 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
      * @return true if warnings exist, false otherwise.
      */
     public boolean hasWarnings() {
-        if(getWarnings() == null)
-            return false;
-        if(getWarnings().isEmpty())
-            return false;
-        return true;
+        return getWarnings() != null && !getWarnings().isEmpty();
     }
 
     /**
@@ -73,11 +62,7 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
      * @return true if errors exist, false otherwise.
      */
     public boolean hasErrors() {
-        if(getErrors() == null)
-            return false;
-        if(getErrors().isEmpty())
-            return false;
-        return true;
+        return getErrors() != null && !getErrors().isEmpty();
     }
 
     /**
@@ -86,11 +71,7 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
      * @return true if fatal errors exist, false otherwise.
      */
     public boolean hasFatalErrors() {
-        if(getFatalErrors() == null)
-            return false;
-        if(getFatalErrors().isEmpty())
-            return false;
-        return true;
+        return getFatalErrors() != null && !getFatalErrors().isEmpty();
     }
 
     /**
