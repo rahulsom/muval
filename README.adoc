@@ -31,12 +31,25 @@ This supports the legacy CLI usage as well as programmatic usage
 
 === CLI Usage
 
-Download the jar from http://oss.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.github.rahulsom&a=muval&v=LATEST&c=all[here]
+Download the jar from Maven Central and unzip it.
+Then you can use it.
 
-Then use it.
-[source,bash]
+[source,shell]
 ----
-java -jar muval-all.jar -input sampleCCD.xml -output result.xml
+# Remove any older versions
+rm -rf muval-*
+
+# Download the latest version from Maven Central
+mvn dependency:unpack \
+    -DrepoUrl=https://repo1.maven.org/maven2/ \
+    -Dartifact=com.github.rahulsom:muval:LATEST:zip \
+    -DoutputDirectory=$PWD
+
+# cd to the unzipped directory
+cd muval-*
+
+# Run the validator
+./bin/muval -input sampleCCD.xml -output result.xml
 ----
 
 === Programmatic usage
