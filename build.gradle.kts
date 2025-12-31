@@ -106,3 +106,9 @@ tasks.named<Jar>("sourcesJar") {
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     configurations = listOf(applicationOnly)
 }
+
+configurations {
+    getByName("runtimeClasspath") {
+        extendsFrom(applicationOnly)
+    }
+}
