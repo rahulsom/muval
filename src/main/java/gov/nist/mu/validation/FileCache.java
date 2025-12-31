@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Extracts cache to a temp directory. This is required because of the way schematron validators work.
@@ -16,6 +17,7 @@ import java.util.zip.ZipInputStream;
  * @author rahul somasunderam
  *
  */
+@Slf4j
 class FileCache {
     private static class Holder {
         static FileCache instance = new FileCache();
@@ -33,7 +35,7 @@ class FileCache {
             destFile = Files.createTempDirectory("muval").toFile();
             extract("cachefile", destFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Failed to create temp directory", e);
         }
     }
 

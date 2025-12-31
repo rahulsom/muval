@@ -13,6 +13,7 @@ lombok = "1.18.42"
 netty = "4.2.9.Final"
 saxon = "9.1.0.8"
 shadow = "9.3.0"
+slf4j = "2.0.17"
 sun-jaxb = "4.0.6"
 waena = "0.21.1"
 xml-commons-resolver = "1.1"
@@ -35,6 +36,8 @@ junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 netty = { module = "io.netty:netty-all", version.ref = "netty" }
 saxon = { module = "net.sourceforge.saxon:saxon", version.ref = "saxon" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 xml-commons-resolver = { module = "org.dspace.xmlui.xml:xml-commons-resolver", version.ref = "xml-commons-resolver" }
 xmlbeans = { module = "org.apache.xmlbeans:xmlbeans", version.ref = "xmlbeans" }
 

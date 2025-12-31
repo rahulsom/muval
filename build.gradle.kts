@@ -24,6 +24,10 @@ application {
     mainClass.set("gov.nist.mu.validation.Validator")
 }
 
+val applicationOnly by configurations.creating {
+    extendsFrom(configurations.runtimeOnly.get())
+}
+
 sourceSets {
     main {
         java {
@@ -45,6 +49,9 @@ repositories {
 dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
+
+    implementation(libs.slf4j.api)
+    applicationOnly(libs.slf4j.simple)
 
     implementation(libs.commons.cli)
     implementation(libs.commons.lang3)
@@ -94,4 +101,14 @@ tasks.named<ProcessResources>("processResources") {
 tasks.named<Jar>("sourcesJar") {
     dependsOn("createCachefile", "createStylesheet")
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    configurations = listOf(applicationOnly)
+}
+
+configurations {
+    getByName("runtimeClasspath") {
+        extendsFrom(applicationOnly)
+    }
 }

@@ -16,6 +16,7 @@ package gov.nist.mu.validation;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
+import lombok.extern.slf4j.Slf4j;
 import jakarta.xml.bind.Unmarshaller;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -62,6 +63,7 @@ import java.util.Date;
  * @author andrew.mccaffrey
  * @author rahul somasunderam
  */
+@Slf4j
 public class Validator {
 
     private static final Schema schemaLocation = Rulesets.Cdar2c32;
@@ -137,7 +139,7 @@ public class Validator {
                     Results resultsFromIteration = (Results) unmarshal;
                     retval.getValidationResults().addAll(resultsFromIteration.getValidationResults());
                 } catch (JAXBException e) {
-                    e.printStackTrace();
+                    log.error("Error unmarshalling results", e);
                 }
             }
         }
@@ -152,7 +154,7 @@ public class Validator {
             try {
                 retval[i] = Validator.stringToDom(results[i]);
             } catch (SAXException | IOException | ParserConfigurationException ex) {
-                ex.printStackTrace();
+                log.error("Error parsing schematron result", ex);
                 return null;
             }
         }
@@ -165,7 +167,7 @@ public class Validator {
         try {
             return new FileInputStream(input);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.error("Input file '{}' not found", input, e);
             return null;
         }
     }
@@ -176,9 +178,9 @@ public class Validator {
             try {
                 formatter.printHelp("java -jar Validator.jar", "", cliOptions, "", true);
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Error printing help", e);
             }
-            System.out.println("Example: user@localhost:~/cdafiles> java -jar Validator.jar -input CCD.xml -output report.xml");
+            log.info("Example: user@localhost:~/cdafiles> java -jar Validator.jar -input CCD.xml -output report.xml");
             return true;
         }
         return false;
@@ -190,7 +192,7 @@ public class Validator {
         try {
             line = parser.parse(cliOptions, args);
         } catch (ParseException ex) {
-            ex.printStackTrace();
+            log.error("Error parsing command line arguments", ex);
         }
         return line;
     }
@@ -212,7 +214,7 @@ public class Validator {
         try (FileWriter outputStream = new FileWriter(outputfilename)) {
             outputStream.write(output);
         } catch (IOException ex) {
-            ex.printStackTrace();
+            log.error("Error writing output to {}", outputfilename, ex);
         }
     }
 
@@ -226,7 +228,7 @@ public class Validator {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             result = builder.newDocument();
         } catch (ParserConfigurationException ex) {
-            ex.printStackTrace();
+            log.error("Error creating document builder", ex);
             System.exit(1);
         }
 
@@ -338,14 +340,14 @@ public class Validator {
             factory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaSource",
                     schemaLocation.getFile().getAbsolutePath());
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Could not get schema file path", e);
         }
         factory.setIgnoringElementContentWhitespace(true);
         DocumentBuilder builder;
         try {
             builder = factory.newDocumentBuilder();
         } catch (ParserConfigurationException pce) {
-            pce.printStackTrace();
+            log.error("Error creating document builder", pce);
             return null;
         }
 
@@ -354,13 +356,13 @@ public class Validator {
         try {
             doc = builder.parse(xml);
         } catch (SAXException e) {
-            System.out.println("Message is not valid XML.");
+            log.error("Message is not valid XML.");
             handler.addError("Message is not valid XML.", null);
-            e.printStackTrace();
+            log.debug("SAXException while parsing", e);
         } catch (IOException e) {
-            System.out.println("Message is not valid XML.  Possible empty message.");
+            log.error("Message is not valid XML.  Possible empty message.");
             handler.addError("Message is not valid XML.  Possible empty message.", null);
-            e.printStackTrace();
+            log.debug("IOException while parsing", e);
         }
         return doc;
     }
@@ -382,7 +384,7 @@ public class Validator {
             result.append(Validator.doTransform(xml, schematronTransform));
             return result.toString();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error reading schematron/skeleton file", e);
             return null;
         }
     }
@@ -399,10 +401,10 @@ public class Validator {
             transformer.setParameter("phase", phase);
             transformer.transform(xmlSource, result);
         } catch (TransformerConfigurationException tce) {
-            tce.printStackTrace();
+            log.error("Transformer configuration error", tce);
             return null;
         } catch (TransformerException te) {
-            te.printStackTrace();
+            log.error("Transformation error", te);
             return null;
         } finally {
             System.clearProperty("javax.xml.transform.TransformerFactory");
@@ -423,10 +425,10 @@ public class Validator {
             Transformer transformer = Validator.getTransformerFactory().newTransformer(xsltSource);
             transformer.transform(xmlSource, result);
         } catch (TransformerConfigurationException tce) {
-            tce.printStackTrace();
+            log.error("Transformer configuration error", tce);
             return null;
         } catch (TransformerException te) {
-            te.printStackTrace();
+            log.error("Transformation error", te);
             return null;
         } finally {
             System.clearProperty("javax.xml.transform.TransformerFactory");
@@ -450,18 +452,18 @@ public class Validator {
                 for (String path : paths) {
                     final File targetFile = new File(cacheLocation, path);
                     if (targetFile.exists()) {
-                        System.out.println("Using file resource - " + href + " as " + path);
+                        log.debug("Using file resource - {} as {}", href, path);
                         return new StreamSource(targetFile);
                     }
                 }
 
                 InputStream resourceAsStream = Validator.class.getClassLoader().getResourceAsStream(href);
                 if (resourceAsStream != null) {
-                    System.out.println("Using classpath resource - " + href);
+                    log.debug("Using classpath resource - {}", href);
                     return new StreamSource(resourceAsStream);
                 }
 
-                System.out.println("Using fallback resource - " + href);
+                log.debug("Using fallback resource - {}", href);
                 return oldResolver.resolve(href, base);
             });
         }
@@ -522,7 +524,7 @@ public class Validator {
             transformer.transform(source, result);
             return stringWriter.getBuffer().toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error converting XML to string", e);
         }
         return null;
     }
