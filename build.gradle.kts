@@ -45,26 +45,25 @@ dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
 
-    implementation(libs.slf4j.api)
     runtimeOnly(libs.slf4j.simple)
 
+    implementation(libs.bundles.jaxb)
     implementation(libs.commons.cli)
     implementation(libs.commons.lang3)
     implementation(libs.jsr173.api)
-    implementation(libs.xml.commons.resolver)
-    implementation(libs.bundles.jaxb)
-
     implementation(libs.saxon)
+    implementation(libs.slf4j.api)
+    implementation(libs.xml.commons.resolver)
+    implementation(libs.xmlbeans) {
+        exclude(group = "net.sf.saxon")
+    }
     implementation(variantOf(libs.saxon) { classifier("dom") })
     implementation(variantOf(libs.saxon) { classifier("dom4j") })
     implementation(variantOf(libs.saxon) { classifier("jdom") })
     implementation(variantOf(libs.saxon) { classifier("s9api") })
+    implementation(variantOf(libs.saxon) { classifier("sql") })
     implementation(variantOf(libs.saxon) { classifier("xom") })
     implementation(variantOf(libs.saxon) { classifier("xqj") })
-    implementation(variantOf(libs.saxon) { classifier("sql") })
-    implementation(libs.xmlbeans) {
-        exclude(group = "net.sf.saxon")
-    }
 
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.assertj.core)
