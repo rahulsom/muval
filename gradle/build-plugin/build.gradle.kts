@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.async.http.client)
     implementation(libs.netty)
     implementation(libs.commons.lang3)
+    implementation(libs.commons.text)
     implementation(libs.bundles.jaxb)
 }
 
