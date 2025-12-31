@@ -1,9 +1,12 @@
 package gov.nist.mu.validation;
 
+import lombok.NoArgsConstructor;
+
 /**
  * Constants of all rulesets.
  *
  */
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class Rulesets {
 
     /**
