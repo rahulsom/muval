@@ -69,14 +69,13 @@ class FileCache {
     private static final int BUFFER_SIZE = 4096;
 
     private static void extractFile(ZipInputStream zipIn, File outFile) throws IOException {
-        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outFile));
-        byte[] bytesIn = new byte[BUFFER_SIZE];
-        int read = 0;
-        while ((read = zipIn.read(bytesIn)) != -1) {
-            bos.write(bytesIn, 0, read);
+        try(BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outFile))) {
+            byte[] bytesIn = new byte[BUFFER_SIZE];
+            int read;
+            while ((read = zipIn.read(bytesIn)) != -1) {
+                bos.write(bytesIn, 0, read);
+            }
         }
-        bos.close();
     }
-
 
 }
