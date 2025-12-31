@@ -19,8 +19,8 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import java.util.Iterator;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -29,12 +29,12 @@ import java.util.Vector;
 @Data
 public class SchemaValidationErrorHandler implements ErrorHandler {
 
-    private Vector<String> warnings = null;
-    private Vector<String> linesWarnings = null;
-    private Vector<String> errors = null;
-    private Vector<String> linesErrors = null;
-    private Vector<String> fatalErrors = null;
-    private Vector<String> linesFatalErrors = null;
+    private List<String> warnings = null;
+    private List<String> linesWarnings = null;
+    private List<String> errors = null;
+    private List<String> linesErrors = null;
+    private List<String> fatalErrors = null;
+    private List<String> linesFatalErrors = null;
 
     /**
      * Creates a new instance of SchemaValidationErrorHandler
@@ -101,10 +101,10 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
     public String getPrintableWarnings() {
         if(getWarnings() == null)
             return "";
-        Iterator it = getWarnings().iterator();
-        StringBuffer sb = new StringBuffer();
+        var it = getWarnings().iterator();
+        StringBuilder sb = new StringBuilder();
         while(it.hasNext()) {
-            sb.append("Warning: " + (String) it.next() + "\n");
+            sb.append("Warning: " + it.next() + "\n");
         }
         return sb.toString();
     }
@@ -117,10 +117,10 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
     public String getPrintableErrors() {
         if(getErrors() == null)
             return "";
-        Iterator it = getErrors().iterator();
-        StringBuffer sb = new StringBuffer();
+        var it = getErrors().iterator();
+        StringBuilder sb = new StringBuilder();
         while(it.hasNext()) {
-            sb.append("Error: " + (String) it.next() + "\n");
+            sb.append("Error: " + it.next() + "\n");
         }
         return sb.toString();
 
@@ -134,10 +134,10 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
     public String getPrintableFatalErrors() {
         if(getFatalErrors() == null)
             return "";
-        Iterator it = getFatalErrors().iterator();
-        StringBuffer sb = new StringBuffer();
+        var it = getFatalErrors().iterator();
+        StringBuilder sb = new StringBuilder();
         while(it.hasNext()) {
-            sb.append("Fatal Error: " + (String) it.next() + "\n");
+            sb.append("Fatal Error: " + it.next() + "\n");
         }
         return sb.toString();
     }
@@ -151,8 +151,8 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
      */
     public boolean addWarning(String warning, String lineNumber) {
         if(getWarnings() == null) {
-            setWarnings(new Vector<String>());
-            setLinesWarnings(new Vector<String>());
+            setWarnings(new ArrayList<>());
+            setLinesWarnings(new ArrayList<>());
         }
         return (getWarnings().add(warning) && getLinesWarnings().add(lineNumber));
     }
@@ -166,8 +166,8 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
      */
     public boolean addError(String error, String lineNumber) {
         if(getErrors() == null) {
-            setErrors(new Vector<String>());
-            setLinesErrors(new Vector<String>());
+            setErrors(new ArrayList<>());
+            setLinesErrors(new ArrayList<>());
         }
         return (getErrors().add(error) && getLinesErrors().add(lineNumber));
     }
@@ -181,8 +181,8 @@ public class SchemaValidationErrorHandler implements ErrorHandler {
      */
     public boolean addFatalError(String fatalError, String lineNumber) {
         if(getFatalErrors() == null) {
-            setFatalErrors(new Vector<String>());
-            setLinesErrors(new Vector<String>());
+            setFatalErrors(new ArrayList<>());
+            setLinesErrors(new ArrayList<>());
         }
         return (getFatalErrors().add(fatalError) && getLinesErrors().add(lineNumber));
     }
