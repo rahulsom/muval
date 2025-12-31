@@ -31,7 +31,7 @@ class ValidatorTest {
         );
 
         assertThat(result.getAllIssues()).hasSize(4);
-        assertThat(result.getErrors()).hasSize(0);
+        assertThat(result.getErrors()).isEmpty();
         assertThat(result.getOtherIssues()).isEmpty();
     }
 
@@ -43,7 +43,7 @@ class ValidatorTest {
         );
 
         assertThat(result.getAllIssues()).hasSize(32);
-        assertThat(result.getErrors()).hasSize(0);
+        assertThat(result.getErrors()).isEmpty();
         assertThat(result.getOtherIssues()).isEmpty();
     }
 
@@ -55,7 +55,7 @@ class ValidatorTest {
         );
 
         assertThat(result.getAllIssues()).hasSize(53);
-        assertThat(result.getErrors()).hasSize(0);
+        assertThat(result.getErrors()).isEmpty();
         assertThat(result.getOtherIssues()).isEmpty();
     }
 
@@ -67,7 +67,7 @@ class ValidatorTest {
         );
 
         assertThat(result.getAllIssues()).hasSize(44);
-        assertThat(result.getErrors()).hasSize(0);
+        assertThat(result.getErrors()).isEmpty();
         assertThat(result.getOtherIssues()).isEmpty();
     }
 
@@ -76,7 +76,7 @@ class ValidatorTest {
         var result = validate(Cdar2c32, file("IHE_BPPC_2010Dec10/BPPCExampleFromIHE.xml"), IheBppc);
 
         assertThat(result.getAllIssues()).hasSize(2);
-        assertThat(result.getErrors()).hasSize(0);
+        assertThat(result.getErrors()).isEmpty();
         assertThat(result.getOtherIssues()).isEmpty();
     }
 }
