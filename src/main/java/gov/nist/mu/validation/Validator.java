@@ -68,6 +68,8 @@ public class Validator {
 
     private static final Schema schemaLocation = Rulesets.Cdar2c32;
     private static final Stylesheet skeletonLocation = Rulesets.stylesheet;
+    public static final String OUTPUT_OPTION = "output";
+    public static final String INPUT_OPTION = "input";
     private static TransformerFactory factory = null;
 
     /**
@@ -163,7 +165,7 @@ public class Validator {
     }
 
     private static FileInputStream getInputFile(CommandLine line) {
-        String input = line.getOptionValue("input");
+        String input = line.getOptionValue(INPUT_OPTION);
         try {
             return new FileInputStream(input);
         } catch (FileNotFoundException e) {
@@ -174,7 +176,7 @@ public class Validator {
 
     private static boolean printHelp(String[] args, Options cliOptions, CommandLine line) {
         HelpFormatter formatter = HelpFormatter.builder().get();
-        if (line.hasOption("help") || args.length == 0 || !line.hasOption("input")) {
+        if (line.hasOption("help") || args.length == 0 || !line.hasOption(INPUT_OPTION)) {
             try {
                 formatter.printHelp("java -jar Validator.jar", "", cliOptions, "", true);
             } catch (IOException e) {
@@ -200,8 +202,8 @@ public class Validator {
     private static String computeOutputFilename(CommandLine line) {
         String outputfilename;
 
-        if (line.hasOption("output")) {
-            outputfilename = line.getOptionValue("output");
+        if (line.hasOption(OUTPUT_OPTION)) {
+            outputfilename = line.getOptionValue(OUTPUT_OPTION);
         } else {
             String date = Validator.createDateOfTest();
             String time = Validator.createTimeOfTest().substring(0, 5);
@@ -481,13 +483,13 @@ public class Validator {
     private static Options setCliOptions() throws IllegalArgumentException {
         Option help = new Option("help", "display this message");
 
-        Option input = Option.builder("input")
-                .argName("input")
+        Option input = Option.builder(INPUT_OPTION)
+                .argName(INPUT_OPTION)
                 .hasArg()
                 .desc("input filename")
                 .get();
-        Option output = Option.builder("output")
-                .argName("output")
+        Option output = Option.builder(OUTPUT_OPTION)
+                .argName(OUTPUT_OPTION)
                 .hasArg()
                 .desc("output filename (without this option, the default filename is validationResult[timestamp].xml)")
                 .get();
