@@ -4,6 +4,7 @@ assertj = "3.27.6"
 async-http-client = "3.0.5"
 commons-cli = "1.11.0"
 commons-lang3 = "3.20.0"
+commons-text = "1.15.0"
 jaxb-api = "4.0.4"
 jsr173_api = "1.0"
 junit-jupiter = "6.0.1"
@@ -23,6 +24,7 @@ assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 async-http-client = { module = "org.asynchttpclient:async-http-client", version.ref = "async-http-client" }
 commons-cli = { module = "commons-cli:commons-cli", version.ref = "commons-cli" }
 commons-lang3 = { module = "org.apache.commons:commons-lang3", version.ref = "commons-lang3" }
+commons-text = { module = "org.apache.commons:commons-text", version.ref = "commons-text" }
 jaxb-api = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jaxb-api" }
 jaxb-core = { module = "com.sun.xml.bind:jaxb-core", version.ref = "sun-jaxb" }
 jaxb-impl = { module = "com.sun.xml.bind:jaxb-impl", version.ref = "sun-jaxb" }
