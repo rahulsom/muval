@@ -46,6 +46,9 @@ dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
 
+    implementation(libs.slf4j.api)
+    runtimeOnly(libs.slf4j.simple)
+
     implementation(libs.commons.cli)
     implementation(libs.commons.lang3)
     implementation(libs.jsr173.api)
