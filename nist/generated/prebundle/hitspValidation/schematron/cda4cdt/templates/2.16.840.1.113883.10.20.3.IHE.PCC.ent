@@ -280,8 +280,8 @@
 
     <assert test="not(cda:relatedEntity/@classCode='PRS') or document('hitspValidation/schematron/cda4cdt/voc.xml')/systems/system[@codeSystemName='LOINC'][@group='Personal Relationship Role Type']/code[@value = current()/cda:relatedEntity/cda:code/@code] or current()/cda:code/@codeSystem='2.16.840.1.113883.6.96'">
     CONF-HP-46: When relatedEntity/@classCode is PRS, values in relatedEntity/code SHALL come
-    from the HL7 PersonalRelationshipRoleType vocabulary or from SNOMED, any subtype ofâ
-    Person in the familyâ (303071001).
+    from the HL7 PersonalRelationshipRoleType vocabulary or from SNOMED, any subtype of“
+    Person in the family” (303071001).
     </assert>            
     </rule>
 

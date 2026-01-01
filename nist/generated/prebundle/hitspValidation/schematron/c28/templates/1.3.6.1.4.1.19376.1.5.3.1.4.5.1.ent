@@ -59,7 +59,7 @@
 	   HL7 Version 3 Messages, this SHALL be represented as a &lt;sourceOf&gt;
 	   element. The typeCode SHALL be SUBJ for both HL7 Version 3 and
 	   CDA. HL7 Version 3 additionally requires that inversionInd SHALL be
-	â  false. 
+	‘  false. 
 	</assert>
 	</rule>
   </pattern>

@@ -52,7 +52,7 @@
 <!ENTITY ent-1.3.6.1.4.1.19376.1.5.3.1.4.4.1 SYSTEM 'templates/1.3.6.1.4.1.19376.1.5.3.1.4.4.1.ent'>
 <!ENTITY ent-1.3.6.1.4.1.19376.1.5.3.1.4.4 SYSTEM 'templates/1.3.6.1.4.1.19376.1.5.3.1.4.4.ent'>
 
-<!-- Medications â Prescription and Non-Prescription -->
+<!-- Medications – Prescription and Non-Prescription -->
 <!ENTITY ent-1.3.6.1.4.1.19376.1.5.3.1.3.19 SYSTEM 'templates/1.3.6.1.4.1.19376.1.5.3.1.3.19.ent'>
 <!ENTITY ent-1.3.6.1.4.1.19376.1.5.3.1.4.7 SYSTEM 'templates/1.3.6.1.4.1.19376.1.5.3.1.4.7.ent'>
 <!ENTITY ent-1.3.6.1.4.1.19376.1.5.3.1.4.7.1 SYSTEM 'templates/1.3.6.1.4.1.19376.1.5.3.1.4.7.1.ent'>

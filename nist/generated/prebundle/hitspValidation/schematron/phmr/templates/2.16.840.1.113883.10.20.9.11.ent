@@ -13,7 +13,7 @@
 
     <assert test='cda:code[@codeSystem="2.16.840.1.113883.6.96"]'>
     Error: CONF-PHMR-123: A code element SHALL be present where @code is either 364681001
-    Waveform-observable or from the Waveform-observable hierarchy in SNOMED CTÂ®,
+    Waveform-observable or from the Waveform-observable hierarchy in SNOMED CT®,
     and @codeSystem is 2.16.840.1.113883.6.96 SNOMED CT (DYNAMIC).
     </assert>
 
@@ -24,7 +24,7 @@
     scaling factor (typically 1), and digits contains a list of space-separated digits
     representing discrete data points on the waveform. Where required as attributes on
     origin and scale, unit of measure SHALL be expressed using a valid Unified Code
-    for Units of Measure (UCUM) expression. For dimensionless values,â1 SHOULD be
+    for Units of Measure (UCUM) expression. For dimensionless values,“1 SHOULD be
     used as the unit.
     </assert>
 

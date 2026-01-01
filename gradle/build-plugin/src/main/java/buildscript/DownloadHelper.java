@@ -10,6 +10,7 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Phaser;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +41,7 @@ public class DownloadHelper {
     private final List<String> pendingUrls = new ArrayList<>();
     private final Object lock = new Object();
     private final ExecutorService filePool = Executors.newSingleThreadExecutor();
+    private final Phaser phaser = new Phaser(0);
 
     private DownloadHelper() {
         try {
@@ -63,7 +66,11 @@ public class DownloadHelper {
 
     static String massageUrl(String url) {
         return url.replace("http://localhost:11080/", NIST_HOME)
-                .replace("http://cda-validation.nist.gov:11079/", NIST_HOME);
+                .replace("http://cda-validation.nist.gov:11080/", NIST_HOME)
+                .replace("https://cda-validation.nist.gov:11080/", NIST_HOME)
+                .replace("http://cda-validation.nist.gov:11079/", NIST_HOME)
+                .replace("https://cda-validation.nist.gov:11079/", NIST_HOME)
+                ;
     }
 
     synchronized void report() {
@@ -75,19 +82,25 @@ public class DownloadHelper {
         if (pendingUrls.isEmpty() && knownUrls.size() > 1000) {
             printlnclr("");
             printlnclr("Done");
-            System.exit(errors.get());
+            try {
+                this.asyncHttpClient.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    void curl(String url, File root) {
+    void curl(String url1, File root) {
         synchronized (lock) {
-            if (knownUrls.contains(url)) {
+            if (knownUrls.contains(url1)) {
                 return;
             }
-            knownUrls.add(url);
-            pendingUrls.add(url);
+            knownUrls.add(url1);
+            pendingUrls.add(url1);
         }
+        String url = massageUrl(url1);
         sentRequests.incrementAndGet();
+        phaser.register();
         report();
         
         String[] urlParts = url.split("/");
@@ -102,18 +115,22 @@ public class DownloadHelper {
         
         try {
             if (!outFile.exists() || templateText.equals(readFile(outFile))) {
-                printlnclr("Curling " + url);
                 writeFile(outFile, templateText);
                 asyncHttpClient.prepareGet(url)
                         .execute(new AsyncCompletionHandler<Void>() {
                             @Override
-                            public Void onCompleted(Response response) throws Exception {
-                                String body = massageUrl(response.getResponseBody());
-                                String processedBody = body.replace(NIST_HOME, "")
-                                        .replace(String.join("/", dirParts) + "/", "");
-                                writeFile(outFile, processedBody);
-                                fetchDependencies(processedBody, url, root);
+                            public Void onCompleted(Response response) {
+                                if (response.getStatusCode() == 200) {
+                                    String body = massageUrl(response.getResponseBody());
+                                    String processedBody = body.replace(NIST_HOME, "")
+                                            .replace(String.join("/", dirParts) + "/", "");
+                                    writeFile(outFile, processedBody);
+                                    fetchDependencies(processedBody, url, root);
+                                } else {
+                                    printlnclr("Could not download " + url + " - Received " + response.getStatusCode());
+                                }
                                 receivedResponses.incrementAndGet();
+                                phaser.arriveAndDeregister();
                                 markUrlDone(url);
                                 return null;
                             }
@@ -123,6 +140,7 @@ public class DownloadHelper {
                                 printlnclr("Could not download " + url);
                                 t.printStackTrace();
                                 receivedResponses.incrementAndGet();
+                                phaser.arriveAndDeregister();
                                 errors.incrementAndGet();
                                 markUrlDone(url);
                             }
@@ -132,6 +150,7 @@ public class DownloadHelper {
                     try {
                         fetchDependencies(readFile(outFile), url, root);
                         receivedResponses.incrementAndGet();
+                        phaser.arriveAndDeregister();
                         markUrlDone(url);
                     } catch (Exception e) {
                         System.err.println("Error processing existing file: " + e.getMessage());
@@ -160,9 +179,7 @@ public class DownloadHelper {
         Matcher matcher = pattern.matcher(body);
         while (matcher.find()) {
             String newUrl = matcher.group(1);
-            String calculated = newUrl.contains("/") ?
-                    (NIST_HOME + newUrl) :
-                    computeUrl(newUrl, url);
+            String calculated = newUrl.startsWith("http") ? computeUrl(newUrl, url) : (NIST_HOME + newUrl);
             curl(calculated, root);
         }
     }
@@ -195,11 +212,20 @@ public class DownloadHelper {
     }
 
     private static String computeUrl(String newUrl, String url) {
+        if (newUrl.startsWith("http")) {
+            return newUrl;
+        }
+
+        // Check if the newUrl is already an absolute path that starts with NIST_HOME context
+        if (newUrl.startsWith("hitspValidation/")) {
+            return NIST_HOME + newUrl;
+        }
+
         List<String> parts = new ArrayList<>(Arrays.asList(newUrl.split("/")));
         Collections.reverse(parts);
         String[] urlParts = url.split("/");
         List<String> oldParts = new ArrayList<>(Arrays.asList(urlParts).subList(0, urlParts.length - 1));
-        
+
         while (!parts.isEmpty()) {
             String head = parts.remove(parts.size() - 1);
             if ("..".equals(head)) {
@@ -260,6 +286,7 @@ public class DownloadHelper {
             System.err.println("Error in downloadFrom: " + e.getMessage());
             throw new RuntimeException(e);
         }
+        phaser.arriveAndAwaitAdvance();
     }
 
     private static String getConst(DocumentType documentType, String constName, String[] urlParts) {
@@ -267,13 +294,12 @@ public class DownloadHelper {
         String[] pathParts = Arrays.copyOfRange(urlParts, 3, urlParts.length - 1);
         return String.format(
                 """
-                            /**
-                             * %s
-                             * %s
-                             */
-                            public static final %s %s = new %s("%s", "%s");
-                        
-                        """,
+                        /**
+                         * %s
+                         * %s
+                         */
+                        public static final %s %s = new %s("%s", "%s");
+                        """.indent(4),
                 StringEscapeUtils.escapeHtml4(documentType.getDisplayName()),
                 StringEscapeUtils.escapeHtml4(documentType.getDescription()),
                 clazz,
