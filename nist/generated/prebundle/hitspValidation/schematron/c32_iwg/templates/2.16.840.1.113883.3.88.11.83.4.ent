@@ -125,7 +125,7 @@
                  (cda:id[@extension and @root="2.16.840.1.113883.4.6"])'>
       Error: HITSP/C83 Healthcare Provider, National Provider Identifier, the extension attribute 
       SHALL contain the National Provider Identifier.  The root attribute SHALL contain the value
-      2.16.840.1.113883.4.6 to indicate that this identifier is the providerâs assigned NPI.
+      2.16.840.1.113883.4.6 to indicate that this identifier is the provider’s assigned NPI.
       See HITSP/C83 Section 2.2.2.4.4, rules C83-[DE-4.10-CDA-1] and C83-[DE-4.10-CDA-2].
    </assert>
 

@@ -13,7 +13,7 @@
 
     <assert test='cda:code[@codeSystem="2.16.840.1.113883.6.96"]'>
     Error: CONF-PHMR-110: A code element SHALL be present where @code is either 364681001
-    Waveform-observable or from the Waveform-observable hierarchy in SNOMED CTÂ®,
+    Waveform-observable or from the Waveform-observable hierarchy in SNOMED CT®,
     and @codeSystem is 2.16.840.1.113883.6.96 SNOMED CT (DYNAMIC).
     </assert>
 

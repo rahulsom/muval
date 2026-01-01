@@ -373,8 +373,8 @@
 
     <assert test="not(cda:relatedEntity/@classCode='PRS') or document('voc.xml')/systems/system[@codeSystemName='LOINC'][@group='Personal Relationship Role Type']/code[@value = current()/cda:relatedEntity/cda:code/@code] or current()/cda:relatedEntity/cda:code/@codeSystem='2.16.840.1.113883.6.96'">
     Error: CDA4CDT: CONF-HP-46: When relatedEntity/@classCode is PRS, values in relatedEntity/code SHALL come
-    from the HL7 PersonalRelationshipRoleType vocabulary or from SNOMED, any subtype ofâ
-    Person in the familyâ (303071001).
+    from the HL7 PersonalRelationshipRoleType vocabulary or from SNOMED, any subtype of“
+    Person in the family” (303071001).
     (This rule comes from CDA for Common Document Types History and Physical Notes (DSTU). IHE Medical
     Documents SHALL follow all constraints found in that document with the exception of those cases
     detailed in IHE PCC Technical Framework Section 6.3.1.1.)
