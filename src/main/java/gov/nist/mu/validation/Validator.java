@@ -68,7 +68,11 @@ public class Validator {
 
     private static final Schema schemaLocation = Rulesets.Cdar2c32;
     private static final Stylesheet skeletonLocation = Rulesets.stylesheet;
+
+    /** CLI option name for the output file path. */
     public static final String OUTPUT_OPTION = "output";
+
+    /** CLI option name for the input file path. */
     public static final String INPUT_OPTION = "input";
     private static TransformerFactory factory = null;
 
