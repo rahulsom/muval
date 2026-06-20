@@ -4,7 +4,7 @@ permissions:
   security-events: write
   actions: read
   contents: read
-  packages: read
+  packages: write
 
 on:
   pull_request:
