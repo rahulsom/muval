@@ -1,5 +1,4 @@
 import com.github.rahulsom.waena.WaenaExtension
-import nebula.plugin.contacts.ContactsExtension
 
 plugins {
     java
@@ -77,8 +76,8 @@ tasks.test {
     useJUnitPlatform()
 }
 
-extensions.findByType<ContactsExtension>()?.apply {
-    with(addPerson("rahulsom@noreply.github.com")) {
+contacts {
+    addPerson("rahulsom@noreply.github.com") {
         moniker("Rahul Somasunderam")
         roles("owner")
         github("https://github.com/rahulsom")
