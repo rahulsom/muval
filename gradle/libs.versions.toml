@@ -15,7 +15,7 @@ saxon = "9.1.0.8"
 shadow = "9.6.1"
 slf4j = "2.0.19"
 sun-jaxb = "4.0.9"
-waena = "0.28.0"
+waena = "0.29.0"
 xml-commons-resolver = "1.1"
 xmlbeans = "5.4.0"
 
