@@ -17,7 +17,7 @@ slf4j = "2.0.19"
 sun-jaxb = "4.0.9"
 waena = "0.29.0"
 xml-commons-resolver = "1.1"
-xmlbeans = "5.4.0"
+xmlbeans = "5.4.1"
 
 [libraries]
 activation = { module = "javax.activation:activation", version.ref = "activation" }
