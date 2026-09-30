@@ -56,13 +56,6 @@ dependencies {
     implementation(libs.xmlbeans) {
         exclude(group = "net.sf.saxon")
     }
-    implementation(variantOf(libs.saxon) { classifier("dom") })
-    implementation(variantOf(libs.saxon) { classifier("dom4j") })
-    implementation(variantOf(libs.saxon) { classifier("jdom") })
-    implementation(variantOf(libs.saxon) { classifier("s9api") })
-    implementation(variantOf(libs.saxon) { classifier("sql") })
-    implementation(variantOf(libs.saxon) { classifier("xom") })
-    implementation(variantOf(libs.saxon) { classifier("xqj") })
 
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.params)
