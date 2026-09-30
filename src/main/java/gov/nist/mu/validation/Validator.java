@@ -470,7 +470,7 @@ public class Validator {
                 }
 
                 log.debug("Using fallback resource - {}", href);
-                return oldResolver.resolve(href, base);
+                return oldResolver != null ? oldResolver.resolve(href, base) : null;
             });
         }
         return factory;
