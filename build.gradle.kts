@@ -1,5 +1,3 @@
-import com.github.rahulsom.waena.WaenaExtension
-
 plugins {
     java
     application
@@ -82,10 +80,6 @@ contacts {
         roles("owner")
         github("https://github.com/rahulsom")
     }
-}
-
-waena {
-     publishMode.set(WaenaExtension.PublishMode.Central)
 }
 
 tasks.named<ProcessResources>("processResources") {
