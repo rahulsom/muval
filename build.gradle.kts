@@ -59,7 +59,7 @@ dependencies {
     testImplementation(libs.junit.jupiter.params)
     testImplementation(libs.assertj.core)
     testImplementation(libs.activation)
-    
+
     testRuntimeOnly(libs.bundles.junit.runtime)
 }
 
